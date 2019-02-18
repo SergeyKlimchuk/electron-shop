@@ -1,7 +1,7 @@
 @import './../../styles'
 
 header-height = 50px
-header-color = #333
+header-color = #24292e
 
 header
   position: absolute
@@ -29,10 +29,14 @@ header
     transition: .2s
 
 .item_right
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
+  flex-grow 1
+  display flex
+  flex-direction row
+  align-items center
+  .account
+    flex-grow 0
+  .search
+    flex-grow 2
 
   & > *
     height 100%

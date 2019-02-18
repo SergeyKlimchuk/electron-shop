@@ -1,7 +1,7 @@
 <header class="header">
   <div class="container-center">
     <a href="#" class="item">
-      <img src="/src/assets/icons/icon.svg" alt=""> Электрон
+      <img src="./../../assets/icons/icon.svg" class="icon" alt=""> Электрон
     </a>
     <a href="#" class="item">Каталог</a>
     <a href="#" class="item">Центры</a>
@@ -9,7 +9,8 @@
 
     <!-- Account block -->
     <div class="item_right">
-      <app-header-dropdown [title]="userFullName" [items]="userDropdown"></app-header-dropdown>
+      <app-search class="search"></app-search>
+      <app-header-dropdown [title]="userFullName" [items]="userDropdown" class="account"></app-header-dropdown>
     </div>
 
   </div>
