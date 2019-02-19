@@ -1,13 +1,8 @@
 package usrt.technospace.models.product
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import org.hibernate.annotations.OnDelete
-import org.hibernate.annotations.OnDeleteAction
 import javax.persistence.*
-import javax.validation.constraints.NotBlank
 import javax.persistence.FetchType
-
-
 
 @Entity
 @Table(name = "products")
@@ -21,15 +16,20 @@ class Product {
     )
     var id: Long? = null
 
+    @Column(name = "name", nullable = false)
+    var name: String? = null
+
     @Column(name = "price", nullable = false)
     var price: Int? = null
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    var texts: List<ProductInfoText>? = null
+    /**
+     * Information about product. (Dynamic multiline)
+     */
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+//    var texts: List<ProductInfoText>? = null
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_id", nullable = false)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "product_type_id", nullable = false)
     var productType: ProductType? = null
 
     @Column(name = "count", nullable = false)

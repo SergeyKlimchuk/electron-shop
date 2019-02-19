@@ -18,7 +18,7 @@ class ProductController {
     }
 
     @PostMapping("/products")
-    fun addProduct(@Valid @RequestBody product: Product): Product {
+    fun addProduct(@RequestBody product: Product): Product {
         return productRepository.save(product)
     }
 }

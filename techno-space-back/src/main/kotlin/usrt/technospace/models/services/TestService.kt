@@ -13,16 +13,5 @@ class TestService(private val productRepository: ProductRepository,
 
     @PostConstruct
     fun init() {
-        print("!")
-
-        if (false) {
-            val productType = ProductType()
-            productType.name = "Random1"
-            productTypeRepository.save(productType)
-            print("1")
-        } else {
-            val result = productTypeRepository.findByName("Random1")
-            print("2")
-        }
     }
 }
