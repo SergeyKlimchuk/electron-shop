@@ -1,4 +1,5 @@
 <div class="container">
-  <input type="text" maxlength=90 (keyup)="keyPress(searchField.value)" #searchField>
+  <input type="text" maxlength=90 (keyup)="searchTerm$.next($event.target.value)" #searchField>
   <i class="fas fa-search loop"></i>
+  <app-search-dropdown [products]="products"></app-search-dropdown>
 </div>

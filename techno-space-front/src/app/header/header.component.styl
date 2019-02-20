@@ -1,15 +1,12 @@
-@import './../../styles'
-
-header-height = 50px
-header-color = #24292e
+@import '../../stylus/colors.styl'
 
 header
   position: absolute
   z-index: 10
   top: 0
   width: 100vw
-  background: header-color
-  height: header-height
+  background: $header-color
+  height: $header-height
   color: white
   box-shadow: 0 0 10px black
   display: flex
@@ -23,10 +20,8 @@ header
   color: white
   font-weight: bold
   margin: 0 20px
-  transition: .2s
   &:hover
-    color: main-color
-    transition: .2s
+    color: $main-color
 
 .item_right
   flex-grow 1

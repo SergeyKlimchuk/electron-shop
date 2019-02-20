@@ -1,4 +1,4 @@
-@import './../../../styles'
+@import '../../../stylus/colors.styl'
 
 .dropdown
   position relative
@@ -6,7 +6,7 @@
 
 .dropdown:hover
   .target
-    color main-color
+    color $main-color
   .list
     visibility visible
 
@@ -38,7 +38,7 @@
     cursor pointer
 
   & li:hover
-    color main-color
+    color $main-color
     background-color #444
 
   & li:last-child
