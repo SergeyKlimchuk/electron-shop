@@ -8,7 +8,7 @@ import { HeaderDropdownComponent } from './header/header-dropdown/header-dropdow
 import { SearchComponent } from './header/search/search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchDropdownComponent } from './header/search/search-dropdown/search-dropdown.component';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularFontAwesomeModule
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
