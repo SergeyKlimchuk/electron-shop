@@ -1,6 +1,5 @@
 package usrt.technospace.models.product
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 import javax.persistence.FetchType
 

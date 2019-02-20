@@ -16,7 +16,7 @@ class SearchController {
     @GetMapping("/search")
     fun search(@RequestParam("q") query: String): List<Product> {
         val screenedQuery = query.replace(Regex("\""), "\\\"")
-        val results = productRepository.findByNameContaining(screenedQuery)
+        val results = productRepository.findByNameContainingIgnoreCase(screenedQuery)
         return if (results.size > -1) {
             results
         } else {

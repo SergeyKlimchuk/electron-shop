@@ -12,5 +12,5 @@ interface ProductRepository : JpaRepository<Product, Long> {
 
     fun findByProductType(productType: ProductType?): List<Product>
 
-    fun findByNameContaining(name: String): List<Product>
+    fun findByNameContainingIgnoreCase(name: String): List<Product>
 }
