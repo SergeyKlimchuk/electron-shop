@@ -10,7 +10,8 @@ export class PageRegistrationComponent implements OnInit {
 
   model = new User();
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

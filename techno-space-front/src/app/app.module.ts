@@ -21,6 +21,7 @@ import { BestCategoriesComponent } from './pages/page-main/best-categories/best-
 import { PageLoginComponent } from './pages/page-login/page-login.component';
 import { PageRegistrationComponent } from './pages/page-registration/page-registration.component';
 import { FormsModule } from '@angular/forms';
+import { MaterialModule } from './material/material.module';
 
 const appRoutes: Routes = [
   { path: 'main',         component: PageMainComponent        },
@@ -62,9 +63,11 @@ const appRoutes: Routes = [
     MatIconModule,
     BrowserAnimationsModule,
     FormsModule,
+    MaterialModule,
     RouterModule.forRoot(
       appRoutes
-    )
+    ),
+    MaterialModule
     // other imports here
   ],
   providers: [],
