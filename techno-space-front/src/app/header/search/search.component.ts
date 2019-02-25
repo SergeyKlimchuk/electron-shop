@@ -1,7 +1,7 @@
 import { SearchService } from './../../services/search/search.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 import { Product } from 'src/models/products/product';
 
 @Component({
@@ -15,15 +15,15 @@ export class SearchComponent implements OnInit {
    }
 
   searchTerm$ = new Subject<string>();
+  visibleList = false;
 
   @Output()
   searchResults = new EventEmitter<Array<Product>>();
-  products: Array<Product>;
+  products = new Array<Product>(0);
 
   ngOnInit() {
     this.searchTerm$.asObservable().pipe(
-      debounceTime(1000),
-      distinctUntilChanged()
+      debounceTime(700)
     ).subscribe(partialName => {
       this.searchProductsByPartialName(partialName);
     });
@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
       console.info(`Был произведен поиск "${partialName}"`, products);
       this.searchResults.next(products);
       this.products = products;
+      this.visibleList = products.length > 0;
     });
   }
-
 }

@@ -1,10 +1,10 @@
 .container
   position relative
   width 100%
-  height calc(100% - 16px)
+  height 1em
+  padding 7px 8px 8px 8px
   display flex
   flex-direction row
-  margin 8px 0
   align-items: center
   border-radius 3px
   background-color #fafafa
@@ -13,7 +13,8 @@
     border none
     background-color transparent
     padding 0 8px
-    height 100%
+    height 1em
+    color #333
   .loop
     background-position: center
     width  24px
@@ -21,5 +22,8 @@
     display flex
     justify-content center
     align-items center
-    margin-right 5px
     color black
+    cursor pointer
+
+.hidden
+  visibility hidden

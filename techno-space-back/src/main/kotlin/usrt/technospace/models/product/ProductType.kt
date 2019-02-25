@@ -18,4 +18,7 @@ class ProductType {
     @NotBlank
     @Column(name = "name", nullable = false)
     var name: String? = null
+
+    @Column(name = "image_url")
+    var imageUrl: String? = null
 }

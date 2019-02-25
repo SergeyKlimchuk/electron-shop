@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import './stylus/material-icons.styl'
+@import './stylus/sizes.styl'
+@import './stylus/colors.styl'
 
 *
   padding 0
@@ -12,7 +14,9 @@ body
   font-family 'Roboto', sans-serif
   position relative
 
-.icon
-  width 24px
-  height 24px
-  margin 4px
+app-root
+  display flex
+  flex-direction column
+  min-height "calc(100vh - %s)" % $header-height
+  padding-top $header-height
+

@@ -1,5 +1,6 @@
 package usrt.technospace.models.product
 
+import usrt.technospace.models.identity.User
 import javax.persistence.*
 import javax.persistence.FetchType
 
@@ -24,8 +25,8 @@ class Product {
     /**
      * Information about product. (Dynamic multiline)
      */
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-//    var texts: List<ProductInfoText>? = null
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    var texts: List<ProductInfoText>? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_type_id", nullable = false)
@@ -33,4 +34,8 @@ class Product {
 
     @Column(name = "count", nullable = false)
     var count: Int? = null
+
+
+    @ManyToMany(mappedBy = "cart")
+    var usersCart: List<User>? = null
 }

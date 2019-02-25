@@ -11,7 +11,7 @@ export class SearchService {
   constructor(private httpClient: HttpClient) { }
 
   public searchProductsByPartialName(produtName: string): Observable<Array<Product>> {
-    return this.httpClient.get<Array<Product>>('api/search', {
+    return this.httpClient.get<Array<Product>>('/api/search', {
       params: {q: produtName}
     });
   }

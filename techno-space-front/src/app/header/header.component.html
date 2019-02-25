@@ -1,17 +1,27 @@
 <header class="header">
   <div class="container-center">
-    <a href="#" class="item">
+    <a [routerLink]="['/main']" class="item">
       <img src="./../../assets/icons/icon.svg" class="icon" alt=""> Электрон
     </a>
-    <a href="#" class="item">Каталог</a>
-    <a href="#" class="item">Центры</a>
-    <a href="#" class="item">Акции</a>
+    <a [routerLink]="['/main']" class="item">Каталог</a>
+    <a [routerLink]="['/addresses']" class="item">Центры</a>
+    <a [routerLink]="['/actions']" class="item">Акции</a>
 
     <!-- Account block -->
     <div class="item_right">
       <app-search class="search"></app-search>
-      <app-header-dropdown [title]="userFullName" [items]="userDropdown" class="account"></app-header-dropdown>
-    </div>
+
+      <div *ngIf="false; then user else signIn"></div>
+      <ng-template #user>
+          <app-header-dropdown [title]="userFullName" [items]="userDropdown" class="account"></app-header-dropdown>
+      </ng-template>
+
+      <ng-template #signIn>
+          <a [routerLink]="['/login']" class="item">Вход</a>
+      </ng-template>
+
+
+      </div>
 
   </div>
 </header>
