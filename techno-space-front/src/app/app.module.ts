@@ -20,7 +20,7 @@ import { PageAddressesComponent } from './pages/page-addresses/page-addresses.co
 import { BestCategoriesComponent } from './pages/page-main/best-categories/best-categories.component';
 import { PageLoginComponent } from './pages/page-login/page-login.component';
 import { PageRegistrationComponent } from './pages/page-registration/page-registration.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
 
 const appRoutes: Routes = [
@@ -64,6 +64,7 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     FormsModule,
     MaterialModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes
     ),

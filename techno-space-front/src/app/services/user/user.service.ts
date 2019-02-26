@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { User } from './../../../models/users/user';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -9,7 +11,7 @@ export class UserService {
   private lastName: string;
   private secondName: string;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.name = 'Сергей';
     this.lastName = 'Климчук';
     this.secondName = 'Александрович';
@@ -34,5 +36,9 @@ export class UserService {
    */
   public getFullName() {
     return `${this.name} ${this.lastName}`;
+  }
+
+  registration(user: User) {
+    return this.http.post('/api/registrate', user);
   }
 }

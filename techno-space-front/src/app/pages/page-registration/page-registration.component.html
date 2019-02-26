@@ -2,63 +2,98 @@
   <mat-card class="registration-form">
     <mat-card-header class="form-header">
       <h3>Регистрация</h3>
+      {{registerForm.value | json}}
     </mat-card-header>
     <mat-card-content>
-      <form class="form-content" #registrationForm="ngForm">
+      <form
+        (ngSubmit)="submit()"
+        [formGroup]="registerForm"
+        class="form-content"
+        #registrationForm="ngForm" >
         <mat-form-field>
           <mat-label>Почта</mat-label>
           <input
             matInput
-            [(ngModel)]="model.email"
+            formControlName="email"
             placeholder="Почта"
-            name="email"
-            required
-          />
+            required />
         </mat-form-field>
+        <div class="error" *ngIf="controlIsInvalid('email')">
+          Почта имеет неизвестный формат!
+        </div>
+
         <mat-form-field>
           <mat-label>Пароль</mat-label>
           <input
             matInput
-            [(ngModel)]="model.password"
+            formControlName="password"
             placeholder="Пароль"
-            name="password"
             type="password"
-          />
+            required />
         </mat-form-field>
+        <div class="error" *ngIf="controlIsInvalid('password')">
+          Пароль должен быть более 6 символов!
+        </div>
+
+        <mat-form-field>
+          <mat-label>Повторите пароль</mat-label>
+          <input
+            matInput
+            formControlName="confirmPassword"
+            placeholder="Повтор пароля"
+            type="password"
+            required />
+        </mat-form-field>
+        <div class="error" *ngIf="controlIsInvalid('confirmPassword')">
+          Пароли не совпадают!
+        </div>
 
         <mat-form-field>
           <mat-label>Имя</mat-label>
           <input
-            matInput
-            [(ngModel)]="model.name"
-            placeholder="Имя"
-            name="name"
-            required
-          />
+          matInput
+          formControlName="name"
+          placeholder="Имя"
+          required />
         </mat-form-field>
+        <div class="error" *ngIf="controlIsInvalid('name')">
+          Имя не может быть пустым!
+        </div>
+
         <mat-form-field>
           <mat-label>Фамилия</mat-label>
           <input
             matInput
-            [(ngModel)]="model.lastName"
+            formControlName="lastName"
             placeholder="Фамилия"
-            name="lastName"
-            required
-          />
+            required />
         </mat-form-field>
+        <div class="error" *ngIf="controlIsInvalid('lastName')">
+          Фамилия не может быть пустым!
+        </div>
 
         <mat-form-field>
           <mat-label>Телефон</mat-label>
           <input
             matInput
-            [(ngModel)]="model.phoneNumber"
+            formControlName="phoneNumber"
             placeholder="Телефон"
-            name="phoneNumber"
-          />
+            [maxLength]="10"
+            required />
         </mat-form-field>
+        <div class="error" *ngIf="controlIsInvalid('phoneNumber')">
+          Телефон требуется для связи курьера/оператора с вами!
+        </div>
         <div class="footer-actions">
-            <button mat-button mat-accent class="form-btn registration-btn">Авторизация</button>
-            <button mat-button mat-accent class="form-btn form-btn_primary registration-btn">Регистрация</button>
+          <button mat-button mat-accent class="form-btn registration-btn">
+            Авторизация
+          </button>
+          <button
+            mat-button
+            mat-accent
+            class="form-btn form-btn_primary registration-btn" >
+            Регистрация
+          </button>
         </div>
       </form>
     </mat-card-content>
