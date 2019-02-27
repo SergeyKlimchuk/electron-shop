@@ -8,6 +8,8 @@ import usrt.technospace.models.roles.Role
 import usrt.technospace.repository.UserRepository
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestBody
+import usrt.technospace.models.services.UserService
+import javax.validation.Valid
 
 
 @RestController
@@ -16,25 +18,28 @@ class RegistrationController {
     @Autowired
     lateinit var userRepository: UserRepository
 
+    @Autowired
+    lateinit var userService: UserService
+
     @GetMapping("/registration")
     fun registration(): String {
+        userService.getCurrentUser()
         return "registration"
     }
 
 
     @PostMapping("/registration")
-    fun addNewUser(@RequestBody user: User): User? {
-        if (user.username == null) {
-            throw IllegalArgumentException("Username cannot be NULL!")
-        }
+    fun addNewUser(@Valid @RequestBody user: User): User? {
 
-        val userWasFounded = userRepository.findByUsername(user.username) != null
+        val userWasFounded = userRepository.findByEmail(user.email) != null
         if (userWasFounded) {
-            throw IllegalArgumentException("Username already exists!")
+            throw IllegalArgumentException("Email already exists!")
         }
 
         user.roles = hashSetOf(Role.USER)
         user.active = true
+//        user.createdAt = Date()
+//        user.createdAt = Date()
         return userRepository.save(user)
     }
 }

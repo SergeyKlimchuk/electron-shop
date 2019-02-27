@@ -17,22 +17,19 @@ class User {
     @GeneratedValue
     var id: Long? = null
 
+
     @NotBlank
-    @Column(name = "username", nullable = false)
-    var username: String? = null
+    @Column(name = "email", nullable = false)
+    var email: String? = null
 
     @NotBlank
     @Column(name = "password", nullable = false)
     var password: String? = null
 
-    @Column(name = "state", nullable = false)
+
+
+    @Column(name = "active", nullable = false)
     var active: Boolean = false
-
-
-
-    @NotBlank
-    @Column(name = "email", nullable = false)
-    var email: String? = null
 
     @NotBlank
     @Column(name = "name", nullable = false)
@@ -53,15 +50,13 @@ class User {
     @Size(min = 10, max = 10)
     var phoneNumber: String? = null
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_date", updatable = false)
     @CreatedDate
-    private val createdAt: Date? = null
+    private var createdAt: Date? = null
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_date")
     @LastModifiedDate
-    private val updatedAt: Date? = null
+    private var updatedAt: Date? = null
 
     @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])
@@ -70,15 +65,15 @@ class User {
 
 
     // CART
-    @ManyToMany(cascade = [
-        CascadeType.PERSIST,
-        CascadeType.MERGE
-    ])
-    @JoinTable(name = "cart",
-            joinColumns = [JoinColumn(name = "user_id")],
-            inverseJoinColumns = [JoinColumn(name = "product_id")]
-    )
-    var cart: List<Product>? = null
+//    @ManyToMany(cascade = [
+//        CascadeType.PERSIST,
+//        CascadeType.MERGE
+//    ])
+//    @JoinTable(name = "cart",
+//            joinColumns = [JoinColumn(name = "user_id")],
+//            inverseJoinColumns = [JoinColumn(name = "product_id")]
+//    )
+//    var cart: List<Product>? = null
 
     // TODO: Favorites
 }

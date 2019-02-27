@@ -17,14 +17,13 @@ class Action {
     var id: Long? = null
 
     @NotBlank
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     var name: String? = null
 
-    @NotBlank
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     var date: Date? = null
 
     @NotBlank
-    @Column(name = "info", nullable = false)
+    @Column(name = "info")
     var info: String? = null
 }

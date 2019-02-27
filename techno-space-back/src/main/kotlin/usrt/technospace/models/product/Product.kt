@@ -36,6 +36,6 @@ class Product {
     var count: Int? = null
 
 
-    @ManyToMany(mappedBy = "cart")
-    var usersCart: List<User>? = null
+//    @ManyToMany(mappedBy = "cart")
+//    var usersCart: List<User>? = null
 }

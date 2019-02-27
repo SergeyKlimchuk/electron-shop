@@ -9,23 +9,23 @@ import usrt.technospace.models.actions.Action
 import usrt.technospace.repository.ActionRepository
 import javax.validation.Valid
 
-@RestController("/actions")
+@RestController
 class ActionsController {
 
     @Autowired
     lateinit var actionRepository: ActionRepository
 
-    @GetMapping
+    @GetMapping("/actions")
     fun getActiveActions(): Array<Action> {
         return actionRepository.getActiveActions()
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/actions/{id}")
     fun getAction(@PathVariable id: Long): Action {
         return actionRepository.getOne(id)
     }
 
-    @PostMapping
+    @PostMapping("/actions")
     fun addAction(@Valid action: Action): Action {
         return actionRepository.save(action)
     }

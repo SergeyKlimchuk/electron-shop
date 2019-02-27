@@ -1,23 +1,20 @@
 package usrt.technospace.config
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.provisioning.InMemoryUserDetailsManager
-import org.springframework.context.annotation.Bean
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder
+import usrt.technospace.models.services.CustomUserDetailService
 import javax.sql.DataSource
 
 
 @Configuration
 @EnableWebSecurity
+@ComponentScan(basePackageClasses = [CustomUserDetailService::class])
 class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Autowired
@@ -25,11 +22,13 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity?) {
         http?.authorizeRequests()
-                ?.antMatchers("/", "/registration")?.permitAll()
+                ?.antMatchers("/", "/registration", "/login")?.permitAll()
                 ?.anyRequest()?.authenticated()
             ?.and()
                 ?.formLogin()
                 ?.loginPage("/login")
+                ?.usernameParameter("email")
+                ?.passwordParameter("password")
                 ?.permitAll()
             ?.and()
                 ?.logout()
@@ -41,10 +40,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         auth?.jdbcAuthentication()
             ?.dataSource(dataSource)
             ?.passwordEncoder(NoOpPasswordEncoder.getInstance()) //SCryptPasswordEncoder()
-            ?.usersByUsernameQuery("SELECT username, password, active FROM users WHERE username=?")
-            ?.authoritiesByUsernameQuery("SELECT u.username, ur.roles " +
-                                               "FROM users AS u " +
-                                               "INNER JOIN user_roles AS ur ON u.id = ur.user_id " +
-                                               "WHERE u.username=?")
+            ?.usersByUsernameQuery("SELECT email, password, active FROM users WHERE email=?")
+            ?.authoritiesByUsernameQuery("SELECT u.email, ur.roles FROM users u INNER JOIN user_roles ur ON ur.user_id=u.id WHERE u.email=?")
     }
 }
