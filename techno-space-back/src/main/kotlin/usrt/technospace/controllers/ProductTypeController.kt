@@ -1,6 +1,10 @@
 package usrt.technospace.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
 import usrt.technospace.exceptions.NotFoundException
 import usrt.technospace.models.product.ProductType
@@ -13,19 +17,30 @@ class ProductTypeController {
     @Autowired
     private lateinit var productTypeRepository: ProductTypeRepository
 
-    @GetMapping("/product-types/{productTypeId}")
-    fun getProductType(@PathVariable productTypeId: Long): ProductType {
-        return productTypeRepository.getOne(productTypeId)
-    }
-
     @PostMapping("/product-types")
     fun addProductType(@Valid @RequestBody productType: ProductType): ProductType {
         return productTypeRepository.save(productType)
     }
 
-    @DeleteMapping("/product-types/{productTypeId}")
-    fun deleteProductType(@PathVariable productTypeId: Long) {
-        val productType = productTypeRepository.findById(productTypeId)
+    @GetMapping("/product-types/{id}")
+    fun getProductType(@PathVariable id: Long): ProductType {
+        return productTypeRepository.getOne(id)
+    }
+
+    @GetMapping("/product-types")
+    fun getProductTypes(@PageableDefault(sort = ["name"], direction = Sort.Direction.DESC)
+                        pageable: Pageable): Page<ProductType> {
+        return productTypeRepository.findAll(pageable)
+    }
+
+    @PutMapping("/product-types")
+    fun updateProductType(@Valid @RequestBody productType: ProductType): ProductType {
+        return productTypeRepository.save(productType)
+    }
+
+    @DeleteMapping("/product-types/{id}")
+    fun deleteProductType(@PathVariable id: Long) {
+        val productType = productTypeRepository.findById(id)
         if (productType.isPresent) {
             productTypeRepository.delete(productType.get())
         } else {
