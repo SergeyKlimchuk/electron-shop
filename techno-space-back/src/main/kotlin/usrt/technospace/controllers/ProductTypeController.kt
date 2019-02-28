@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
-import usrt.technospace.exceptions.NotFoundException
 import usrt.technospace.models.product.ProductType
 import usrt.technospace.repository.ProductTypeRepository
 import javax.validation.Valid
@@ -40,11 +39,7 @@ class ProductTypeController {
 
     @DeleteMapping("/product-types/{id}")
     fun deleteProductType(@PathVariable id: Long) {
-        val productType = productTypeRepository.findById(id)
-        if (productType.isPresent) {
-            productTypeRepository.delete(productType.get())
-        } else {
-            throw NotFoundException()
-        }
+        val productType = productTypeRepository.getOne(id)
+        productTypeRepository.delete(productType)
     }
 }

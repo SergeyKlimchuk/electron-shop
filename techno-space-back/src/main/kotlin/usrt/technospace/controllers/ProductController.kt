@@ -26,11 +26,6 @@ class ProductController {
         return productRepository.getOne(id)
     }
 
-    @PutMapping("/products")
-    fun updateProduct(@Valid @RequestBody product: Product): Product {
-        return productRepository.save(product)
-    }
-
     @GetMapping("/products")
     fun getProductsByProductTypeId(
             @RequestParam("productTypeId")
@@ -45,8 +40,19 @@ class ProductController {
         return productRepository.findAllByProductTypeId(productTypeId, pageable)
     }
 
+    @PutMapping("/products")
+    fun updateProduct(@Valid @RequestBody product: Product): Product {
+        return productRepository.save(product)
+    }
+
     @GetMapping("/products/count")
     fun getProductsCount(@RequestParam("productTypeId") productTypeId: Long): Long {
         return productRepository.countProductsByProductTypeId(productTypeId)
+    }
+
+    @DeleteMapping("/products/{id}")
+    fun deleteProduct(@PathVariable id: Long) {
+        val product = productRepository.getOne(id)
+        productRepository.delete(product)
     }
 }
