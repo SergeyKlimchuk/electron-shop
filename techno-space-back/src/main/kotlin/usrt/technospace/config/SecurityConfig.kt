@@ -21,15 +21,16 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     lateinit var dataSource: DataSource
 
     override fun configure(http: HttpSecurity?) {
-        http?.authorizeRequests()
-                ?.antMatchers("/", "/registration", "/login")?.permitAll()
-                ?.anyRequest()?.authenticated()
-            ?.and()
-                ?.formLogin()
+        http    ?.formLogin()
                 ?.loginPage("/login")
                 ?.usernameParameter("email")
                 ?.passwordParameter("password")
                 ?.permitAll()
+            ?.and()
+                ?.authorizeRequests()
+                ?.antMatchers("/", "/registration", "/search")?.permitAll()
+                ?.antMatchers("/user/current")?.authenticated()
+                ?.anyRequest()?.authenticated()
             ?.and()
                 ?.logout()
                 ?.permitAll()

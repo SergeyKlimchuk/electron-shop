@@ -1,44 +1,71 @@
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User } from './../../../models/users/user';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements OnInit {
 
-  private name: string;
-  private lastName: string;
-  private secondName: string;
+  private user = new Subject<User>();
+  private userAuthenticated = false;
 
   constructor(private http: HttpClient) {
-    this.name = 'Сергей';
-    this.lastName = 'Климчук';
-    this.secondName = 'Александрович';
+    this.updateUser();
   }
 
-  /**
-   * getUserName
-   */
-  public getUserName() {
-    return this.name;
+  ngOnInit(): void {
+
   }
 
-  /**
-   * getLastName
-   */
-  public getLastName() {
-    return this.lastName;
+  getRequiredPasswordLength() {
+    return 6;
   }
 
-  /**
-   * getFullName
-   */
-  public getFullName() {
-    return `${this.name} ${this.lastName}`;
+  updateUser(): void {
+    this.http.get<User>('/api/user/current').subscribe(
+      (success) => {
+        this.user.next(success);
+        this.userAuthenticated = true;
+        console.log('Пользователь авторизован');
+      },
+      (error) => {
+        console.log('Пользователь не авторизован');
+      }
+    );
+  }
+
+  userIsAuthenticated(): boolean {
+    return this.userAuthenticated;
+  }
+
+  getCurrentUser(): Observable<User> {
+    return this.user;
   }
 
   registration(user: User) {
+    if (this.userAuthenticated) {
+      return;
+    }
     return this.http.post('/api/registrate', user);
+  }
+
+  signIn(email: string, password: string): Observable<any> {
+    console.log(email, password);
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    const loginRequest = this.http.post<any>('/api/login', formData);
+    loginRequest.subscribe(
+      (success) => {
+        this.updateUser();
+        console.log('Пользователь успешно авторизовался!');
+      },
+      (error) => {
+        console.log('Пользователь не смог авторизоваться!');
+      }
+    );
+    return loginRequest;
   }
 }

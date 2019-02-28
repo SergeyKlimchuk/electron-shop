@@ -4,10 +4,8 @@ import {
   Component,
   OnInit,
   AfterViewInit,
-  ElementRef,
-  Renderer2
+  ElementRef
 } from '@angular/core';
-import { trigger, transition, style, state } from '@angular/animations';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +13,7 @@ import { trigger, transition, style, state } from '@angular/animations';
   styleUrls: ['./header.component.styl'],
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
+
   public userDropdown = [
     new DropdownItem('Профиль', e => {}),
     new DropdownItem('Корзина', e => {}),
@@ -22,16 +21,24 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     new DropdownItem('Выйти', e => {})
   ];
 
-  public userFullName = this.userService.getFullName();
+  public userFullName = '';
   leftSideElements: Array<any>;
   currentAnimation = null;
   last = 0;
 
   constructor(
     private userService: UserService,
-    private renderer: Renderer2,
     private elem: ElementRef
-  ) {}
+  ) {
+    userService.getCurrentUser().subscribe(
+      (user) => {
+        this.userFullName = `${user.name} ${user.lastName}`;
+      },
+      (error) => {
+        console.log('getCurrentUser in header', error);
+      }
+    );
+  }
 
   ngOnInit() {}
 

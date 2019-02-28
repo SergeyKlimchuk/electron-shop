@@ -11,7 +11,7 @@
     <div class="item_right">
       <app-search class="search"></app-search>
 
-      <div *ngIf="false; then user else signIn"></div>
+      <div *ngIf="userFullName != ''; then user else signIn"></div>
       <ng-template #user>
           <app-header-dropdown [title]="userFullName" [items]="userDropdown" class="account"></app-header-dropdown>
       </ng-template>

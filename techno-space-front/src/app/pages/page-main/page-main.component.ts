@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SliderPage } from 'src/app/slider/slider-page';
+import { SliderPage } from './slider/slider-page';
 
 @Component({
   selector: 'app-page-main',

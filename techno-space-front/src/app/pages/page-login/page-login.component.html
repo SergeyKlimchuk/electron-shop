@@ -1,9 +1,58 @@
-<h2>Авторизация</h2>
+<mat-card class="registration-form">
+  <div class="header-wrapper">
+    <mat-icon class="icon">account_circle</mat-icon>
+    <div color="primary">Авторизация {{userService.userIsAuthenticated()}}</div>
+  </div>
+  <mat-card-content>
+    <form
+      (ngSubmit)="signIn()"
+      [formGroup]="authForm"
+      class="form-content"
+      #signInForm="ngForm"
+    >
+      <mat-form-field>
+        <mat-label>Почта</mat-label>
+        <input matInput formControlName="email" placeholder="Почта" required />
+      </mat-form-field>
+      <div class="error" *ngIf="ctrlIsInvalid('email')">
+        Почта имеет неизвестный формат!
+      </div>
 
-<form action="/api/login">
-  <input type="text" name="username" id="username">
-  <input type="text" name="password" id="password">
-  <button type="submit">Вход</button>
-</form>
+      <mat-form-field>
+        <mat-label>Пароль</mat-label>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Пароль"
+          type="password"
+          required
+        />
+      </mat-form-field>
+      <div class="error" *ngIf="ctrlIsInvalid('password')">
+        Пароль должен быть более 6 символов!
+      </div>
 
-<a [routerLink]="['/registration']">Регистрация</a>
+      <div class="error-msg" *ngIf="failAuth">
+        Неверный логин или пароль!
+      </div>
+
+      <div class="footer-actions">
+        <button mat-flat-button color="primary"
+          type="submit"
+          class="login-btn"
+          [disabled]="!authForm.valid">Вход</button>
+      </div>
+    </form>
+  </mat-card-content>
+  <div class="footer-row">
+    <a class="registration-link" [routerLink]="['/registration']" color="primary">
+      Регистрация
+    </a>
+  </div>
+  <mat-card-footer class="form-footer">
+    <div class="footer-row">
+      <mat-icon svgIcon="google" class="icon hoverable"></mat-icon>
+      <mat-icon svgIcon="vk" class="icon hoverable"></mat-icon>
+    </div>
+  </mat-card-footer>
+</mat-card>

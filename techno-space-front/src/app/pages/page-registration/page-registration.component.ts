@@ -2,6 +2,7 @@ import { User } from './../../../models/users/user';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user/user.service';
+import { controlIsInvalid } from 'src/utils/form-validator-msg';
 
 @Component({
   selector: 'app-page-registration',
@@ -22,9 +23,10 @@ export class PageRegistrationComponent implements OnInit {
   }
 
   buildForm() {
+    const minPasswordLength = this.userService.getRequiredPasswordLength();
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(minPasswordLength)]],
       confirmPassword: ['', Validators.required],
       name: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -32,9 +34,8 @@ export class PageRegistrationComponent implements OnInit {
     });
   }
 
-  controlIsInvalid(controlName: string) {
-    const control = this.registerForm.get(controlName);
-    return control.invalid && control.touched;
+  ctrlIsInvalid(controlName: string): boolean {
+    return controlIsInvalid(this.registerForm, controlName);
   }
 
   submit() {

@@ -11,7 +11,7 @@ import { HeaderComponent } from './header/header.component';
 import { HeaderDropdownComponent } from './header/header-dropdown/header-dropdown.component';
 import { SearchComponent } from './header/search/search.component';
 import { SearchDropdownComponent } from './header/search/search-dropdown/search-dropdown.component';
-import { SliderComponent } from './slider/slider.component';
+import { SliderComponent } from './pages/page-main/slider/slider.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { PageMainComponent } from './pages/page-main/page-main.component';
 import { PageProductComponent } from './pages/page-product/page-product.component';

@@ -18,7 +18,7 @@
             placeholder="Почта"
             required />
         </mat-form-field>
-        <div class="error" *ngIf="controlIsInvalid('email')">
+        <div class="error" *ngIf="ctrlIsInvalid('email')">
           Почта имеет неизвестный формат!
         </div>
 
@@ -31,7 +31,7 @@
             type="password"
             required />
         </mat-form-field>
-        <div class="error" *ngIf="controlIsInvalid('password')">
+        <div class="error" *ngIf="ctrlIsInvalid('password')">
           Пароль должен быть более 6 символов!
         </div>
 
@@ -44,7 +44,7 @@
             type="password"
             required />
         </mat-form-field>
-        <div class="error" *ngIf="controlIsInvalid('confirmPassword')">
+        <div class="error" *ngIf="ctrlIsInvalid('confirmPassword')">
           Пароли не совпадают!
         </div>
 
@@ -56,7 +56,7 @@
           placeholder="Имя"
           required />
         </mat-form-field>
-        <div class="error" *ngIf="controlIsInvalid('name')">
+        <div class="error" *ngIf="ctrlIsInvalid('name')">
           Имя не может быть пустым!
         </div>
 
@@ -68,7 +68,7 @@
             placeholder="Фамилия"
             required />
         </mat-form-field>
-        <div class="error" *ngIf="controlIsInvalid('lastName')">
+        <div class="error" *ngIf="ctrlIsInvalid('lastName')">
           Фамилия не может быть пустым!
         </div>
 
@@ -81,11 +81,11 @@
             [maxLength]="10"
             required />
         </mat-form-field>
-        <div class="error" *ngIf="controlIsInvalid('phoneNumber')">
+        <div class="error" *ngIf="ctrlIsInvalid('phoneNumber')">
           Телефон требуется для связи курьера/оператора с вами!
         </div>
         <div class="footer-actions">
-          <button mat-button mat-accent class="form-btn registration-btn">
+          <button mat-button mat-accent class="form-btn registration-btn" [routerLink]="['/login']">
             Авторизация
           </button>
           <button
