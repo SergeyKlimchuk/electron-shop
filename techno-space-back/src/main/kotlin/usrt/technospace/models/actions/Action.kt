@@ -20,10 +20,17 @@ class Action {
     @Column(name = "name")
     var name: String? = null
 
-    @Column(name = "date")
-    var date: Date? = null
+    @Column(name = "date_start")
+    var dateStart: Date? = null
+
+    @Column(name = "date_finish")
+    var dateFinish: Date? = null
 
     @NotBlank
     @Column(name = "info")
     var info: String? = null
+
+    @NotBlank
+    @Column(name = "image_url")
+    var imageUrl: String? = null
 }

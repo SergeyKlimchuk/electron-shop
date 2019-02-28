@@ -1,10 +1,11 @@
 package usrt.technospace.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
+import org.springframework.web.bind.annotation.*
 import usrt.technospace.models.actions.Action
 import usrt.technospace.repository.ActionRepository
 import javax.validation.Valid
@@ -15,9 +16,20 @@ class ActionsController {
     @Autowired
     lateinit var actionRepository: ActionRepository
 
+    @PostMapping("/actions")
+    fun addAction(@Valid action: Action): Action {
+        return actionRepository.save(action)
+    }
+
     @GetMapping("/actions")
-    fun getActiveActions(): Array<Action> {
-        return actionRepository.getActiveActions()
+    fun getActions(@RequestParam active: Boolean?,
+                   @PageableDefault(sort = ["dateStart"], direction = Sort.Direction.DESC)
+                   pageable: Pageable): Page<Action> {
+        if (active == null) {
+            return actionRepository.findAll(pageable)
+        }
+
+        return actionRepository.findAllByState(active, pageable)
     }
 
     @GetMapping("/actions/{id}")
@@ -25,8 +37,9 @@ class ActionsController {
         return actionRepository.getOne(id)
     }
 
-    @PostMapping("/actions")
-    fun addAction(@Valid action: Action): Action {
-        return actionRepository.save(action)
+    @DeleteMapping("/actions/{id}")
+    fun deleteAction(@PathVariable id: Long) {
+        val action = actionRepository.getOne(id)
+        actionRepository.delete(action)
     }
 }
