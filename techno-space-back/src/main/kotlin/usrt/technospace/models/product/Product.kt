@@ -17,6 +17,9 @@ class Product {
     @Column(name = "price", nullable = false)
     var price: Int? = null
 
+    @Column(name = "image_url")
+    var imageUrl: String? = null
+
     /**
      * Information about product. (Dynamic multiline)
      */
