@@ -28,8 +28,10 @@ class ActionsController {
         if (active == null) {
             return actionRepository.findAll(pageable)
         }
-
-        return actionRepository.findAllByState(active, pageable)
+        if (active) {
+            return actionRepository.findAllActive(pageable)
+        }
+        return actionRepository.findAllNotActive(pageable)
     }
 
     @GetMapping("/actions/{id}")
