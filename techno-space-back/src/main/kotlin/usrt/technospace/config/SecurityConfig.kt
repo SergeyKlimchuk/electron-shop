@@ -28,7 +28,13 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 ?.permitAll()
             ?.and()
                 ?.authorizeRequests()
-                ?.antMatchers("/", "/registration", "/search")?.permitAll()
+                ?.antMatchers(
+                        "/",
+                        "/registration",
+                        "/search",
+                        "/products",
+                        "/product-types",
+                        "/product-types/**")?.permitAll()
                 ?.antMatchers("/user/current")?.authenticated()
                 ?.anyRequest()?.authenticated()
             ?.and()
