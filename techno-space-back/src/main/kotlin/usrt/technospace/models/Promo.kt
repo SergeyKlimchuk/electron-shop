@@ -1,2 +1,0 @@
-package usrt.technospace.models
-
