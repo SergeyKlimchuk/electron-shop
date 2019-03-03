@@ -1,0 +1,12 @@
+<div class="container">
+  <mat-icon class="icon left" (click)="priorSlide()" *ngIf="this.pages.length > 0">chevron_left</mat-icon>
+  <div class="images" #images>
+    <a class="page" *ngFor="let page of pages; index as i" [routerLink]="[page.url]">
+      <img src="{{ page.imgUrl }}"
+           alt="picture"
+           class="image"
+           [@visibility]="this.currentPage == i ? 'visible' : 'hidden'">{{i}}
+    </a>
+  </div>
+  <mat-icon class="icon right" (click)="nextSlide()" *ngIf="this.pages.length > 0">chevron_right</mat-icon>
+</div>
