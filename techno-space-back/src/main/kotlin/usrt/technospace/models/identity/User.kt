@@ -2,7 +2,6 @@ package usrt.technospace.models.identity
 
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.annotation.CreatedDate
-import usrt.technospace.models.product.Product
 import usrt.technospace.models.roles.Role
 import java.util.*
 import javax.persistence.*
