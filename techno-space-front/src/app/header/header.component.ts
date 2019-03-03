@@ -28,9 +28,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   constructor(
     private userService: UserService,
-    private elem: ElementRef
-  ) {
-    userService.getCurrentUser().subscribe(
+    private elem: ElementRef) {
+  }
+
+  subscribeOnChangeUser() {
+    this.userService.getCurrentUser().subscribe(
       (user) => {
         this.userFullName = `${user.name} ${user.lastName}`;
       },
@@ -40,7 +42,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscribeOnChangeUser();
+  }
 
   ngAfterViewInit(): void {
     this.leftSideElements = this.elem.nativeElement.querySelectorAll('.item');

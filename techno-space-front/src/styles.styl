@@ -10,7 +10,7 @@
 
 body
   background-color #fff
-  width 100vw
+  width 100%
   min-height 100vh
   font-family 'Roboto', sans-serif
   position relative
@@ -23,3 +23,7 @@ app-root
   min-height "calc(100vh - %s)" % $header-height
   padding-top $header-height
 
+.square:after
+  content ""
+  display block
+  padding-bottom 100%

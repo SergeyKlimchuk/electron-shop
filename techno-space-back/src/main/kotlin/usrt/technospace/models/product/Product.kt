@@ -1,6 +1,8 @@
 package usrt.technospace.models.product
 
-import usrt.technospace.models.identity.User
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import java.util.*
 import javax.persistence.*
 import javax.persistence.FetchType
 
@@ -24,7 +26,7 @@ class Product {
      * Information about product. (Dynamic multiline)
      */
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    var texts: List<ProductInfoText>? = null
+    var values: List<ProductInfoValue>? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_type_id", nullable = false)
@@ -32,6 +34,14 @@ class Product {
 
     @Column(name = "count", nullable = false)
     var count: Int? = null
+
+    @Column(name = "created_date", updatable = false)
+    @CreatedDate
+    private var createdAt: Date? = null
+
+    @Column(name = "updated_date")
+    @LastModifiedDate
+    private var updatedAt: Date? = null
 
 
 //    @ManyToMany(mappedBy = "cart")

@@ -6,4 +6,5 @@ export class Product {
   price: number;
   productType: ProductType;
   count: number;
+  imageUrl: string;
 }

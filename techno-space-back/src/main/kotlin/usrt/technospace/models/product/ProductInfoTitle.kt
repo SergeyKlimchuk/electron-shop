@@ -1,6 +1,6 @@
 package usrt.technospace.models.product
 
-import com.fasterxml.jackson.annotation.JsonIgnore
+import usrt.technospace.models.dictionary.Dictionary
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 
@@ -11,12 +11,19 @@ class ProductInfoTitle {
     @GeneratedValue
     var id: Long? = 0
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "product_type_id", nullable = false)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_type_id")
     var productType: ProductType? = null
 
     @NotBlank
     @Column(name = "name", nullable = false)
     var name: String = ""
+
+    @JoinTable(name = "product_info_value_types", joinColumns = [JoinColumn(name = "product_info_value_type_id")])
+    @Enumerated(EnumType.STRING)
+    var type: ProductInfoValueType? = ProductInfoValueType.None
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dictionary_id")
+    var dictionary: Dictionary? = null
 }
