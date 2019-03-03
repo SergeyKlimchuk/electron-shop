@@ -8,12 +8,7 @@ import javax.persistence.FetchType
 @Table(name = "products")
 class Product {
     @Id
-    @GeneratedValue(generator = "product_generator")
-    @SequenceGenerator(
-            name = "product_generator",
-            sequenceName = "product_generator",
-            initialValue = 1
-    )
+    @GeneratedValue
     var id: Long? = null
 
     @Column(name = "name", nullable = false)

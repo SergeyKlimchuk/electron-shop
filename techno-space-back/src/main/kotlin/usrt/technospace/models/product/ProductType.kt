@@ -7,12 +7,7 @@ import javax.validation.constraints.NotBlank
 @Table(name = "productTypes")
 class ProductType {
     @Id
-    @GeneratedValue(generator = "product_type_generator")
-    @SequenceGenerator(
-            name = "product_type_generator",
-            sequenceName = "product_type_generator",
-            initialValue = 1
-    )
+    @GeneratedValue
     var id: Long? = null
 
     @NotBlank

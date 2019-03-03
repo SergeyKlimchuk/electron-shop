@@ -8,12 +8,7 @@ import javax.validation.constraints.NotBlank
 @Table(name = "products_info_title")
 class ProductInfoTitle {
     @Id
-    @GeneratedValue(generator = "products_info_title_generator")
-    @SequenceGenerator(
-            name = "products_info_title_generator",
-            sequenceName = "products_info_title_generator",
-            initialValue = 1
-    )
+    @GeneratedValue
     var id: Long? = 0
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
