@@ -16,7 +16,7 @@ class DictionaryController {
     lateinit var dictionaryRepository: DictionaryRepository
 
     @PostMapping("/dictionaries")
-    fun add(@RequestParam dictionary: Dictionary): Dictionary {
+    fun add(@RequestBody dictionary: Dictionary): Dictionary {
         return dictionaryRepository.save(dictionary)
     }
 
