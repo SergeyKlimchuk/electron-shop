@@ -1,5 +1,6 @@
 package usrt.technospace.models.product
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import usrt.technospace.models.dictionary.Dictionary
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
@@ -11,6 +12,7 @@ class ProductInfoTitle {
     @GeneratedValue
     var id: Long? = 0
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_type_id")
     var productType: ProductType? = null

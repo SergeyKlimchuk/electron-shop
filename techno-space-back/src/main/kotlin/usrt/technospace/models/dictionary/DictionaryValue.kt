@@ -1,5 +1,6 @@
 package usrt.technospace.models.dictionary
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import javax.persistence.*
 
 @Entity
@@ -12,7 +13,8 @@ class DictionaryValue {
     @Column(name = "name", nullable = false)
     var name: String? = null
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     var dictionary: Dictionary? = null
 }
