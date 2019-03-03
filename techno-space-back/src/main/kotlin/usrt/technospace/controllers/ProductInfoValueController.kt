@@ -16,28 +16,27 @@ class ProductInfoValueController {
     private lateinit var productInfoValueRepository: ProductInfoValueRepository
 
     @PostMapping("/product-info-values")
-    fun addProductType(@Valid @RequestBody productInfoValue: ProductInfoValue): ProductInfoValue {
+    fun add(@Valid @RequestBody productInfoValue: ProductInfoValue): ProductInfoValue {
         return productInfoValueRepository.save(productInfoValue)
     }
 
     @GetMapping("/product-info-values/{id}")
-    fun getProductType(@PathVariable id: Long): ProductInfoValue {
+    fun get(@PathVariable id: Long): ProductInfoValue {
         return productInfoValueRepository.getOne(id)
     }
 
     @GetMapping("/product-info-values")
-    fun getProductTypes(@PageableDefault(sort = ["name"], direction = Sort.Direction.DESC)
-                        pageable: Pageable): Page<ProductInfoValue> {
-        return productInfoValueRepository.findAll(pageable)
+    fun getByProductId(@RequestParam productId: Long): List<ProductInfoValue> {
+        return productInfoValueRepository.findAllByProductId(productId)
     }
 
     @PutMapping("/product-info-values")
-    fun updateProductType(@Valid @RequestBody productInfoValue: ProductInfoValue): ProductInfoValue {
+    fun update(@Valid @RequestBody productInfoValue: ProductInfoValue): ProductInfoValue {
         return productInfoValueRepository.save(productInfoValue)
     }
 
     @DeleteMapping("/product-info-values/{id}")
-    fun deleteProductType(@PathVariable id: Long) {
+    fun delete(@PathVariable id: Long) {
         val productType = productInfoValueRepository.getOne(id)
         productInfoValueRepository.delete(productType)
     }
