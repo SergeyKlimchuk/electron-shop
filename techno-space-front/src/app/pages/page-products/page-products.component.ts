@@ -6,6 +6,7 @@ import { Product } from 'src/models/products/product';
 import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
 import { ProductType } from 'src/models/products/product-type';
 import { tap } from 'rxjs/operators';
+import { ProductInfoTitle } from 'src/models/products/product-info-title';
 
 @Component({
   selector: 'app-page-products',
@@ -17,6 +18,7 @@ export class PageProductsComponent implements OnInit {
   public products = new Subject<Product[]>();
   public pageButtons = new Subject<number[]>();
   public productTypeName = '';
+  public filtrableProperies: ProductInfoTitle[];
 
   totalPages = 1;
   totalProducts = 0;
@@ -46,6 +48,7 @@ export class PageProductsComponent implements OnInit {
     this.applyProductType(idAsNumber).subscribe(
       (productType) => {
         this.productTypeName = productType.name;
+        this.applyAllowedFilters();
         this.updateProductsList();
       },
       (error) => {
@@ -64,6 +67,11 @@ export class PageProductsComponent implements OnInit {
         this.productType = productType;
       })
     );
+  }
+
+  applyAllowedFilters() {
+    this.filtrableProperies = this.productType.titles
+      .filter(title => title.type === 'Dictionary');
   }
 
   updateProductsList() {

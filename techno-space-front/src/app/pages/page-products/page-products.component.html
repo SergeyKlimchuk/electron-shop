@@ -12,10 +12,25 @@
       <div class="param">
         <label class="param__name">Цена</label>
         <div class="price-inputs">
-          от <input type="text" name="minPrice" />
-          до <input type="text" name="maxPrice" />
+          <mat-form-field class="price">
+            <input matInput placeholder="от" value="1">
+          </mat-form-field>
+          <mat-form-field class="price">
+            <input matInput placeholder="до" value="10000">
+          </mat-form-field>
         </div>
       </div>
+      <section *ngIf="filtrableProperies">
+        <div class="param" *ngFor="let property of filtrableProperies">
+          {{ property.name }}
+          <div class="values">
+            <mat-checkbox class="value" *ngFor="let value of property.dictionary.values" color="primary" >
+              {{ value.name }}
+            </mat-checkbox>
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <ul class="list">

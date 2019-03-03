@@ -14,9 +14,10 @@
   display flex
 
 .filter
-  width 300px
   display flex
+  max-width 300px
   flex-direction column
+  flex-grow 1
   padding-right 16px
   .text
     text-align center
@@ -26,11 +27,15 @@
     border-bottom 1px solid #ddd
     .param__name
       font-weight bold
+    .value
+      padding-left 10px
 
 
 .price-inputs
-  input
-    width 32px
+  display flex
+  justify-content space-between
+  .price
+    width 50px
 
 
 .page-panel
