@@ -34,7 +34,7 @@
     </div>
 
     <ul class="list">
-      <li class="item" *ngFor="let product of (products | async)">
+      <li class="item" *ngFor="let product of (products | async)" [routerLink]="['/product', product.id]">
         <img
           class="image square"
           src="http://c1.neweggimages.com/NeweggImage/ProductImageCompressAll300/19-117-826-Z01.jpg"
@@ -53,6 +53,17 @@
 
   <div class="page-panel">
     <div class="wrapper">
+        <mat-form-field class="" onchange="changeItemsPerPage()">
+          <mat-select #itemsPerPage
+          placeholder="Кол-во предметов"
+          color="primary"
+          [value]="20"
+          (selectionChange)="changeItemsPageSize($event.value)">
+            <mat-option *ngFor="let pagesCount of pagesCountOption" [value]="pagesCount">
+              {{ pagesCount }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       <button
         class="btn btn_prior"
         [disabled]="!priorPageIsAlloved"

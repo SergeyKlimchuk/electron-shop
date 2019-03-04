@@ -28,6 +28,8 @@ export class PageProductsComponent implements OnInit {
   priorPageIsAlloved = false;
   nextPageIsAlloved = false;
 
+  pagesCountOption = [ 10, 20, 30, 40 ];
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private productService: ProductService,
@@ -105,6 +107,11 @@ export class PageProductsComponent implements OnInit {
     this.priorPageIsAlloved = currentPageIsNotFirst;
     const currentPageIsNotLast = this.currentPage !== this.totalPages - 1;
     this.nextPageIsAlloved = currentPageIsNotLast;
+  }
+
+  changeItemsPageSize(newSize: number) {
+    this.size = newSize;
+    this.updateProductsList();
   }
 
   selectPage(page: number) {
