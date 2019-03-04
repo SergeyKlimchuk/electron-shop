@@ -9,7 +9,8 @@ import {MatNativeDateModule,
         MatFormFieldModule,
         MatInputModule,
         MatRadioModule,
-        MatListModule} from '@angular/material';
+        MatListModule,
+        MatSelectModule} from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -26,8 +27,9 @@ imports: [
   MatFormFieldModule,
   MatInputModule,
   MatListModule,
-  MatRadioModule,],
-
+  MatRadioModule,
+  MatSelectModule
+],
 exports: [MatNativeDateModule,
   FormsModule,
   MatDatepickerModule,
@@ -39,6 +41,8 @@ exports: [MatNativeDateModule,
   MatFormFieldModule,
   MatInputModule,
   MatListModule,
-  MatRadioModule],
+  MatRadioModule,
+  MatSelectModule
+],
 })
 export class MaterialModule { }
