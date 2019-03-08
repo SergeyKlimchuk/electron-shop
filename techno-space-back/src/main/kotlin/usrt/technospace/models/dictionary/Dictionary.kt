@@ -13,5 +13,5 @@ class Dictionary {
     var name: String? = null
 
     @OneToMany(mappedBy = "dictionary", cascade = [CascadeType.ALL])
-    val values: Set<DictionaryValue>? = null
+    val values: List<DictionaryValue>? = null
 }
