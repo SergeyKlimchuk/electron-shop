@@ -4,7 +4,7 @@ import javax.persistence.*
 import javax.validation.constraints.NotBlank
 
 @Entity
-@Table(name = "products_info_text")
+@Table(name = "products_info_value")
 class ProductInfoValue {
     @Id
     @GeneratedValue
