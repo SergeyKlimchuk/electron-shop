@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { Action } from './../../../models/actions/actions';
 import { ActionService } from './../../services/action/action.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,8 +13,9 @@ import { SliderPage } from 'src/app/core/slider/slider-page';
 })
 export class PageProductGroupComponent implements OnInit {
 
-  productsTypes = new Array<ProductType>();
+  public productsTypes = new Subject<ProductType[]>();
   sliderPages = new Array<SliderPage>();
+  productTypesNotFound = true;
 
   constructor(private productService: ProductTypeService,
               private actionService: ActionService) {
@@ -23,8 +25,11 @@ export class PageProductGroupComponent implements OnInit {
 
   loadProductTypes() {
     this.productService.getProductTypes().subscribe(
-      (response) => {
-        this.productsTypes = response;
+      (productsTypes) => {
+        console.log('Загружены типы продуктов!', productsTypes);
+        this.productsTypes.next(productsTypes.content);
+        console.log('After next.');
+        this.productTypesNotFound =  productsTypes.content.length === 0;
       },
       (error) => {
         console.error('Не удалось получить типы продуктов!', error);
@@ -35,6 +40,7 @@ export class PageProductGroupComponent implements OnInit {
   loadActions() {
     this.actionService.getActiveActions().subscribe(
       (response) => {
+        // TODO: ERROR TypeError: "response.forEach is not a function"
         response.forEach(action => {
           console.log('Получил список акций', response.length);
           this.sliderPages.push({
