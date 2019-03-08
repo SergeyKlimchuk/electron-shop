@@ -48,7 +48,7 @@ export class UserService implements OnInit {
     if (this.userAuthenticated) {
       return;
     }
-    return this.http.post('/api/registrate', user);
+    return this.http.post('/api/registration', user);
   }
 
   signIn(email: string, password: string): Observable<any> {
