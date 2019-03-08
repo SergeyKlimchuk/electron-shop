@@ -10,6 +10,7 @@ import {MatNativeDateModule,
         MatInputModule,
         MatRadioModule,
         MatListModule,
+        MatTableModule,
         MatSelectModule} from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +29,7 @@ imports: [
   MatInputModule,
   MatListModule,
   MatRadioModule,
+  MatTableModule,
   MatSelectModule
 ],
 exports: [MatNativeDateModule,
@@ -42,6 +44,7 @@ exports: [MatNativeDateModule,
   MatInputModule,
   MatListModule,
   MatRadioModule,
+  MatTableModule,
   MatSelectModule
 ],
 })
