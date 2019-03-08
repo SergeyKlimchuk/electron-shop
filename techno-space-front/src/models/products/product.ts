@@ -7,4 +7,5 @@ export class Product {
   productType: ProductType;
   count: number;
   imageUrl: string;
+  description: string;
 }
