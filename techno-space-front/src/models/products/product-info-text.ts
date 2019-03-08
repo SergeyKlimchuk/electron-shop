@@ -1,6 +1,6 @@
 import { Product } from './product';
 import { ProductInfoTitle } from './product-info-title';
-export class ProductInfoText {
+export class ProductInfoValue {
   id: number;
   product: Product;
   title: ProductInfoTitle;
