@@ -31,9 +31,14 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 ?.antMatchers(
                         "/",
                         "/registration",
+                        "/login",
                         "/search",
                         "/products",
                         "/products/**",
+                        "/product-info-titles",
+                        "/product-info-titles/**",
+                        "/product-info-values",
+                        "/product-info-values/**",
                         "/product-types",
                         "/product-types/**")?.permitAll()
                 ?.antMatchers("/user/current")?.authenticated()

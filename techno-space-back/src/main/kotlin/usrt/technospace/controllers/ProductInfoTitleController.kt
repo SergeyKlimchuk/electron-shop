@@ -22,14 +22,9 @@ class ProductInfoTitleController {
         return productInfoTitleRepository.getOne(id)
     }
 
-    @GetMapping("/product-info-titles?productId={productId}")
-    fun getProductTypesByProductId(@PathVariable @NotNull productId: Long): List<ProductInfoTitle> {
-        return productInfoTitleRepository.findAllByProductTypeId(productId)
-    }
-
     @GetMapping("/product-info-titles")
-    fun get(): List<ProductInfoTitle> {
-        return productInfoTitleRepository.findAll()
+    fun getProductInfoTitlesByProductTypeId(@RequestParam @NotNull productTypeId: Long): List<ProductInfoTitle> {
+        return productInfoTitleRepository.findAllByProductTypeId(productTypeId)
     }
 
     @PutMapping("/product-info-titles")

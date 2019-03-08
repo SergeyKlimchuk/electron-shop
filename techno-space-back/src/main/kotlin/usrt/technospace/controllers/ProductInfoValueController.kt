@@ -22,8 +22,8 @@ class ProductInfoValueController {
     }
 
     @GetMapping("/product-info-values")
-    fun getByProductId(@RequestParam productId: Long): List<ProductInfoValue> {
-        return productInfoValueRepository.findAllByProductId(productId)
+    fun getByTitleId(@RequestParam titleId: Long): List<ProductInfoValue> {
+        return productInfoValueRepository.findAllByTitleId(titleId)
     }
 
     @PutMapping("/product-info-values")
