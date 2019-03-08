@@ -35,6 +35,9 @@ class Product {
     @Column(name = "count", nullable = false)
     var count: Int? = null
 
+    @Column(name = "description")
+    var description: String? = null
+
     @Column(name = "created_date", updatable = false)
     @CreatedDate
     private var createdAt: Date? = null
