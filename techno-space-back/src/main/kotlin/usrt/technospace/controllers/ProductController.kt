@@ -6,7 +6,9 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
+import usrt.technospace.dto.ProductProperty
 import usrt.technospace.models.product.Product
+import usrt.technospace.models.services.ProductService
 import usrt.technospace.repository.ProductRepository
 import javax.validation.Valid
 
@@ -15,6 +17,11 @@ class ProductController {
 
     @Autowired
     private lateinit var productRepository: ProductRepository
+
+    @Autowired
+    private lateinit var productService: ProductService
+
+
 
     @PostMapping("/products")
     fun addProduct(@Valid @RequestBody product: Product): Product {
@@ -54,5 +61,10 @@ class ProductController {
     fun deleteProduct(@PathVariable id: Long) {
         val product = productRepository.getOne(id)
         productRepository.delete(product)
+    }
+
+    @GetMapping("/products/{productId}/properties")
+    fun getProductProperties(@PathVariable productId: Long): List<ProductProperty> {
+        return productService.getProductInfo(productId)
     }
 }

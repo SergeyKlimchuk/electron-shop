@@ -5,5 +5,6 @@ import usrt.technospace.models.product.ProductInfoValue
 
 interface ProductInfoValueRepository : JpaRepository<ProductInfoValue, Long> {
 
-    fun findAllByProductId(productTypeId: Long): List<ProductInfoValue>
+    fun findAllByTitleId(titleId: Long): List<ProductInfoValue>
+    fun findAllByProductId(productId: Long): List<ProductInfoValue>
 }
