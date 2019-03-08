@@ -1,3 +1,4 @@
+import { ProductProperty } from './../../../models/products/product-property';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PageableResponse } from 'src/models/system/pageable-response';
@@ -34,6 +35,10 @@ export class ProductService {
 
   updateProduct(product: Product) {
     return this.http.put<Product>('/api/products', product);
+  }
+
+  getProductProperties(productId: number) {
+    return this.http.get<ProductProperty[]>(`api/products/${productId}/properties`);
   }
 
   // TODO: Разобраться с этим несуразным без-пагинационным методом
