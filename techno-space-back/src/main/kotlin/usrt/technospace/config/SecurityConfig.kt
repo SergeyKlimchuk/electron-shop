@@ -40,6 +40,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/product-info-values",
                         "/product-info-values/**",
                         "/product-types",
+                        "/files",
+                        "/files/**",
                         "/product-types/**")?.permitAll()
                 ?.antMatchers("/user/current")?.authenticated()
                 ?.anyRequest()?.authenticated()
