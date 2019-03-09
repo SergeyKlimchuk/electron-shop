@@ -1,3 +1,5 @@
+import { Roles } from './roles';
+
 export class User {
   public id: number;
   public username: string;
@@ -7,4 +9,5 @@ export class User {
   public lastName: string;
   public secondName: string;
   public phoneNumber: string;
+  public roles: Roles[];
 }
