@@ -1,0 +1,24 @@
+<h2>{{ action }}</h2>
+<div class="image-block">
+  <div class="wrapper">
+    <img src="{{ imageUrl }}" class="image" alt="Без изображения" #image>
+    <div class="image-hoverable mat-ripple" (click)="selectNewImage()" matRipple >
+      <mat-icon>add_photo_alternate</mat-icon>
+    </div>
+  </div>
+</div>
+<button  mat-raised-button *ngIf="newImage" (click)="restoreImage()" >Восстановить прошлую картинку</button>
+
+<div mat-dialog-content>
+  <mat-form-field class="property">
+    <input matInput placeholder="Название" [(ngModel)]="productType.name">
+  </mat-form-field>
+</div>
+
+<input #selectImage type="file" (change)="onImageSelect($event)" hidden />
+
+<div mat-dialog-actions class="actions">
+    <button mat-raised-button (click)="close()">Отмена</button>
+    <button mat-raised-button (click)="save()" color="primary"
+    [disabled]="!((inputProductType && inputProductType.name != productType.name) || newImage)">Сохранить</button>
+</div>

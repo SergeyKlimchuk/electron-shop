@@ -11,7 +11,10 @@ import {MatNativeDateModule,
         MatRadioModule,
         MatListModule,
         MatTableModule,
-        MatSelectModule} from '@angular/material';
+        MatTabsModule,
+        MatPaginatorModule,
+        MatSelectModule,
+        MatRippleModule} from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -30,6 +33,9 @@ imports: [
   MatListModule,
   MatRadioModule,
   MatTableModule,
+  MatTabsModule,
+  MatPaginatorModule,
+  MatRippleModule,
   MatSelectModule
 ],
 exports: [MatNativeDateModule,
@@ -45,6 +51,9 @@ exports: [MatNativeDateModule,
   MatListModule,
   MatRadioModule,
   MatTableModule,
+  MatTabsModule,
+  MatPaginatorModule,
+  MatRippleModule,
   MatSelectModule
 ],
 })

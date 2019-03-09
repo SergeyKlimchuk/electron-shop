@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { DropdownItem } from './header-dropdown/dropdown-item';
 import { UserService } from './../services/user/user.service';
 import {
@@ -6,6 +7,7 @@ import {
   AfterViewInit,
   ElementRef
 } from '@angular/core';
+import { Roles } from 'src/models/users/roles';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +30,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   constructor(
     private userService: UserService,
+    private router: Router,
     private elem: ElementRef) {
   }
 
@@ -35,6 +38,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.userService.getCurrentUser().subscribe(
       (user) => {
         this.userFullName = `${user.name} ${user.lastName}`;
+        if (user.roles.indexOf(Roles.admin) > -1) {
+          const moveToAdminpage = new DropdownItem('Панель управления', e => {
+            this.router.navigate(['/admin-panel']);
+          });
+          this.userDropdown.push(moveToAdminpage);
+        }
+        console.log(user.roles);
       },
       (error) => {
         console.log('getCurrentUser in header', error);

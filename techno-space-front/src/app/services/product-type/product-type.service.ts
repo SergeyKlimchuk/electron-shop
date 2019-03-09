@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProductType } from 'src/models/products/product-type';
 import { PageableResponse } from 'src/models/system/pageable-response';
@@ -19,8 +19,15 @@ export class ProductTypeService {
     return this.http.get<ProductType>(`/api/product-types/${id}`);
   }
 
-  getProductTypes(): Observable<PageableResponse<ProductType>> {
-    return this.http.get<PageableResponse<ProductType>>('/api/product-types');
+  getProductTypes(page: number = null, size: number = null): Observable<PageableResponse<ProductType>> {
+    let params = new HttpParams();
+    if (page) {
+      params = params.set('page', page.toString());
+    }
+    if (size) {
+      params = params.set('size', size.toString());
+    }
+    return this.http.get<PageableResponse<ProductType>>('/api/product-types', { params });
   }
 
   updateProductType(productType: ProductType) {

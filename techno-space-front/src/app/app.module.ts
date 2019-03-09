@@ -25,6 +25,13 @@ import { MaterialModule } from './material/material.module';
 import { PageProfileComponent } from './pages/page-profile/page-profile.component';
 import { PageProductsComponent } from './pages/page-products/page-products.component';
 import { PageProductGroupComponent } from './pages/page-product-group/page-product-group.component';
+import { PageAdminComponent } from './pages/page-admin/page-admin.component';
+import { ProductTypeSubpageComponent } from './pages/page-admin/subpages/product-type-subpage/product-type-subpage.component';
+import { ProductSubpageComponent } from './pages/page-admin/subpages/product-subpage/product-subpage.component';
+import { DictionariesSubpageComponent } from './pages/page-admin/subpages/dictionaries-subpage/dictionaries-subpage.component';
+import { EditProductTypeDialog } from './pages/page-admin/subpages/product-type-subpage/edit-product-type/edit-product-type-dialog';
+import { MatFileUploadModule } from 'angular-material-fileupload';
+
 
 const appRoutes: Routes = [
   { path: 'main',           component: PageMainComponent        },
@@ -37,6 +44,7 @@ const appRoutes: Routes = [
   { path: 'addresses',      component: PageAddressesComponent   },
   { path: 'actions',        component: PageActionsComponent     },
   { path: 'actions/:id',    component: PageActionsComponent     },
+  { path: 'admin-panel',    component: PageAdminComponent       },
   {
     path: '',
     redirectTo: '/main',
@@ -63,7 +71,12 @@ const appRoutes: Routes = [
     PageRegistrationComponent,
     PageProfileComponent,
     PageProductsComponent,
-    PageProductGroupComponent
+    PageProductGroupComponent,
+    PageAdminComponent,
+    ProductTypeSubpageComponent,
+    ProductSubpageComponent,
+    DictionariesSubpageComponent,
+    EditProductTypeDialog
   ],
   imports: [
     BrowserModule,
@@ -74,11 +87,15 @@ const appRoutes: Routes = [
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
+    MatFileUploadModule,
     RouterModule.forRoot(
       appRoutes
     ),
     MaterialModule
     // other imports here
+  ],
+  entryComponents: [
+    EditProductTypeDialog
   ],
   providers: [],
   bootstrap: [AppComponent]
