@@ -1,3 +1,33 @@
-<p>
-  dictionaries-subpage works!
-</p>
+<div class="mat-elevation-z8 wrapper">
+  <div>
+    <table mat-table [dataSource]="dataSource" class="table">
+      <!-- Position Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Список справочников</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="options">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">Hello</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        class="row"
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="rowClick(row)"
+      ></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[2, 10, 20]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+
+  <div class="info">
+    <app-dictionary-values-list [dictionaryIdObservable]="selectedDictionaryIdSubject"></app-dictionary-values-list>
+  </div>
+</div>

@@ -31,6 +31,7 @@ import { ProductSubpageComponent } from './pages/page-admin/subpages/product-sub
 import { DictionariesSubpageComponent } from './pages/page-admin/subpages/dictionaries-subpage/dictionaries-subpage.component';
 import { EditProductTypeDialog } from './pages/page-admin/subpages/product-type-subpage/edit-product-type/edit-product-type-dialog';
 import { MatFileUploadModule } from 'angular-material-fileupload';
+import { DictionaryValuesListComponent } from './pages/page-admin/subpages/dictionaries-subpage/dictionary-values-list/dictionary-values-list.component';
 
 
 const appRoutes: Routes = [
@@ -76,7 +77,8 @@ const appRoutes: Routes = [
     ProductTypeSubpageComponent,
     ProductSubpageComponent,
     DictionariesSubpageComponent,
-    EditProductTypeDialog
+    EditProductTypeDialog,
+    DictionaryValuesListComponent
   ],
   imports: [
     BrowserModule,

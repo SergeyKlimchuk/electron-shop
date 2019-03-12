@@ -22,12 +22,12 @@ export class ProductTypeSubpageComponent implements OnInit {
 
   ngOnInit() {
     this.paginator.pageSize = 2;
-    this.upadtePage();
+    this.updatePage();
     this.setPageUpdateEvent();
   }
 
   // TODO: Проверить на пустой БД
-  upadtePage() {
+  updatePage() {
     console.log('Обновлена страница');
     this.productTypeService.getProductTypes(this.paginator.pageIndex, this.paginator.pageSize).subscribe(
       (productTypesPageable) => {
@@ -46,7 +46,7 @@ export class ProductTypeSubpageComponent implements OnInit {
     this.paginator.page.subscribe(
       (success) => {
         console.log('Update values: ', success);
-        this.upadtePage();
+        this.updatePage();
       }
     );
   }
@@ -58,7 +58,7 @@ export class ProductTypeSubpageComponent implements OnInit {
       (result) => {
         if (result) {
           alert('Успешно сохранил!');
-          this.upadtePage();
+          this.updatePage();
         }
       },
       (error) => {

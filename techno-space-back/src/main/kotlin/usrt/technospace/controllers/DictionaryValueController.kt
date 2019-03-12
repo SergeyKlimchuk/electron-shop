@@ -1,11 +1,8 @@
 package usrt.technospace.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
-import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
+import usrt.technospace.models.dictionary.Dictionary
 import usrt.technospace.models.dictionary.DictionaryValue
 import usrt.technospace.repository.DictionaryValueRepository
 
@@ -15,29 +12,34 @@ class DictionaryValueController {
     @Autowired
     lateinit var dictionaryValueRepository: DictionaryValueRepository
 
-    @PostMapping("/dictionary-values")
-    fun add(@RequestBody dictionary: DictionaryValue): DictionaryValue {
-        return dictionaryValueRepository.save(dictionary)
+    @PostMapping("/dictionaries/{dictionaryId}/values")
+    fun add(@PathVariable dictionaryId: Long, @RequestBody value: DictionaryValue): DictionaryValue {
+        return update(dictionaryId, value)
     }
 
-    @GetMapping("/dictionary-values")
-    fun getAll(@PageableDefault(sort = ["name"], direction = Sort.Direction.DESC)
-               pageable: Pageable): Page<DictionaryValue> {
-        return dictionaryValueRepository.findAll(pageable)
+    @GetMapping("/dictionaries/{dictionaryId}/values")
+    fun getAll(@PathVariable dictionaryId: Long): List<DictionaryValue> {
+        return dictionaryValueRepository.findAll()
     }
 
-    @GetMapping("/dictionary-values/{id}")
-    fun getOne(@PathVariable id: Long): DictionaryValue {
+    @GetMapping("/dictionaries/{dictionaryId}/values/{id}")
+    fun getOne(@PathVariable dictionaryId: Long, @PathVariable id: Long): DictionaryValue {
+        // TODO: Доделать сложный ключ состоящий из айдишника справочника и айдишника значения
         return dictionaryValueRepository.getOne(id)
     }
 
-    @PutMapping("/dictionary-values")
-    fun update(@RequestBody dictionary: DictionaryValue): DictionaryValue {
-        return dictionaryValueRepository.save(dictionary)
+    @PutMapping("/dictionaries/{dictionaryId}/values")
+    fun update(@PathVariable dictionaryId: Long, @RequestBody value: DictionaryValue): DictionaryValue {
+        if (value.dictionary?.id == null) {
+            val dictionaryReference = Dictionary()
+            dictionaryReference.id = dictionaryId
+            value.dictionary = dictionaryReference
+        }
+        return dictionaryValueRepository.save(value)
     }
 
-    @DeleteMapping("/dictionary-values/{id}")
-    fun update(@PathVariable id: Long) {
+    @DeleteMapping("/dictionaries/{dictionaryId}/values/{id}")
+    fun update(@PathVariable dictionaryId: Long, @PathVariable id: Long) {
         return dictionaryValueRepository.deleteById(id)
     }
 

@@ -1,5 +1,5 @@
 import { ProductType } from './product-type';
-import { Dictionary } from './dictionary';
+import { Dictionary } from '../dictionaries/dictionary';
 export class ProductInfoTitle {
   id: number;
   productType: ProductType;

@@ -14,6 +14,8 @@ import {MatNativeDateModule,
         MatTabsModule,
         MatPaginatorModule,
         MatSelectModule,
+        MatMenuModule,
+        MatSnackBarModule,
         MatRippleModule} from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,6 +38,8 @@ imports: [
   MatTabsModule,
   MatPaginatorModule,
   MatRippleModule,
+  MatMenuModule,
+  MatSnackBarModule,
   MatSelectModule
 ],
 exports: [MatNativeDateModule,
@@ -54,6 +58,8 @@ exports: [MatNativeDateModule,
   MatTabsModule,
   MatPaginatorModule,
   MatRippleModule,
+  MatMenuModule,
+  MatSnackBarModule,
   MatSelectModule
 ],
 })

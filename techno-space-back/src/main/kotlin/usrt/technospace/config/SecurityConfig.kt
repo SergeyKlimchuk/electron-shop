@@ -35,6 +35,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/search",
                         "/products",
                         "/products/**",
+                        "/dictionaries",
+                        "/dictionaries/**",
                         "/product-info-titles",
                         "/product-info-titles/**",
                         "/product-info-values",
