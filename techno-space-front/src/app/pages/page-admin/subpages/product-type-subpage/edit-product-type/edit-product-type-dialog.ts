@@ -25,22 +25,19 @@ export class EditProductTypeDialog {
               @Inject(MAT_DIALOG_DATA) public data: ProductType,
               private fileService: FileService,
               private productTypeService: ProductTypeService) {
-    this.productType = this.cloneProductType(data);
+    if (data) {
+      this.action = 'Редактирвоание типа продукта';
+      this.productType = this.cloneProductType(data);
+      this.imageUrl = data.imageUrl;
+    } else {
+      this.action = 'Добавление';
+      this.productType = new ProductType();
+    }
     this.inputProductType = data;
-    this.setActionName();
-    this.imageUrl = data.imageUrl;
   }
 
   cloneProductType(productType: ProductType): ProductType {
     return Object.assign({}, productType);
-  }
-
-  setActionName() {
-    if (this.productType) {
-      this.action = 'Редактирвоание типа продукта';
-    } else {
-      this.action = 'Добавление';
-    }
   }
 
   selectNewImage() {

@@ -13,7 +13,7 @@ export class ProductTypeSubpageComponent implements OnInit {
 
   dataSource = new MatTableDataSource<ProductType>();
   selectedProductType: ProductType;
-  displayedColumns = ['name'];
+  displayedColumns = ['name', 'options'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -21,7 +21,7 @@ export class ProductTypeSubpageComponent implements OnInit {
               private matDialog: MatDialog) { }
 
   ngOnInit() {
-    this.paginator.pageSize = 2;
+    this.paginator.pageSize = 10;
     this.updatePage();
     this.setPageUpdateEvent();
   }
@@ -65,7 +65,34 @@ export class ProductTypeSubpageComponent implements OnInit {
         alert('Ошибочка');
         console.error(error);
       }
+    );
+  }
+
+  deleteValue(row: ProductType) {
+    this.productTypeService.deleteProductType(row.id).subscribe(
+      () => {
+        this.updatePage();
+      },
+      (error) => {
+        alert('Ошибочка');
+        console.error(error);
+      }
     )
+  }
+
+  showAddValueForm() {
+    this.matDialog.open(EditProductTypeDialog).afterClosed().subscribe(
+      (result) => {
+        if (result) {
+          alert('Успешно добавлено!');
+          this.updatePage();
+        }
+      },
+      (error) => {
+        alert('Ошибочка');
+        console.error(error);
+      }
+    );
   }
 
 }

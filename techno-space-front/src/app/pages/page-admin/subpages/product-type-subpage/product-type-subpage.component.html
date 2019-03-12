@@ -1,9 +1,22 @@
 <div class="mat-elevation-z8 table">
   <table mat-table [dataSource]="dataSource">
-    <!-- Position Column -->
+    <!-- Столбец с названием -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Технические характеристики</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+
+      <td mat-cell *matCellDef="let element" (click)="rowClick(element)">
+        {{ element.name }}
+      </td>
+    </ng-container>
+
+    <!-- Кнопка удаления -->
+    <ng-container matColumnDef="options" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element" class="option-collumn">
+        <button mat-icon-button (click)="deleteValue(element)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -11,12 +24,16 @@
       mat-row
       class="row"
       *matRowDef="let row; columns: displayedColumns"
-      (click)="rowClick(row)"
     ></tr>
   </table>
 
   <mat-paginator
-    [pageSizeOptions]="[2, 10, 20]"
+    [pageSizeOptions]="[10, 20, 40]"
     showFirstLastButtons
   ></mat-paginator>
+</div>
+<div *ngIf="!addPanelVisible">
+  <button mat-fab color="primary" class="add-btn" (click)="showAddValueForm()" >
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

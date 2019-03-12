@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { Subject } from 'rxjs';
 import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
 
@@ -15,13 +15,18 @@ export class DictionariesSubpageComponent implements OnInit {
   dataSource = new MatTableDataSource<Dictionary>();
   selectedDictionaryIdSubject = new Subject<number>();
   displayedColumns = ['name', 'options'];
+  displayedFooterRows = [];
+
+  bufferedDictionary = new Dictionary();
+  addPanelVisible = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dictionaryService: DictionaryService) { }
+  constructor(private dictionaryService: DictionaryService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.paginator.pageSize = 2;
+    this.paginator.pageSize = 10;
     this.updatePage();
     this.setPageUpdateEvent();
   }
@@ -54,4 +59,50 @@ export class DictionariesSubpageComponent implements OnInit {
     this.selectedDictionaryIdSubject.next(dictionary.id);
   }
 
+  editValue(value: Dictionary) {
+    this.bufferedDictionary = value;
+    this.showAddRow();
+  }
+
+  deleteValue(value: Dictionary) {
+    this.dictionaryService.deleteDictionary(value.id).subscribe(
+      () => {
+        this.dataSource.data = this.dataSource.data.filter( x => x.id !== value.id);
+        this.snackBar.open('Успешно удалено!');
+      },
+      (error) => {
+        alert('Ошибка при удалении справочника!');
+        console.error('Ошибка при удалении справочника!', error);
+      }
+    );
+  }
+
+  addNewValue() {
+    this.dictionaryService.addDictionary(this.bufferedDictionary).subscribe(
+      (response) => {
+        this.hideAddRow();
+        this.updatePage();
+        this.bufferedDictionary = new Dictionary();
+        this.snackBar.open('Успешно добавлено!');
+      },
+      (error) => {
+        alert('Ошибка при добавления значения справочника!');
+        console.error(error);
+      }
+    );
+  }
+
+  showAddValueForm() {
+    this.showAddRow();
+  }
+
+  showAddRow() {
+    this.displayedFooterRows = ['name', 'options'];
+    this.addPanelVisible = true;
+  }
+
+  hideAddRow() {
+    this.displayedFooterRows = [];
+    this.addPanelVisible = false;
+  }
 }

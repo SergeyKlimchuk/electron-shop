@@ -41,19 +41,6 @@ export class DictionaryValuesListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  deleteValue(dictionaryValue: DictionaryValue) {
-    this.dictionaryService.deleteDictionaryValue(dictionaryValue.id).subscribe(
-      () => {
-        this.infoDataSource.data = this.infoDataSource.data.filter( x => x.id !== dictionaryValue.id);
-        this.snackBar.open('Успешно удалено!');
-      },
-      (error) => {
-        alert('Ошибка при удалении значения справочника!');
-        console.error('Ошибка при удалении значения справочника!', error);
-      }
-    );
-  }
-
   loadValues(dictionaryId: number) {
     this.dictionaryService.getDictionaryValues(dictionaryId).subscribe(
       (values) => {
@@ -72,11 +59,25 @@ export class DictionaryValuesListComponent implements OnInit, OnDestroy {
     this.showAddRow();
   }
 
+  deleteValue(dictionaryValue: DictionaryValue) {
+    this.dictionaryService.deleteDictionaryValue(dictionaryValue.id).subscribe(
+      () => {
+        this.infoDataSource.data = this.infoDataSource.data.filter( x => x.id !== dictionaryValue.id);
+        this.snackBar.open('Успешно удалено!');
+      },
+      (error) => {
+        alert('Ошибка при удалении значения справочника!');
+        console.error('Ошибка при удалении значения справочника!', error);
+      }
+    );
+  }
+
   addNewValue() {
     this.dictionaryService.addDictionaryValue(this.dictionaryId, this.newValue).subscribe(
       (response) => {
         this.loadValues(this.dictionaryId);
         this.hideAddRow();
+        this.newValue = new DictionaryValue();
         this.snackBar.open('Успешно добавлено!');
       },
       (error) => {

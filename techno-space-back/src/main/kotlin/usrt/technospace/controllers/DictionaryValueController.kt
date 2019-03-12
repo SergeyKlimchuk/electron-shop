@@ -19,7 +19,7 @@ class DictionaryValueController {
 
     @GetMapping("/dictionaries/{dictionaryId}/values")
     fun getAll(@PathVariable dictionaryId: Long): List<DictionaryValue> {
-        return dictionaryValueRepository.findAll()
+        return dictionaryValueRepository.findAllByDictionaryId(dictionaryId)
     }
 
     @GetMapping("/dictionaries/{dictionaryId}/values/{id}")

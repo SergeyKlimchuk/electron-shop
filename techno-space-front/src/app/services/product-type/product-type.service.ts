@@ -33,4 +33,8 @@ export class ProductTypeService {
   updateProductType(productType: ProductType) {
     return this.http.put<ProductType>('/api/product-types', productType);
   }
+
+  deleteProductType(productTypeId: number) {
+    return this.http.delete<void>(`/api/product-types/${productTypeId}`);
+  }
 }

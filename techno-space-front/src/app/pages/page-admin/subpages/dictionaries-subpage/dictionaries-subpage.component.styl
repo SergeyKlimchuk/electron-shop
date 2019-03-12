@@ -9,12 +9,28 @@
 
 .table
   width 100%
-  .row
-    td:first-child
-      width 100%
   .row:hover
     background-color #eee
     cursor pointer
 
+.option-collumn
+  width 1%
+  button
+    float right
+
 .info
   border-left 1px solid rgba(0,0,0,.12)
+
+.actions
+  display flex
+  align-items center
+  mat-paginator
+    flex-grow 2
+  button
+    height 36px
+    margin 0 10px
+
+.action-list-flat
+  display flex
+  button:not(:last-child)
+    margin-right 10px
