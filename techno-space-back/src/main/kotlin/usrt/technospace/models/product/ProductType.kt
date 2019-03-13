@@ -19,17 +19,9 @@ class ProductType {
 
     // TODO: Выкосить зависимость
     @OneToMany(
+            cascade = [CascadeType.ALL],
             mappedBy = "productType",
-            cascade = [CascadeType.ALL]
+            orphanRemoval = true
     )
     var titles: List<ProductInfoTitle>? = null
-
-
-
-//    @ManyToMany
-//    @JoinTable(
-//            name = "product_dictionaries",
-//            joinColumns = @JoinColumn(name = "student_id"),
-//            inverseJoinColumns = @JoinColumn(name = "course_id"))
-//    var dictionaries: List<Dictionary>? = null
 }

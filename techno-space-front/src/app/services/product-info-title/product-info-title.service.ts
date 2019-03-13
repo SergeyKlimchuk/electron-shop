@@ -22,7 +22,7 @@ export class ProductInfoTitleService {
     if (productTypeId) {
       params = params.set('productTypeId', productTypeId.toString());
     }
-    return this.http.get< ProductInfoTitle[] >('/api/product-info-titles', { params });
+    return this.http.get<ProductInfoTitle[]>('/api/product-info-titles', { params });
   }
 
   updateProductInfoTitle(productInfoTitle: ProductInfoTitle) {

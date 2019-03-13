@@ -2,7 +2,7 @@
   <table mat-table [dataSource]="dataSource">
     <!-- Столбец с названием -->
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Технические характеристики</th>
+      <th mat-header-cell *matHeaderCellDef>Список типов товаров</th>
 
       <td mat-cell *matCellDef="let element" (click)="rowClick(element)">
         {{ element.name }}

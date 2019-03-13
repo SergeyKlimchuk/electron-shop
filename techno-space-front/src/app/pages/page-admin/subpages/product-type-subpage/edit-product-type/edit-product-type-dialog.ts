@@ -1,8 +1,13 @@
+import { Dictionary } from './../../../../../../models/dictionaries/dictionary';
+import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
 import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
 import { FileService } from './../../../../../services/file/file.service';
 import { ProductType } from 'src/models/products/product-type';
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource } from '@angular/material';
+import { ProductInfoTitle } from 'src/models/products/product-info-title';
+import { ProductInfoTitleService } from 'src/app/services/product-info-title/product-info-title.service';
+import { ProductPropertyTitleType } from 'src/models/products/product-property-title-type';
 
 @Component({
   selector: 'app-edit-product-type-dialog',
@@ -17,23 +22,65 @@ export class EditProductTypeDialog {
   imageUrl: string;
   entityChanged = false;
 
+  displayedColumns = ['name', 'type', 'remove'];
+  propertiesDataSource = new MatTableDataSource<ProductInfoTitle>();
+  dictionariesList = new Array<Dictionary>();
+  allowedTypeValues = [
+    { value: ProductPropertyTitleType.String, text: 'Строка'},
+    { value: ProductPropertyTitleType.Integer, text: 'Число'},
+    { value: ProductPropertyTitleType.Dictionary, text: 'Справочник'},
+    { value: ProductPropertyTitleType.Boolean, text: 'Да/Нет'}
+  ];
+
   newImage: File = null;
 
   @ViewChild('selectImage') selectImage: ElementRef<HTMLElement>;
+  @ViewChild('image') image: ElementRef<HTMLElement>;
 
   constructor(public dialogRef: MatDialogRef<EditProductTypeDialog>,
               @Inject(MAT_DIALOG_DATA) public data: ProductType,
               private fileService: FileService,
-              private productTypeService: ProductTypeService) {
+              private productTypeService: ProductTypeService,
+              private productInfoTitleService: ProductInfoTitleService,
+              private dictionaryService: DictionaryService,
+              private snack: MatSnackBar) {
     if (data) {
       this.action = 'Редактирвоание типа продукта';
       this.productType = this.cloneProductType(data);
+      this.loadProperties();
       this.imageUrl = data.imageUrl;
     } else {
       this.action = 'Добавление';
       this.productType = new ProductType();
     }
+    this.loadDictionariesList();
     this.inputProductType = data;
+  }
+
+  loadProperties() {
+    this.productInfoTitleService.getProductInfoTitles(this.productType.id).subscribe(
+      (properties) => {
+        console.log('Свойства загружены ', properties);
+        this.propertiesDataSource.data = properties;
+      },
+      (error) => {
+        alert('Не удалось загрузить свйоства, смотрите консоль!');
+        console.log('ERROR', error);
+      }
+    );
+  }
+
+  loadDictionariesList() {
+    this.dictionaryService.getDictionaries(0, 50).subscribe(
+      dictionaries => {
+        console.log('Справочники', dictionaries.content);
+        this.dictionariesList = dictionaries.content;
+      },
+      error => {
+        alert('Не удалось сохранить сущность, смотрите консоль!');
+        console.log('ERROR', error);
+      }
+    );
   }
 
   cloneProductType(productType: ProductType): ProductType {
@@ -58,8 +105,15 @@ export class EditProductTypeDialog {
 
       reader.onload = () => {
         console.log('result', reader.result);
-        this.imageUrl = reader.result.toString();
-        this.newImage = event.target.files[0];
+        const imageWidth = this.image.nativeElement.offsetWidth;
+        const imageHeight = this.image.nativeElement.offsetHeight;
+        if (imageWidth > 100 && imageWidth < 200
+          && imageHeight > 100 && imageHeight < 200) {
+          this.imageUrl = reader.result.toString();
+          this.newImage = event.target.files[0];
+        } else {
+          this.snack.open('Изобржение должно быть размеров [200-300]X[200-300]!', undefined, {duration: 7500});
+        }
       };
     }
   }
@@ -70,6 +124,7 @@ export class EditProductTypeDialog {
         (imageUrl) => {
           console.log('imageUrl', imageUrl);
           this.productType.imageUrl = imageUrl;
+          this.productType.titles = this.propertiesDataSource.data;
           this.closeWithSave(this.productType);
         },
         (error) => {
@@ -92,6 +147,15 @@ export class EditProductTypeDialog {
         console.error('ERROR WHILE SAVE', error);
       }
     );
+  }
+
+  addNewProperty() {
+    const property = new ProductInfoTitle();
+    property.name = '';
+    // Костыль, т.к. форма не отлавливает на добавление через push
+    const data = this.propertiesDataSource.data;
+    data.push(property);
+    this.propertiesDataSource.data = data;
   }
 
   close() {

@@ -7,6 +7,7 @@ import { ProductTypeService } from 'src/app/services/product-type/product-type.s
 import { ProductType } from 'src/models/products/product-type';
 import { tap } from 'rxjs/operators';
 import { ProductInfoTitle } from 'src/models/products/product-info-title';
+import { ProductPropertyTitleType } from 'src/models/products/product-property-title-type';
 
 @Component({
   selector: 'app-page-products',
@@ -73,7 +74,7 @@ export class PageProductsComponent implements OnInit {
 
   applyAllowedFilters() {
     this.filtrableProperies = this.productType.titles
-      .filter(title => title.type === 'Dictionary');
+      .filter(title => title.type === ProductPropertyTitleType.Dictionary);
   }
 
   updateProductsList() {

@@ -9,16 +9,28 @@ import org.springframework.web.bind.annotation.*
 import usrt.technospace.models.product.ProductType
 import usrt.technospace.repository.ProductTypeRepository
 import javax.validation.Valid
+import org.hibernate.SessionFactory
+import usrt.technospace.repository.ProductInfoTitleRepository
+
 
 @RestController
 class ProductTypeController {
 
     @Autowired
     private lateinit var productTypeRepository: ProductTypeRepository
+    @Autowired
+    private lateinit var productInfoTitleRepository: ProductInfoTitleRepository
 
     @PostMapping("/product-types")
     fun addProductType(@Valid @RequestBody productType: ProductType): ProductType {
-        return productTypeRepository.save(productType)
+        val elements = productType.titles
+        productType.titles = null
+        val savedProductType = productTypeRepository.save(productType)
+        if (elements != null) {
+            elements.forEach { x -> x.productType = productType }
+            productInfoTitleRepository.saveAll(elements)
+        }
+        return savedProductType
     }
 
     @GetMapping("/product-types/{id}")

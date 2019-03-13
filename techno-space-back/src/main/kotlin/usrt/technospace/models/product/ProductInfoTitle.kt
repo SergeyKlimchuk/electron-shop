@@ -21,7 +21,10 @@ class ProductInfoTitle {
     @Column(name = "name", nullable = false)
     var name: String = ""
 
-    @JoinTable(name = "product_info_value_types", joinColumns = [JoinColumn(name = "product_info_value_type_id")])
+    @JoinTable(
+            name = "product_info_value_types",
+            joinColumns = [JoinColumn(name = "product_info_value_type_id")]
+    )
     @Enumerated(EnumType.STRING)
     var type: ProductInfoValueType? = ProductInfoValueType.None
 
