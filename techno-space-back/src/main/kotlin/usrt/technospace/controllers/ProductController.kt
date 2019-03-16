@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*
 import usrt.technospace.dto.ProductProperty
 import usrt.technospace.models.product.Product
 import usrt.technospace.models.services.ProductService
+import usrt.technospace.repository.ProductInfoValueRepository
 import usrt.technospace.repository.ProductRepository
 import javax.validation.Valid
 
@@ -21,11 +22,21 @@ class ProductController {
     @Autowired
     private lateinit var productService: ProductService
 
+    @Autowired
+    private lateinit var productInfoValueRepository: ProductInfoValueRepository
+
 
 
     @PostMapping("/products")
     fun addProduct(@Valid @RequestBody product: Product): Product {
-        return productRepository.save(product)
+        val values = product.values
+        product.values = null
+        productRepository.save(product)
+        if (values != null) {
+            values.forEach { x -> x.product = product }
+            productInfoValueRepository.saveAll(values)
+        }
+        return product
     }
 
     @GetMapping("/products/{id}")
