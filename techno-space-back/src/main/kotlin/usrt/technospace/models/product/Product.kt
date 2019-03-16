@@ -1,5 +1,6 @@
 package usrt.technospace.models.product
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import java.util.*
@@ -25,7 +26,8 @@ class Product {
     /**
      * Information about product. (Dynamic multiline)
      */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    @JsonBackReference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", orphanRemoval = true)
     var values: List<ProductInfoValue>? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
