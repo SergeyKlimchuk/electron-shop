@@ -1,0 +1,13 @@
+<mat-form-field *ngIf="productTypes">
+  <mat-select
+    placeholder="Тип товара"
+    [(ngModel)]="selected"
+    (selectionChange)="onValueChange($event.value)"
+    [disabled]="productTypes.length == 0">
+    <mat-option
+      *ngFor="let productType of productTypes"
+      [value]="productType">
+      {{ productType.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
