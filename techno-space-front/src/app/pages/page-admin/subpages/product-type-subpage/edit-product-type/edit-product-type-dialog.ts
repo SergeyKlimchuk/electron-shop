@@ -1,14 +1,16 @@
-import { Dictionary } from './../../../../../../models/dictionaries/dictionary';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
-import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
-import { FileService } from './../../../../../services/file/file.service';
-import { ProductType } from 'src/models/products/product-type';
-import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource } from '@angular/material';
-import { ProductInfoTitle } from 'src/models/products/product-info-title';
 import { ProductInfoTitleService } from 'src/app/services/product-info-title/product-info-title.service';
+import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
+import { ProductInfoTitle } from 'src/models/products/product-info-title';
 import { ProductPropertyTitleType } from 'src/models/products/product-property-title-type';
+import { ProductType } from 'src/models/products/product-type';
 
+import { Dictionary } from './../../../../../../models/dictionaries/dictionary';
+import { FileService } from './../../../../../services/file/file.service';
+
+// TODO: NEED TOTAL REFACTORING
 @Component({
   selector: 'app-edit-product-type-dialog',
   templateUrl: './edit-product-type-dialog.html',
@@ -124,7 +126,6 @@ export class EditProductTypeDialog {
         (imageUrl) => {
           console.log('imageUrl', imageUrl);
           this.productType.imageUrl = imageUrl;
-          this.productType.titles = this.propertiesDataSource.data;
           this.closeWithSave(this.productType);
         },
         (error) => {
@@ -138,6 +139,7 @@ export class EditProductTypeDialog {
   }
 
   closeWithSave(productType: ProductType) {
+    this.productType.titles = this.propertiesDataSource.data;
     this.productTypeService.saveProductType(productType).subscribe(
       (success) => {
         this.dialogRef.close(productType);
@@ -160,6 +162,34 @@ export class EditProductTypeDialog {
 
   close() {
     this.dialogRef.close();
+  }
+
+  onChangeSelectedType(property: ProductInfoTitle, newValue: ProductPropertyTitleType) {
+    console.log(property, newValue);
+    if (newValue !== undefined ) {
+      if (newValue === ProductPropertyTitleType.Dictionary) {
+        if (property.dictionary == null) {
+          property.dictionary = this.dictionariesList[0];
+        }
+      } else {
+        property.dictionary = null;
+      }
+    }
+  }
+
+  deleteProperty(property: ProductInfoTitle) {
+    const propertyAsJSON = JSON.stringify(property);
+    console.log(propertyAsJSON);
+    let wasDeleted = false;
+    this.propertiesDataSource.data = this.propertiesDataSource.data.filter(x => {
+      if (wasDeleted) {
+        return true;
+      }
+      if (propertyAsJSON === JSON.stringify(x)) {
+        return !(wasDeleted = true);
+      }
+      return true;
+    });
   }
 
 }

@@ -1,20 +1,7 @@
 <h2>{{ action }}</h2>
-{{ propertiesDataSource.data | json }}
 <div class="image-block">
-  <div class="wrapper">
-    <img src="{{ imageUrl }}" class="image" alt="Без изображения" #image />
-    <div
-      class="image-hoverable mat-ripple"
-      (click)="selectNewImage()"
-      matRipple
-    >
-      <mat-icon>add_photo_alternate</mat-icon>
-    </div>
-  </div>
+  <app-loadable-image [(ngModel)]="imageUrl" class="image"></app-loadable-image>
 </div>
-<button mat-raised-button *ngIf="newImage" (click)="restoreImage()">
-  Восстановить прошлую картинку
-</button>
 
 <div mat-dialog-content>
   <mat-form-field class="property">
@@ -37,7 +24,7 @@
 
       <td mat-cell *matCellDef="let element">
         <mat-form-field>
-          <input matInput [(ngModel)]="element.name">
+          <input matInput [(ngModel)]="element.name" />
         </mat-form-field>
       </td>
     </ng-container>
@@ -48,18 +35,30 @@
 
       <td mat-cell *matCellDef="let element">
         <mat-form-field>
-          <mat-select placeholder="Тип свойства" [(ngModel)]="element.type">
-            <mat-option #field *ngFor="let option of allowedTypeValues"
-              [value]="option.value">
+          <mat-select
+            placeholder="Тип свойства"
+            [(ngModel)]="element.type"
+            (selectionChange)="onChangeSelectedType(element, $event.value)"
+          >
+            <mat-option
+              #field
+              *ngFor="let option of allowedTypeValues"
+              [value]="option.value"
+            >
               {{ option.text }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngIf="element.type == 'Dictionary'" >
-          <mat-select placeholder="Справочник" [(ngModel)]="element.dictionary.id">
-            <mat-option *ngFor="let dictionary of dictionariesList"
-              [value]="dictionary.id">
+        <mat-form-field *ngIf="element.type == 'Dictionary'">
+          <mat-select
+            placeholder="Справочник"
+            [(ngModel)]="element.dictionary.id"
+          >
+            <mat-option
+              *ngFor="let dictionary of dictionariesList"
+              [value]="dictionary.id"
+            >
               {{ dictionary.name }}
             </mat-option>
           </mat-select>
@@ -72,7 +71,7 @@
       <th mat-header-cell *matHeaderCellDef>Действия</th>
 
       <td mat-cell *matCellDef="let element" class="option-collumn">
-        <button mat-icon-button>
+        <button mat-icon-button (click)="deleteProperty(element)">
           <mat-icon>close</mat-icon>
         </button>
       </td>
