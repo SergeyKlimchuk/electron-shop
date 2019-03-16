@@ -17,13 +17,19 @@ class ProductInfoValueController {
     }
 
     @GetMapping("/product-info-values/{id}")
-    fun get(@PathVariable id: Long): ProductInfoValue {
+    fun getById(@PathVariable id: Long): ProductInfoValue {
         return productInfoValueRepository.getOne(id)
     }
 
     @GetMapping("/product-info-values")
-    fun getByTitleId(@RequestParam titleId: Long): List<ProductInfoValue> {
-        return productInfoValueRepository.findAllByTitleId(titleId)
+    fun getByFilter(@RequestParam titleId: Long?, @RequestParam productId: Long?): List<ProductInfoValue> {
+        if (titleId != null) {
+            return productInfoValueRepository.findAllByTitleId(titleId)
+        }
+        if (productId != null) {
+            return productInfoValueRepository.findAllByProductId(productId)
+        }
+        return productInfoValueRepository.findAll()
     }
 
     @PutMapping("/product-info-values")
