@@ -33,6 +33,9 @@ import { EditProductTypeDialog } from './pages/page-admin/subpages/product-type-
 import { MatFileUploadModule } from 'angular-material-fileupload';
 import { DictionaryValuesListComponent } from './pages/page-admin/subpages/dictionaries-subpage/dictionary-values-list/dictionary-values-list.component';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
+import { EditProductDialog } from './pages/page-admin/subpages/product-subpage/edit-product/edit-product-dialog';
+import { LoadableImageComponent } from './core/loadable-image/loadable-image.component';
+import { DictionaryValueInputComponent } from './core/dictionary-value-input/dictionary-value-input.component';
 
 
 const appRoutes: Routes = [
@@ -79,7 +82,10 @@ const appRoutes: Routes = [
     ProductSubpageComponent,
     DictionariesSubpageComponent,
     EditProductTypeDialog,
-    DictionaryValuesListComponent
+    DictionaryValuesListComponent,
+    EditProductDialog,
+    LoadableImageComponent,
+    DictionaryValueInputComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +104,8 @@ const appRoutes: Routes = [
     // other imports here
   ],
   entryComponents: [
-    EditProductTypeDialog
+    EditProductTypeDialog,
+    EditProductDialog
   ],
   providers: [
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
