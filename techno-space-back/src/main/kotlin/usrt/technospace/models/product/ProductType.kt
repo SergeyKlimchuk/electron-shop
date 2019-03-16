@@ -1,5 +1,6 @@
 package usrt.technospace.models.product
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 
@@ -18,10 +19,10 @@ class ProductType {
     var imageUrl: String? = null
 
     // TODO: Выкосить зависимость
+    @JsonBackReference
     @OneToMany(
             cascade = [CascadeType.ALL],
-            mappedBy = "productType",
-            orphanRemoval = true
+            mappedBy = "productType"
     )
     var titles: List<ProductInfoTitle>? = null
 }
