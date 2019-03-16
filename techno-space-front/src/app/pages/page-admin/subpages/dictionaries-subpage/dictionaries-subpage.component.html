@@ -71,7 +71,7 @@
     </div>
   </div>
 
-  <div class="info">
+  <div class="info" [hidden]="selectedDictionary == null">
     <app-dictionary-values-list
       [dictionaryIdObservable]="selectedDictionaryIdSubject"
     ></app-dictionary-values-list>

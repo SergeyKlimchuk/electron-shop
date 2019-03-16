@@ -18,6 +18,7 @@ export class DictionariesSubpageComponent implements OnInit {
   displayedFooterRows = [];
 
   bufferedDictionary = new Dictionary();
+  selectedDictionary: Dictionary = null;
   addPanelVisible = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -56,6 +57,7 @@ export class DictionariesSubpageComponent implements OnInit {
   }
 
   rowClick(dictionary: Dictionary) {
+    this.selectedDictionary = dictionary;
     this.selectedDictionaryIdSubject.next(dictionary.id);
   }
 
@@ -67,6 +69,9 @@ export class DictionariesSubpageComponent implements OnInit {
   deleteValue(value: Dictionary) {
     this.dictionaryService.deleteDictionary(value.id).subscribe(
       () => {
+        if (this.selectedDictionary && this.selectedDictionary.id === value.id) {
+          this.selectedDictionary = null;
+        }
         this.dataSource.data = this.dataSource.data.filter( x => x.id !== value.id);
         this.snackBar.open('Успешно удалено!');
       },
