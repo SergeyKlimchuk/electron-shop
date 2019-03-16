@@ -4,5 +4,5 @@ export class ProductInfoValue {
   id: number;
   product: Product;
   title: ProductInfoTitle;
-  text: string;
+  value: string;
 }
