@@ -25,10 +25,14 @@ class ProductTypeController {
     fun addProductType(@Valid @RequestBody productType: ProductType): ProductType {
         val elements = productType.titles
         productType.titles = null
-        val savedProductType = productTypeRepository.save(productType)
+        val savedProductType = productTypeRepository.saveAndFlush(productType)
         if (elements != null) {
-            elements.forEach { x -> x.productType = productType }
-            productInfoTitleRepository.saveAll(elements)
+            elements.forEach { x ->
+                run {
+                    x.productType = savedProductType
+                    productInfoTitleRepository.saveAndFlush(x)
+                }
+            }
         }
         return savedProductType
     }
