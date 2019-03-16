@@ -45,4 +45,8 @@ export class ProductService {
   getProductsCountByProductType(productTypeId: number) {
     return this.http.get<number>(`/api/products/${productTypeId}/count`);
   }
+
+  removeProduct(productId: number) {
+    return this.http.delete<void>(`api/products/${productId}`);
+  }
 }
