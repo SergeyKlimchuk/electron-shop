@@ -36,6 +36,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { EditProductDialog } from './pages/page-admin/subpages/product-subpage/edit-product/edit-product-dialog';
 import { LoadableImageComponent } from './core/loadable-image/loadable-image.component';
 import { DictionaryValueInputComponent } from './core/dictionary-value-input/dictionary-value-input.component';
+import { ProductTypeInputComponent } from './core/product-type-input/product-type-input.component';
 
 
 const appRoutes: Routes = [
@@ -85,7 +86,8 @@ const appRoutes: Routes = [
     DictionaryValuesListComponent,
     EditProductDialog,
     LoadableImageComponent,
-    DictionaryValueInputComponent
+    DictionaryValueInputComponent,
+    ProductTypeInputComponent
   ],
   imports: [
     BrowserModule,
