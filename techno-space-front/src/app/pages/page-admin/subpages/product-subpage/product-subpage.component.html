@@ -1,3 +1,44 @@
-<p>
-  product-subpage works!
-</p>
+<div class="mat-elevation-z8 table">
+  <table mat-table [dataSource]="productDataSource">
+    <!-- Столбец с названием товара -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Список продуктов</th>
+
+      <td mat-cell *matCellDef="let element" (click)="openProduct(element)">
+        {{ element.name }}
+      </td>
+    </ng-container>
+
+    <!-- Кнопка действий -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="deleteProduct(element)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      class="row"
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 40]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>
+
+<section *ngIf="productDataSource.data.length == 0">
+  (Нет товаров)
+</section>
+
+<div *ngIf="!addPanelVisible">
+  <button mat-fab color="primary" class="add-btn" (click)="addProduct()" >
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

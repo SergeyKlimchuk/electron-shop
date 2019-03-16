@@ -1,0 +1,103 @@
+<h2>{{ action }}</h2>
+<app-loadable-image [(ngModel)]="image.url" class="image"></app-loadable-image>
+<!-- Название товара -->
+<mat-form-field class="full-width">
+  <input
+    matInput
+    placeholder="Название товара"
+    [(ngModel)]="product.name"
+    required
+  />
+</mat-form-field>
+
+<!-- Тип товара -->
+<mat-form-field *ngIf="(productTypes$ | async) as productTypes">
+  <mat-select placeholder="Тип товара"
+    (selectionChange)="onSelectProductType($event.value)"
+    [disabled]="productTypes.length == 0">
+    <ng-container *ngIf="productTypes.length > 0">
+      <mat-option
+        #productType
+        *ngFor="let productType of productTypes"
+        [value]="productType"
+      >
+        {{ productType.name }}
+      </mat-option>
+    </ng-container>
+
+  </mat-select>
+</mat-form-field>
+
+<div class="static-properties">
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Цена" [(ngModel)]="product.price" required />
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Кол-во" [(ngModel)]="product.count" required />
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <textarea
+      matInput
+      placeholder="Описание товара"
+      [(ngModel)]="product.description"
+      required
+    ></textarea>
+  </mat-form-field>
+</div>
+
+<div class="properties full-width">
+  <table
+    mat-table
+    #table
+    [dataSource]="propertiesDataSource"
+    class="full-width"
+  >
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Свойство</th>
+      <td mat-cell *matCellDef="let property">{{ property.title.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef>Значение</th>
+      <td mat-cell *matCellDef="let property">
+        <ng-container
+          *ngIf="
+            property.title.type == 'Dictionary';
+            then hasDictionary;
+            else hasNative
+          "
+        ></ng-container>
+
+        <ng-template #hasDictionary>
+          <app-dictionary-value-input
+            [dictionaryId]="property.title.dictionary.id"
+            [(ngModel)]="property.value.value"
+          ></app-dictionary-value-input>
+        </ng-template>
+        | {{ property.value | json }}|
+        <ng-template #hasNative>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Значение"
+              value="property.value.value"
+            />
+          </mat-form-field>
+        </ng-template>
+
+        <!-- {{ property.value?.name }} -->
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedCollumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedCollumns"></tr>
+  </table>
+</div>
+<div class="actions">
+  <button mat-flat-button (click)="closeDialog()" >Отмена</button>
+  <button mat-raised-button color="primary" (click)="saveProduct()">
+    Сохранить
+  </button>
+</div>
