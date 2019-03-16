@@ -45,35 +45,26 @@ export class ProductSubpageComponent implements OnInit {
   }
 
   addProduct() {
-    this.matDialog.open(EditProductDialog, { data: null }).afterClosed().subscribe(
-      (result) => {
-        if (result) {
-          this.snack.open(`Успешно обновлено!`);
-          this.updateProductsList();
-        }
-      },
-      (error) => {
-        alert('Ошибочка');
-        console.error(error);
-      }
-    );
-    this.snack.open(`Типо открытие панельки..`);
+    this.openDialog(null);
   }
 
   editProduct(product: Product) {
-    this.matDialog.open(EditProductDialog, { data: product.id }).afterClosed().subscribe(
+    this.openDialog(product);
+  }
+
+  openDialog(product: Product) {
+    const data = product ? product.id : null;
+    this.matDialog.open(EditProductDialog, { data }).afterClosed().subscribe(
       (result) => {
         if (result) {
-          this.snack.open(`Успешно обновлено!`);
           this.updateProductsList();
         }
       },
       (error) => {
-        alert('Ошибочка');
+        alert('Ошибочка 3');
         console.error(error);
       }
     );
-    this.snack.open(`Типо открытие панельки..`);
   }
 
   deleteProduct(product: Product) {

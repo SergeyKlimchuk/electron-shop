@@ -1,8 +1,10 @@
 <mat-form-field>
-  <mat-select placeholder="Значение свойства" (selectionChange)="value$.next($event.value.id)">
+  <mat-select placeholder="Значение свойства"
+    [(ngModel)]="value"
+    (selectionChange)="changeValue($event.value.id)">
     <mat-option
     *ngFor="let dictionaryValue of dictionaryValues$ | async"
-    [value]="dictionaryValue">
+    [value]="dictionaryValue.id">
       {{ dictionaryValue.name }}
     </mat-option>
   </mat-select>

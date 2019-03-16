@@ -1,15 +1,17 @@
 <h2>{{ action }}</h2>
 <div class="image-block">
-  <app-loadable-image [(ngModel)]="imageUrl" class="image"></app-loadable-image>
+  <app-loadable-image
+    *ngIf="productType"
+    [(ngModel)]="productType.imageUrl"
+    class="image"
+  ></app-loadable-image>
 </div>
 
 <div mat-dialog-content>
-  <mat-form-field class="property">
-    <input matInput placeholder="Название" [(ngModel)]="productType.name" />
+  <mat-form-field class="property" *ngIf="productType">
+    <input matInput placeholder="Название" [(ngModel)]="productType.name" required />
   </mat-form-field>
 </div>
-
-<input #selectImage type="file" (change)="onImageSelect($event)" hidden />
 
 <div class="properties">
   <h5>Свойства продукта</h5>
@@ -94,17 +96,7 @@
 
 <div mat-dialog-actions class="actions">
   <button mat-raised-button (click)="close()">Отмена</button>
-  <button
-    mat-raised-button
-    (click)="save()"
-    color="primary"
-    [disabled]="
-      !(
-        (inputProductType && inputProductType.name != productType.name) ||
-        newImage
-      )
-    "
-  >
+  <button mat-raised-button (click)="save()" color="primary">
     Сохранить
   </button>
 </div>

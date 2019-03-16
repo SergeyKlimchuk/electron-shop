@@ -18,7 +18,8 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
   dictionaryId: number;
 
   dictionaryValues$ = new Subject<DictionaryValue[]>();
-  value$ = new Subject<DictionaryValue>();
+  value: number;
+  private onChange: (value: number) => void;
 
   constructor(private dictionaryService: DictionaryService) { }
 
@@ -35,17 +36,15 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
     );
   }
 
-  writeValue(obj: any): void {
-    this.value$.next(obj);
+  changeValue(newValue: number) {
+    this.onChange(newValue);
+  }
+
+  writeValue(newValue: string): void {
+    this.value = Number(newValue);
   }
   registerOnChange(onChange: any): void {
-    console.log('set "onChange"');
-    this.value$.subscribe(
-      value => {
-        console.log('new selected value', value);
-        onChange(value);
-      }
-    );
+    this.onChange = onChange;
   }
   registerOnTouched(fn: any): void {
     console.log('1');

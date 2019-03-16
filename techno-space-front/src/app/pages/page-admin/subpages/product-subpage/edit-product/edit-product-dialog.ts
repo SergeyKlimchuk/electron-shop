@@ -23,17 +23,12 @@ export class EditProductDialog implements OnInit {
   @ViewChild(LoadableImageComponent)
   loadableImage: LoadableImageComponent;
 
-  product = new Product();
+  product: Product;
   productTypes$ = new Subject<ProductType[]>();
 
   action: string;
   propertiesDataSource = new MatTableDataSource<{title: ProductInfoTitle, value: ProductInfoValue}>();
   displayedCollumns = ['title', 'value'];
-
-  image = {
-    // url: 'https://cdn-images-1.medium.com/max/800/1*pOvzhe0JaYBd6yLooq2fzA.png'
-    url: '/'
-  };
 
   constructor(public dialogRef: MatDialogRef<EditProductDialog>,
               @Inject(MAT_DIALOG_DATA) public productId: number,
@@ -46,6 +41,7 @@ export class EditProductDialog implements OnInit {
 
     if (productId == null) {
       this.action = 'Создание товара';
+      this.product = new Product();
     } else {
       this.action = 'Редактирование товара';
       this.productService.getProduct(productId).subscribe(
@@ -67,7 +63,7 @@ export class EditProductDialog implements OnInit {
     this.productTypeService.getProductTypes(0, 30).subscribe(
       productTypes => {
         this.productTypes$.next(productTypes.content);
-        console.log('Загружены типы продуктов', productTypes);
+        console.log('Загружены типы продуктов', productTypes.content);
       },
       error => {
         alert('Ошибка');
@@ -77,6 +73,11 @@ export class EditProductDialog implements OnInit {
   }
 
   onSelectProductType(productType: ProductType) {
+    if (productType === undefined) {
+      console.log('undefined');
+      return;
+    }
+    console.log('selected produtType', productType);
     this.product.productType = productType;
     console.log('Начата загрузка свойств', productType);
     this.loadProperties();
@@ -122,9 +123,9 @@ export class EditProductDialog implements OnInit {
     await this.loadableImage.uploadImage();
     this.product.values = this.propertiesDataSource.data.map(x => x.value);
     this.productService.saveProduct(this.product).subscribe(
-      success => {
+      product => {
         this.snack.open('Успешно сохранено!');
-        this.dialogRef.close();
+        this.dialogRef.close(product);
       },
       error => {
         console.error(error);

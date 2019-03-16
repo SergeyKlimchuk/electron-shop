@@ -53,11 +53,10 @@ export class ProductTypeSubpageComponent implements OnInit {
 
   rowClick(productType: ProductType) {
     this.matDialog.open(EditProductTypeDialog, {
-      data: productType
+      data: productType.id
     }).afterClosed().subscribe(
       (result) => {
         if (result) {
-          alert('Успешно сохранил!');
           this.updatePage();
         }
       },

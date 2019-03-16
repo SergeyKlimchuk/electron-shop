@@ -9,6 +9,7 @@ import { ProductType } from 'src/models/products/product-type';
 
 import { Dictionary } from './../../../../../../models/dictionaries/dictionary';
 import { FileService } from './../../../../../services/file/file.service';
+import { LoadableImageComponent } from 'src/app/core/loadable-image/loadable-image.component';
 
 // TODO: NEED TOTAL REFACTORING
 @Component({
@@ -19,10 +20,11 @@ import { FileService } from './../../../../../services/file/file.service';
 export class EditProductTypeDialog {
 
   action: string;
-  inputProductType: ProductType;
   productType: ProductType;
-  imageUrl: string;
   entityChanged = false;
+
+  @ViewChild(LoadableImageComponent)
+  imageComponent: LoadableImageComponent;
 
   displayedColumns = ['name', 'type', 'remove'];
   propertiesDataSource = new MatTableDataSource<ProductInfoTitle>();
@@ -40,23 +42,30 @@ export class EditProductTypeDialog {
   @ViewChild('image') image: ElementRef<HTMLElement>;
 
   constructor(public dialogRef: MatDialogRef<EditProductTypeDialog>,
-              @Inject(MAT_DIALOG_DATA) public data: ProductType,
+              @Inject(MAT_DIALOG_DATA) public productTypeId: number,
               private fileService: FileService,
               private productTypeService: ProductTypeService,
               private productInfoTitleService: ProductInfoTitleService,
               private dictionaryService: DictionaryService,
               private snack: MatSnackBar) {
-    if (data) {
-      this.action = 'Редактирвоание типа продукта';
-      this.productType = this.cloneProductType(data);
-      this.loadProperties();
-      this.imageUrl = data.imageUrl;
-    } else {
+    if (productTypeId == null) {
       this.action = 'Добавление';
       this.productType = new ProductType();
+    } else {
+      this.action = 'Редактирвоание типа продукта';
+      this.productTypeService.getProductType(productTypeId).subscribe(
+        productType => {
+          console.log('productType was loaded', productType);
+          this.productType = productType;
+          this.loadProperties();
+        },
+        error => {
+          console.error(error);
+          this.snack.open('Произошла ошибка при получения типа продукта!');
+        }
+      );
     }
     this.loadDictionariesList();
-    this.inputProductType = data;
   }
 
   loadProperties() {
@@ -85,68 +94,22 @@ export class EditProductTypeDialog {
     );
   }
 
-  cloneProductType(productType: ProductType): ProductType {
-    return Object.assign({}, productType);
-  }
-
-  selectNewImage() {
-    this.selectImage.nativeElement.click();
-    console.log('selectNewImage');
-  }
-
-  restoreImage() {
-    this.imageUrl = this.productType.imageUrl;
-    this.newImage = null;
-  }
-
-  onImageSelect(event: any) {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-        console.log('result', reader.result);
-        const imageWidth = this.image.nativeElement.offsetWidth;
-        const imageHeight = this.image.nativeElement.offsetHeight;
-        if (imageWidth > 100 && imageWidth < 200
-          && imageHeight > 100 && imageHeight < 200) {
-          this.imageUrl = reader.result.toString();
-          this.newImage = event.target.files[0];
-        } else {
-          this.snack.open('Изобржение должно быть размеров [200-300]X[200-300]!', undefined, {duration: 7500});
-        }
-      };
+  async save() {
+    if (!this.imageComponent.isValid() || !this.productType.name) {
+      this.snack.open('Не все поля были заполнены!');
+      return;
     }
-  }
 
-  save() {
-    if (this.newImage) {
-      this.fileService.uploadFile(this.newImage).subscribe(
-        (imageUrl) => {
-          console.log('imageUrl', imageUrl);
-          this.productType.imageUrl = imageUrl;
-          this.closeWithSave(this.productType);
-        },
-        (error) => {
-          alert('Не удалось сохранить сущность, смотрите консоль!');
-          console.log('ERROR', error);
-        }
-      );
-    } else {
-      this.closeWithSave(this.productType);
-    }
-  }
-
-  closeWithSave(productType: ProductType) {
+    await this.imageComponent.uploadImage();
     this.productType.titles = this.propertiesDataSource.data;
-    this.productTypeService.saveProductType(productType).subscribe(
-      (success) => {
+    this.productTypeService.saveProductType(this.productType).subscribe(
+      (productType) => {
+        this.snack.open('Успешно сохранено!');
         this.dialogRef.close(productType);
       },
-      (error) => {
-        alert('Не удалось сохранить!');
-        console.error('ERROR WHILE SAVE', error);
+      error => {
+        console.error(error);
+        this.snack.open('При сохранении произошла ошибка!');
       }
     );
   }

@@ -29,9 +29,16 @@ export class LoadableImageComponent implements ControlValueAccessor {
   private onChange: (value: string) => void;
 
   public async uploadImage() {
+    if (this.newImage == null) {
+      return Promise.resolve();
+    }
     return await this.fileService.uploadFile(this.newImage).pipe(
       tap(this.onChange)
     ).toPromise();
+  }
+
+  public isValid() {
+    return this.imageUrl || this.oldImageUrl;
   }
 
   writeValue(newUrl: string): void {

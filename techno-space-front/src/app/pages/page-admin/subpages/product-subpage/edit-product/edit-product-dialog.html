@@ -1,7 +1,9 @@
 <h2>{{ action }}</h2>
-<app-loadable-image [(ngModel)]="image.url" class="image"></app-loadable-image>
+<div class="image-block" *ngIf="product">
+  <app-loadable-image [(ngModel)]="product.imageUrl" class="image"></app-loadable-image>
+</div>
 <!-- Название товара -->
-<mat-form-field class="full-width">
+<mat-form-field class="full-width" *ngIf="product" >
   <input
     matInput
     placeholder="Название товара"
@@ -11,24 +13,13 @@
 </mat-form-field>
 
 <!-- Тип товара -->
-<mat-form-field *ngIf="(productTypes$ | async) as productTypes">
-  <mat-select placeholder="Тип товара"
-    (selectionChange)="onSelectProductType($event.value)"
-    [disabled]="productTypes.length == 0">
-    <ng-container *ngIf="productTypes.length > 0">
-      <mat-option
-        #productType
-        *ngFor="let productType of productTypes"
-        [value]="productType"
-      >
-        {{ productType.name }}
-      </mat-option>
-    </ng-container>
+<div class="product-type" *ngIf="product" >
+  <app-product-type-input
+    [(ngModel)]="product.productType"
+    (change)="onSelectProductType($event)"></app-product-type-input>
+</div>
 
-  </mat-select>
-</mat-form-field>
-
-<div class="static-properties">
+<div class="static-properties" *ngIf="product" >
   <mat-form-field class="full-width">
     <input matInput placeholder="Цена" [(ngModel)]="product.price" required />
   </mat-form-field>
@@ -76,13 +67,13 @@
             [(ngModel)]="property.value.value"
           ></app-dictionary-value-input>
         </ng-template>
-        | {{ property.value | json }}|
+
         <ng-template #hasNative>
           <mat-form-field>
             <input
               matInput
               placeholder="Значение"
-              value="property.value.value"
+              [(ngModel)]="property.value.value"
             />
           </mat-form-field>
         </ng-template>
