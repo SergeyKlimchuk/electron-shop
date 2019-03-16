@@ -16,7 +16,6 @@ class ProductInfoValue {
     @JoinColumn(name = "product_id", nullable = false)
     var product: Product? = null
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
     var title: ProductInfoTitle? = null
