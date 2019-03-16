@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { DictionaryValue } from './../../../../../../models/dictionaries/dictionary-value';
 import { DictionaryService } from './../../../../../services/dictionary/dictionary.service';
+import { Dictionary } from 'src/models/dictionaries/dictionary';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class DictionaryValuesListComponent implements OnInit, OnDestroy {
   @Input()
   dictionaryIdObservable: Observable<number>;
   subscription: Subscription;
+  dictionary: Dictionary;
 
   constructor(private dictionaryService: DictionaryService,
               private snackBar: MatSnackBar) { }
@@ -31,6 +33,13 @@ export class DictionaryValuesListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.dictionaryIdObservable.subscribe(
       (dictionaryId) => {
+        this.dictionaryService.getDictionary(dictionaryId).subscribe(
+          dictionary => this.dictionary = dictionary,
+          error => {
+            this.snackBar.open('Произошла ошибка при получении справочника!');
+            console.error('Ошибка при получении справочника', error);
+          }
+        );
         this.loadValues(dictionaryId);
         this.dictionaryId = dictionaryId;
       }
