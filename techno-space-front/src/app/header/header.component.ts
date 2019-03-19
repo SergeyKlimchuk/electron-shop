@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   subscribeOnChangeUser() {
     this.userService.getCurrentUser().subscribe(
-      (user) => {
+      user => {
         this.userFullName = `${user.name} ${user.lastName}`;
         if (user.roles.indexOf(Roles.admin) > -1) {
           const moveToAdminpage = new DropdownItem('Панель управления', e => {
@@ -44,10 +44,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           });
           this.userDropdown.push(moveToAdminpage);
         }
-        console.log(user.roles);
       },
-      (error) => {
-        console.log('getCurrentUser in header', error);
+      error => {
+        console.error('getCurrentUser in header', error);
       }
     );
   }

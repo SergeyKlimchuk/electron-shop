@@ -28,7 +28,6 @@ export class ProductTypeSubpageComponent implements OnInit {
 
   // TODO: Проверить на пустой БД
   updatePage() {
-    console.log('Обновлена страница');
     this.productTypeService.getProductTypes(this.paginator.pageIndex, this.paginator.pageSize).subscribe(
       (productTypesPageable) => {
         // TODO: Add algorithm for fix case (Load this page, update db, press next page)
@@ -44,8 +43,7 @@ export class ProductTypeSubpageComponent implements OnInit {
 
   setPageUpdateEvent() {
     this.paginator.page.subscribe(
-      (success) => {
-        console.log('Update values: ', success);
+      success => {
         this.updatePage();
       }
     );

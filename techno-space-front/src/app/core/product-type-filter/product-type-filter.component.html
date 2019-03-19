@@ -1,0 +1,19 @@
+<h3 class="title">Филтрация</h3>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let title of titles">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ title.name }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <app-dictionary-value-input
+      [dictionaryId]="title.dictionary.id"
+      [multiply]="true"
+    ></app-dictionary-value-input>
+  </mat-expansion-panel>
+</mat-accordion>
+<div class="actions">
+  <button mat-flat-button>Сбросить <mat-icon>clear</mat-icon></button>
+  <button mat-raised-button color="primary">Применить <mat-icon>sort</mat-icon></button>
+</div>

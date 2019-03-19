@@ -1,13 +1,15 @@
-import { ProductService } from './../../services/product/product.service';
-import { Subject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from 'src/models/products/product';
+import { Subject } from 'rxjs';
 import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
-import { ProductType } from 'src/models/products/product-type';
-import { tap } from 'rxjs/operators';
+import { Product } from 'src/models/products/product';
 import { ProductInfoTitle } from 'src/models/products/product-info-title';
 import { ProductPropertyTitleType } from 'src/models/products/product-property-title-type';
+import { ProductType } from 'src/models/products/product-type';
+
+import { ProductInfoTitleService } from './../../services/product-info-title/product-info-title.service';
+import { ProductService } from './../../services/product/product.service';
 
 @Component({
   selector: 'app-page-products',
@@ -16,9 +18,8 @@ import { ProductPropertyTitleType } from 'src/models/products/product-property-t
 })
 export class PageProductsComponent implements OnInit {
   public productType: ProductType = null;
-  public products = new Subject<Product[]>();
+  public products$ = new Subject<Product[]>();
   public pageButtons = new Subject<number[]>();
-  public productTypeName = '';
   public filtrableProperies: ProductInfoTitle[];
 
   totalPages = 1;
@@ -34,61 +35,59 @@ export class PageProductsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private productService: ProductService,
+              private productInfoTitleService: ProductInfoTitleService,
+              private snack: MatSnackBar,
               private productTypeService: ProductTypeService) {
   }
 
   ngOnInit() {
     // Validate argument.
     const productTypeId = this.route.snapshot.paramMap.get('productTypeId');
-    if (productTypeId == null) {
+    if (!productTypeId) {
       this.redirectToMain();
-      console.log('Была запрошена старница с товарами по пустой категории', productTypeId);
+      console.error('Была запрошена старница с товарами по пустой категории');
       return;
     }
-    console.log('Пользователь зашел на страницу просомтра продуктов по типу', productTypeId);
-    const idAsNumber = Number(productTypeId);
-    // Get productType from DB and update list for him.
-    this.applyProductType(idAsNumber).subscribe(
-      (productType) => {
-        this.productTypeName = productType.name;
-        this.applyAllowedFilters();
-        this.updateProductsList();
-      },
-      (error) => {
-        console.error('Не удалось получить тип продукта по его идентификатору!', error);
-      }
-    );
+    this.loadProductType(Number(productTypeId));
   }
 
   redirectToMain() {
     this.router.navigate(['/main']);
   }
 
-  applyProductType(productTypeId: number) {
-    return this.productTypeService.getProductType(productTypeId).pipe(
-      tap(productType => {
+  loadProductType(productTypeId: number) {
+    this.productTypeService.getProductType(productTypeId).subscribe(
+      productType => {
         this.productType = productType;
-      })
+        this.loadFilters();
+        this.updateProductsList();
+      },
+      error => {
+        console.error(error);
+        this.snack.open('Не удалось загрузить тип продукта!');
+      }
     );
   }
 
-  applyAllowedFilters() {
-    this.filtrableProperies = this.productType.titles
-      .filter(title => title.type === ProductPropertyTitleType.Dictionary);
+  loadFilters() {
+    this.productInfoTitleService.getProductInfoTitles(this.productType.id).subscribe(
+      (productInfoTitles) => {
+        this.filtrableProperies = productInfoTitles
+          .filter(title => title.type === ProductPropertyTitleType.Dictionary);
+      }
+    );
   }
 
   updateProductsList() {
     this.productService
       .getProducts(this.productType.id, this.currentPage, this.size).subscribe(
         (page) => {
-          console.log('page', page);
           const pagesCount = page.totalPages;
           this.totalPages = pagesCount;
           this.totalProducts = page.totalElements;
           this.updatePageButtons(pagesCount);
           this.updateButtonsState();
-          this.products.next(page.content);
-          console.log('Обновлен список продуктов.');
+          this.products$.next(page.content);
         },
         (error) => {
           console.error('Не удалось получить товары по след. критериям:',
@@ -99,7 +98,6 @@ export class PageProductsComponent implements OnInit {
 
   updatePageButtons(pageButtonsCount: number) {
     const numbersArray = Array(pageButtonsCount).map( (x, i) => i);
-    console.log(pageButtonsCount);
     this.pageButtons.next(numbersArray);
   }
 

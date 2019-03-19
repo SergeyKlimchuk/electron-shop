@@ -37,6 +37,8 @@ import { EditProductDialog } from './pages/page-admin/subpages/product-subpage/e
 import { LoadableImageComponent } from './core/loadable-image/loadable-image.component';
 import { DictionaryValueInputComponent } from './core/dictionary-value-input/dictionary-value-input.component';
 import { ProductTypeInputComponent } from './core/product-type-input/product-type-input.component';
+import { ProductTypeFilterComponent } from './core/product-type-filter/product-type-filter.component';
+import { ProductPropertyValueEditorComponent } from './core/product-property-value-editor/product-property-value-editor.component';
 
 
 const appRoutes: Routes = [
@@ -87,7 +89,9 @@ const appRoutes: Routes = [
     EditProductDialog,
     LoadableImageComponent,
     DictionaryValueInputComponent,
-    ProductTypeInputComponent
+    ProductTypeInputComponent,
+    ProductTypeFilterComponent,
+    ProductPropertyValueEditorComponent
   ],
   imports: [
     BrowserModule,

@@ -27,8 +27,13 @@ class Product {
      * Information about product. (Dynamic multiline)
      */
     @JsonBackReference
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", orphanRemoval = true)
-    var values: List<ProductInfoValue>? = null
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "product",
+            orphanRemoval = true,
+            cascade = [CascadeType.ALL]
+    )
+    var values: Set<ProductInfoValue>? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_type_id", nullable = false)

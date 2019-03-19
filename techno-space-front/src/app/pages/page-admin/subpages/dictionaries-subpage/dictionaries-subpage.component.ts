@@ -33,7 +33,6 @@ export class DictionariesSubpageComponent implements OnInit {
   }
 
   updatePage() {
-    console.log('Обновлена страница');
     this.dictionaryService.getDictionaries(this.paginator.pageIndex, this.paginator.pageSize).subscribe(
       (dictionariesPageable) => {
         // TODO: Add algorithm for fix case (Load this page, update db, press next page)
@@ -50,7 +49,6 @@ export class DictionariesSubpageComponent implements OnInit {
   setPageUpdateEvent() {
     this.paginator.page.subscribe(
       (success) => {
-        console.log('Update values: ', success);
         this.updatePage();
       }
     );

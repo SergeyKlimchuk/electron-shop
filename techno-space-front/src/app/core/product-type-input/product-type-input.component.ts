@@ -15,10 +15,10 @@ import { ProductType } from 'src/models/products/product-type';
 export class ProductTypeInputComponent implements ControlValueAccessor {
 
   productTypes: ProductType[] = null;
-  selected: ProductType;
+  selectedProductTypeId: number;
   private onChangeHandler: (value: ProductType) => void;
 
-  @Output() change = new EventEmitter<ProductType>();
+  @Output() change = new EventEmitter<number>();
 
   constructor(private productTypeService: ProductTypeService,
               private snack: MatSnackBar) {
@@ -28,12 +28,14 @@ export class ProductTypeInputComponent implements ControlValueAccessor {
   loadProductTypes() {
     this.productTypeService.getProductTypes(0, 50).subscribe(
       productTypes => {
-        console.log('productTypes', productTypes);
-
         this.productTypes = productTypes.content;
         if (productTypes.content.length > 0) {
-          this.selected = productTypes.content[0];
-          this.change.emit(this.selected);
+          if (!this.selectedProductTypeId) {
+            const selected = productTypes.content[0];
+            this.selectedProductTypeId = selected.id;
+            this.change.emit(this.selectedProductTypeId);
+            this.onChangeHandler(selected);
+          }
         }
       },
       error => {
@@ -44,13 +46,22 @@ export class ProductTypeInputComponent implements ControlValueAccessor {
     );
   }
 
-  onValueChange(newProductType: ProductType) {
-    this.onChangeHandler(newProductType);
-    this.change.emit(newProductType);
+  onValueChange(newProductTypeId: number) {
+    console.log('WARN [newProductTypeId]', newProductTypeId);
+    if (newProductTypeId) {
+      const selectedType = this.productTypes.find(x => x.id === newProductTypeId);
+      console.log('selectedType', selectedType);
+      this.onChangeHandler(selectedType);
+      this.change.emit(newProductTypeId);
+    }
   }
 
   writeValue(newProductType: ProductType): void {
-    this.selected = newProductType;
+    if (newProductType) {
+      this.selectedProductTypeId = newProductType.id;
+    } else {
+      this.selectedProductTypeId = null;
+    }
   }
   registerOnChange(fn: any): void {
     this.onChangeHandler = fn;

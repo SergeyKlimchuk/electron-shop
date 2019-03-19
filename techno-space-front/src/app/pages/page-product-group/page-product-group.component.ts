@@ -26,9 +26,7 @@ export class PageProductGroupComponent implements OnInit {
   loadProductTypes() {
     this.productService.getProductTypes().subscribe(
       (productsTypes) => {
-        console.log('Загружены типы продуктов!', productsTypes);
         this.productsTypes.next(productsTypes.content);
-        console.log('After next.');
         this.productTypesNotFound =  productsTypes.content.length === 0;
       },
       (error) => {

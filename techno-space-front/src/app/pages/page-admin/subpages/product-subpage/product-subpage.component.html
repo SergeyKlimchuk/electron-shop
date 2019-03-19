@@ -1,5 +1,5 @@
-<div class="mat-elevation-z8 table">
-  <table mat-table [dataSource]="productDataSource">
+<div class="mat-elevation-z8 table-wrapper">
+  <table mat-table [dataSource]="productDataSource" class="table">
     <!-- Столбец с названием товара -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Список продуктов</th>
@@ -38,7 +38,7 @@
 </section>
 
 <div *ngIf="!addPanelVisible">
-  <button mat-fab color="primary" class="add-btn" (click)="addProduct()" >
+  <button mat-fab color="primary" class="add-btn" (click)="addProduct()">
     <mat-icon>add</mat-icon>
   </button>
 </div>

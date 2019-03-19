@@ -1,91 +1,16 @@
-<mat-card class="panel">
-  <div class="status_panel">
-    <h2 class="text">{{ productTypeName }}</h2>
-    <div class="total">Всего продуктов: {{ totalProducts }}</div>
-  </div>
-
-  <div class="content">
-    <div class="filter">
-      <div class="text">
-        <h4>Подбор по параметрам</h4>
-      </div>
-      <div class="param">
-        <label class="param__name">Цена</label>
-        <div class="price-inputs">
-          <mat-form-field class="price">
-            <input matInput placeholder="от" value="1">
-          </mat-form-field>
-          <mat-form-field class="price">
-            <input matInput placeholder="до" value="10000">
-          </mat-form-field>
-        </div>
-      </div>
-      <section *ngIf="filtrableProperies">
-        <div class="param" *ngFor="let property of filtrableProperies">
-          {{ property.name }}
-          <div class="values">
-            <mat-checkbox class="value" *ngFor="let value of property.dictionary.values" color="primary" >
-              {{ value.name }}
-            </mat-checkbox>
-          </div>
-        </div>
-      </section>
-
-    </div>
-
-    <ul class="list">
-      <li class="item" *ngFor="let product of (products | async)" [routerLink]="['/product', product.id]">
-        <img
-          class="image square"
-          src="http://c1.neweggimages.com/NeweggImage/ProductImageCompressAll300/19-117-826-Z01.jpg"
-          alt="Изображение товара"
-        />
-        <h5 class="text">{{ product.name }}</h5>
-        <h4 class="price">{{ product.price }}</h4>
-        <!-- TODO: добавить сравнение товаров -->
-      </li>
-    </ul>
-
-    <div #productsNotFound class="products-not-found" *ngIf="totalProducts < 1">
-      Продукты для этого типа не найдены!
-    </div>
-  </div>
-
-  <div class="page-panel">
-    <div class="wrapper">
-        <mat-form-field class="" onchange="changeItemsPerPage()">
-          <mat-select #itemsPerPage
-          placeholder="Кол-во предметов"
-          color="primary"
-          [value]="20"
-          (selectionChange)="changeItemsPageSize($event.value)">
-            <mat-option *ngFor="let pagesCount of pagesCountOption" [value]="pagesCount">
-              {{ pagesCount }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      <button
-        class="btn btn_prior"
-        [disabled]="!priorPageIsAlloved"
-        (click)="priorPage()"
-      >
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      <button
-        class="btn"
-        *ngFor="let pageButton of (pageButtons | async); let i = index"
-        [ngClass]="{ selected: i == currentPage }"
-        (click)="selectPage(i)"
-      >
-        {{ i + 1 }}
-      </button>
-      <button
-        class="btn btn_next"
-        [disabled]="!nextPageIsAlloved"
-        (click)="nextPage()"
-      >
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-    </div>
-  </div>
+<mat-card class="products__filter" *ngIf="productType" >
+  <app-product-type-filter [productTypeId]="productType.id"></app-product-type-filter>
 </mat-card>
+
+<div class="products__list">
+  <mat-card *ngFor="let product of products$ | async" class="product">
+    <div class="left">
+      <img src="{{ product.imageUrl }}" alt="Фотография товара" class="product__image">
+      <div class="product__price">{{ product.price }} Тг.</div>
+    </div>
+    <div class="right">
+      <div class="product__name" [routerLink]="['/product', product.id]">{{ product.name }}</div>
+      <div class="product__description">{{ product.description }}</div>
+    </div>
+  </mat-card>
+</div>

@@ -1,8 +1,9 @@
 import { Subject } from 'rxjs';
 import { DictionaryService } from './../../services/dictionary/dictionary.service';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, QueryList, Output, EventEmitter } from '@angular/core';
 import { DictionaryValue } from 'src/models/dictionaries/dictionary-value';
+import { MatCheckbox } from '@angular/material';
 
 @Component({
   selector: 'app-dictionary-value-input',
@@ -17,8 +18,17 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
   @Input()
   dictionaryId: number;
 
+  @Input()
+  multiply = false;
+
+  @Output()
+  change = new EventEmitter<number>();
+
+  @ViewChild(MatCheckbox)
+  checkboxes: QueryList<MatCheckbox>;
+
   dictionaryValues$ = new Subject<DictionaryValue[]>();
-  value: number;
+  value: number = null;
   private onChange: (value: number) => void;
 
   constructor(private dictionaryService: DictionaryService) { }
@@ -26,7 +36,6 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
   ngOnInit(): void {
     this.dictionaryService.getDictionaryValues(this.dictionaryId).subscribe(
       values => {
-        console.log('dictionary values', values);
         this.dictionaryValues$.next(values);
       },
       error => {
@@ -36,8 +45,17 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
     );
   }
 
+  public getValues() {
+    return this.checkboxes;
+  }
+
+  public isValid() {
+    return !!this.value;
+  }
+
   changeValue(newValue: number) {
     this.onChange(newValue);
+    this.change.emit(newValue);
   }
 
   writeValue(newValue: string): void {

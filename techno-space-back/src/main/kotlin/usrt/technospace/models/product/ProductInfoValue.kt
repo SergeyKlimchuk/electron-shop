@@ -12,8 +12,11 @@ class ProductInfoValue {
     var id: Long? = 0
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false,
+            cascade = [CascadeType.ALL])
     var product: Product? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

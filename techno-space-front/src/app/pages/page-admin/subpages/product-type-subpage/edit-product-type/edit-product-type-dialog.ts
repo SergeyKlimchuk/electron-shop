@@ -1,5 +1,6 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatTableDataSource } from '@angular/material';
+import { LoadableImageComponent } from 'src/app/core/loadable-image/loadable-image.component';
 import { DictionaryService } from 'src/app/services/dictionary/dictionary.service';
 import { ProductInfoTitleService } from 'src/app/services/product-info-title/product-info-title.service';
 import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
@@ -8,8 +9,6 @@ import { ProductPropertyTitleType } from 'src/models/products/product-property-t
 import { ProductType } from 'src/models/products/product-type';
 
 import { Dictionary } from './../../../../../../models/dictionaries/dictionary';
-import { FileService } from './../../../../../services/file/file.service';
-import { LoadableImageComponent } from 'src/app/core/loadable-image/loadable-image.component';
 
 // TODO: NEED TOTAL REFACTORING
 @Component({
@@ -43,7 +42,6 @@ export class EditProductTypeDialog {
 
   constructor(public dialogRef: MatDialogRef<EditProductTypeDialog>,
               @Inject(MAT_DIALOG_DATA) public productTypeId: number,
-              private fileService: FileService,
               private productTypeService: ProductTypeService,
               private productInfoTitleService: ProductInfoTitleService,
               private dictionaryService: DictionaryService,

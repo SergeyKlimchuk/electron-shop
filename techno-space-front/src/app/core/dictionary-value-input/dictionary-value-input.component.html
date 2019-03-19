@@ -1,11 +1,21 @@
-<mat-form-field>
-  <mat-select placeholder="Значение свойства"
-    [(ngModel)]="value"
-    (selectionChange)="changeValue($event.value.id)">
-    <mat-option
-    *ngFor="let dictionaryValue of dictionaryValues$ | async"
-    [value]="dictionaryValue.id">
-      {{ dictionaryValue.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<ng-container *ngIf="multiply; else elseTemplate">
+  <ul>
+    <li *ngFor="let value of dictionaryValues$ | async">
+      <mat-checkbox>{{ value.name }}</mat-checkbox>
+    </li>
+  </ul>
+</ng-container>
+<ng-template #elseTemplate>
+  <mat-form-field>
+    <mat-select
+      placeholder="Значение свойства"
+      [(ngModel)]="value"
+      (selectionChange)="changeValue($event.value)">
+      <mat-option
+        *ngFor="let dictionaryValue of (dictionaryValues$ | async)"
+        [value]="dictionaryValue.id">
+        {{ dictionaryValue.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>

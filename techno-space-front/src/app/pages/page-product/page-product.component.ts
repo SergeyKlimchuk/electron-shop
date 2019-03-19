@@ -33,7 +33,6 @@ export class PageProductComponent implements OnInit {
     this.productService.getProduct(Number(productId)).subscribe(
       (product) => {
         this.product = product;
-        console.log(product);
         this.applyproductProperties();
       },
       (error) => {
@@ -50,7 +49,6 @@ export class PageProductComponent implements OnInit {
   async applyproductProperties() {
     this.productService.getProductProperties(this.product.id).subscribe(
       (properties) => {
-        console.log(properties);
         this.properties = new Array<ProductProperty>();
         this.properties = properties;
       },

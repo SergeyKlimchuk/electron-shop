@@ -63,12 +63,10 @@ export class LoadableImageComponent implements ControlValueAccessor {
 
   selectNewImage() {
     this.selectImageElement.nativeElement.click();
-    console.log('selected new image');
   }
 
   restoreImage() {
     this.imageUrl = this.oldImageUrl;
-    console.log('restore image');
   }
 
   onImageWasBroken(event: any) {
@@ -82,7 +80,6 @@ export class LoadableImageComponent implements ControlValueAccessor {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        console.log('result', reader);
         const imageWidth = this.image.nativeElement.offsetWidth;
         const imageHeight = this.image.nativeElement.offsetHeight;
         if (imageWidth >= 100 && imageWidth <= 200
