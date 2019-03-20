@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user/user.service';
 import { controlIsInvalid } from 'src/utils/form-validator-msg';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-page-registration',
@@ -14,7 +16,9 @@ export class PageRegistrationComponent implements OnInit {
   registerForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService) {}
+              private userService: UserService,
+              private router: Router,
+              private snack: MatSnackBar) {}
 
   // TODO: Сделать нормальные валидаторы
 
@@ -42,8 +46,16 @@ export class PageRegistrationComponent implements OnInit {
     const form = this.registerForm;
     this.userService.registration(form.value)
       .subscribe(
-        (response) => {
-          console.info(response);
+        (newAccount) => {
+          this.userService.signIn(newAccount.email, newAccount.password).subscribe(
+            (success) => {
+              this.router.navigate(['/main']);
+            },
+            error => {
+              console.error(error);
+              this.snack.open('Во время пост аутентификации произошла ошибка!');
+            }
+          );
         },
         (error) => {
           console.error(error);
