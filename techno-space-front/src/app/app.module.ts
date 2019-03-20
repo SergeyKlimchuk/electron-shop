@@ -30,7 +30,6 @@ import { ProductTypeSubpageComponent } from './pages/page-admin/subpages/product
 import { ProductSubpageComponent } from './pages/page-admin/subpages/product-subpage/product-subpage.component';
 import { DictionariesSubpageComponent } from './pages/page-admin/subpages/dictionaries-subpage/dictionaries-subpage.component';
 import { EditProductTypeDialog } from './pages/page-admin/subpages/product-type-subpage/edit-product-type/edit-product-type-dialog';
-import { MatFileUploadModule } from 'angular-material-fileupload';
 import { DictionaryValuesListComponent } from './pages/page-admin/subpages/dictionaries-subpage/dictionary-values-list/dictionary-values-list.component';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { EditProductDialog } from './pages/page-admin/subpages/product-subpage/edit-product/edit-product-dialog';
@@ -102,7 +101,6 @@ const appRoutes: Routes = [
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
-    MatFileUploadModule,
     RouterModule.forRoot(
       appRoutes
     ),
