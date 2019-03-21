@@ -16,9 +16,13 @@ export class PageLoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private router: Router) {
-    if (userService.userIsAuthenticated()) {
-      this.redirectToMainPage();
-    }
+    userService.getCurrentUser().subscribe(
+      user => {
+        if (user) {
+          this.redirectToMainPage();
+        }
+      }
+    );
   }
 
   ngOnInit() {
@@ -40,7 +44,7 @@ export class PageLoginComponent implements OnInit {
   signIn() {
     this.userService.signIn(this.authForm.value.email, this.authForm.value.password)
       .subscribe(
-        (success) => {
+        () => {
           this.redirectToMainPage();
         },
         (error) => {

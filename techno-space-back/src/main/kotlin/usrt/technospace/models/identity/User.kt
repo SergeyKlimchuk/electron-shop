@@ -2,6 +2,7 @@ package usrt.technospace.models.identity
 
 import org.springframework.data.annotation.LastModifiedDate
 import org.springframework.data.annotation.CreatedDate
+import usrt.technospace.models.product.Product
 import usrt.technospace.models.roles.Role
 import java.util.*
 import javax.persistence.*
@@ -64,15 +65,12 @@ class User {
 
 
     // CART
-//    @ManyToMany(cascade = [
-//        CascadeType.PERSIST,
-//        CascadeType.MERGE
-//    ])
-//    @JoinTable(name = "cart",
-//            joinColumns = [JoinColumn(name = "user_id")],
-//            inverseJoinColumns = [JoinColumn(name = "product_id")]
-//    )
-//    var cart: List<Product>? = null
+    @ManyToMany
+    @JoinTable(name = "cart",
+            joinColumns = [JoinColumn(name = "user_id")],
+            inverseJoinColumns = [JoinColumn(name = "product_id")]
+    )
+    var cart: MutableList<Product>? = null
 
     // TODO: Favorites
 }

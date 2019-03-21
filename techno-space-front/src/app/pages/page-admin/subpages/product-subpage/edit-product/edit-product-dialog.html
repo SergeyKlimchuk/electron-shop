@@ -33,6 +33,7 @@
       matInput
       placeholder="Описание товара"
       [(ngModel)]="product.description"
+      [maxLength]="255"
       required
     ></textarea>
   </mat-form-field>

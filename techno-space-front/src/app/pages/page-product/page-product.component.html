@@ -1,7 +1,7 @@
 <div class="info">
   <div class="info__image">
       <img
-      src="http://c1.neweggimages.com/NeweggImage/ProductImageCompressAll300/19-117-826-Z01.jpg"
+      src="{{ product.imageUrl }}"
       alt="Картинка продукта">
   </div>
   <div class="info__text">
@@ -9,7 +9,10 @@
     <div class="product_count">Кол-во продуктов: {{ product.count }}</div>
     <div class="price__block">
         <span class="product__price">{{ product.price }} ₸</span>
-      <button mat-raised-button class="buy" color="primary">Добавить в корзину <mat-icon class="mat-18">shopping_cart</mat-icon></button>
+      <button mat-raised-button
+        class="buy"
+        color="primary"
+        (click)="cartAction()" >Добавить в корзину <mat-icon class="mat-18">shopping_cart</mat-icon></button>
     </div>
     <section *ngIf="product.description">
       Информация:
@@ -31,7 +34,7 @@
 
   <!-- Name Column -->
   <ng-container matColumnDef="value">
-    <th mat-header-cell *matHeaderCellDef>{{ product.name }}</th>
+    <th mat-header-cell *matHeaderCellDef class="grey">{{ product.name }}</th>
     <td mat-cell *matCellDef="let element"> {{element.value}} </td>
   </ng-container>
 

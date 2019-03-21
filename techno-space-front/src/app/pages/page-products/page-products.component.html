@@ -6,11 +6,11 @@
   <mat-card *ngFor="let product of products$ | async" class="product">
     <div class="left">
       <img src="{{ product.imageUrl }}" alt="Фотография товара" class="product__image">
-      <div class="product__price">{{ product.price }} Тг.</div>
+      <div class="product__price">{{ product.price }} ₸</div>
     </div>
     <div class="right">
       <div class="product__name" [routerLink]="['/product', product.id]">{{ product.name }}</div>
-      <div class="product__description">{{ product.description }}</div>
+      <div class="product__description">{{ product.description }}...</div>
     </div>
   </mat-card>
 </div>
