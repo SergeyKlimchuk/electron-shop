@@ -3,11 +3,13 @@ package usrt.technospace.config
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler
 import usrt.technospace.models.services.CustomUserDetailService
 import javax.sql.DataSource
 
@@ -50,12 +52,13 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 ?.loginPage("/login")
                 ?.usernameParameter("email")
                 ?.passwordParameter("password")
-                ?.successForwardUrl("/")
+                ?.successHandler { _, _, _ ->
+                }
                 ?.permitAll()
             ?.and()
                 ?.logout()
                 ?.logoutUrl("/logout")
-                ?.logoutSuccessUrl("/")
+                ?.logoutSuccessHandler(HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
                 ?.permitAll()
             ?.and()
                 http
