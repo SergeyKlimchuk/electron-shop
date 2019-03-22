@@ -21,12 +21,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     lateinit var dataSource: DataSource
 
     override fun configure(http: HttpSecurity?) {
-        http    ?.formLogin()
-                ?.loginPage("/login")
-                ?.usernameParameter("email")
-                ?.passwordParameter("password")
-                ?.permitAll()
-            ?.and()
+        http
                 ?.authorizeRequests()
                 ?.antMatchers(
                         "/",
@@ -51,11 +46,21 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 ?.antMatchers("/user/current")?.authenticated()
                 ?.anyRequest()?.authenticated()
             ?.and()
+                ?.formLogin()
+                ?.loginPage("/login")
+                ?.usernameParameter("email")
+                ?.passwordParameter("password")
+                ?.successForwardUrl("/")
+                ?.permitAll()
+            ?.and()
                 ?.logout()
                 ?.logoutUrl("/logout")
                 ?.logoutSuccessUrl("/")
                 ?.permitAll()
-        http?.csrf()?.disable()
+            ?.and()
+                http
+                ?.csrf()
+                ?.disable()
     }
 
     override fun configure(auth: AuthenticationManagerBuilder?) {

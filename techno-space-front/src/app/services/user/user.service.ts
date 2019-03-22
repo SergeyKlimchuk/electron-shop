@@ -13,7 +13,12 @@ export class UserService {
   private user$ = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient) {
-    this.updateUser().toPromise();
+    this.updateUser().subscribe(
+      () => {
+        console.log('Пользователь был успешно авторизован!');
+      },
+      error => {}
+    );
   }
 
   getRequiredPasswordLength() {
@@ -48,7 +53,7 @@ export class UserService {
     const loginRequest = this.http.post<any>('/api/login', formData);
     loginRequest.subscribe(
       () => {
-        this.updateUser();
+        this.updateUser().toPromise();
         console.log('Пользователь успешно авторизовался!');
       },
       (error) => {
