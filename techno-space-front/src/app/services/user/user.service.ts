@@ -57,4 +57,8 @@ export class UserService {
     );
     return loginRequest;
   }
+
+  signOut() {
+    return this.http.get<void>('/api/logout');
+  }
 }

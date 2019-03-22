@@ -32,6 +32,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/",
                         "/registration",
                         "/login",
+                        "/logout",
                         "/search",
                         "/products",
                         "/products/**",
@@ -51,6 +52,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 ?.anyRequest()?.authenticated()
             ?.and()
                 ?.logout()
+                ?.logoutUrl("/logout")
+                ?.logoutSuccessUrl("/")
                 ?.permitAll()
         http?.csrf()?.disable()
     }
