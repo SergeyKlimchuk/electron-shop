@@ -1,7 +1,7 @@
 <ng-container *ngIf="multiply; else elseTemplate">
   <ul>
-    <li *ngFor="let value of dictionaryValues$ | async">
-      <mat-checkbox>{{ value.name }}</mat-checkbox>
+    <li *ngFor="let dictionaryValue of dictionaryValues$ | async">
+      <mat-checkbox [value]="dictionaryValue.id">{{ dictionaryValue.name }}</mat-checkbox>
     </li>
   </ul>
 </ng-container>

@@ -1,9 +1,10 @@
-import { Subject } from 'rxjs';
-import { DictionaryService } from './../../services/dictionary/dictionary.service';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Component, OnInit, Input, ViewChild, QueryList, Output, EventEmitter } from '@angular/core';
-import { DictionaryValue } from 'src/models/dictionaries/dictionary-value';
 import { MatCheckbox } from '@angular/material';
+import { Subject } from 'rxjs';
+import { DictionaryValue } from 'src/models/dictionaries/dictionary-value';
+
+import { DictionaryService } from './../../services/dictionary/dictionary.service';
 
 @Component({
   selector: 'app-dictionary-value-input',
@@ -24,7 +25,7 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
   @Output()
   change = new EventEmitter<number>();
 
-  @ViewChild(MatCheckbox)
+  @ViewChildren(MatCheckbox)
   checkboxes: QueryList<MatCheckbox>;
 
   dictionaryValues$ = new Subject<DictionaryValue[]>();
@@ -46,7 +47,7 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
   }
 
   public getValues() {
-    return this.checkboxes;
+    return this.checkboxes.filter(x => x.checked).map(x => x.value);
   }
 
   public isValid() {
