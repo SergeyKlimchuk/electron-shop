@@ -72,5 +72,11 @@ class User {
     )
     var cart: MutableList<Product>? = null
 
-    // TODO: Favorites
+    // Favorites
+    @ManyToMany
+    @JoinTable(name = "favorites",
+            joinColumns = [JoinColumn(name = "user_id")],
+            inverseJoinColumns = [JoinColumn(name = "product_id")]
+    )
+    var favorites: MutableList<Product>? = null
 }
