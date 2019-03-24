@@ -42,6 +42,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/product-types",
                         "/cart",
                         "/cart/**",
+                        "/favorites",
+                        "/favorites/**",
                         "/files",
                         "/files/**",
                         "/product-types/**")?.permitAll()
