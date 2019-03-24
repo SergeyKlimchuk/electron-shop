@@ -52,8 +52,4 @@ class Product {
     @Column(name = "updated_date")
     @LastModifiedDate
     private var updatedAt: Date? = null
-
-
-//    @ManyToMany(mappedBy = "cart")
-//    var usersCart: List<User>? = null
 }
