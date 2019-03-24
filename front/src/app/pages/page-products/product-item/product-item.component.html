@@ -1,0 +1,47 @@
+<mat-card class="product" *ngIf="product" >
+  <div class="left">
+    <img
+      src="{{ product.imageUrl }}"
+      alt="Фотография товара"
+      class="product__image"
+    />
+    <div class="product__price">{{ product.price }} ₸</div>
+  </div>
+  <div class="right">
+    <div class="product__name" [routerLink]="['/product', product.id]">
+      {{ product.name }}
+    </div>
+    <div class="product__description">{{ product.description }}...</div>
+    <div class="product__actions" *ngIf="actionsVisible">
+      <!-- Favorites button -->
+      <ng-container
+        *ngIf="inFavorites; then removeFromFavorites; else addToFavorites"
+      ></ng-container>
+      <ng-template #removeFromFavorites>
+        <button mat-raised-button (click)="removeFromFavorite(product)">
+          <mat-icon>favorite</mat-icon> Удалить из избранного
+        </button>
+      </ng-template>
+      <ng-template #addToFavorites>
+        <button mat-raised-button (click)="addToFavorite(product)">
+          <mat-icon>favorite_border</mat-icon> Добавить в избранное
+        </button>
+      </ng-template>
+
+      <!-- Cart button -->
+      <ng-container
+        *ngIf="inCart; then removeFromCartTemplate; else addToCartTemplate"
+      ></ng-container>
+      <ng-template #removeFromCartTemplate>
+        <button mat-raised-button (click)="removeFromCart(product)">
+          <mat-icon>remove_shopping_cart</mat-icon> Удалить из корзины
+        </button>
+      </ng-template>
+      <ng-template #addToCartTemplate>
+        <button mat-raised-button (click)="addToCart(product)">
+          <mat-icon>add_shopping_cart</mat-icon> Добавить в корзину
+        </button>
+      </ng-template>
+    </div>
+  </div>
+</mat-card>

@@ -1,16 +1,9 @@
-<mat-card class="products__filter" *ngIf="productType" >
-  <app-product-type-filter [productTypeId]="productType.id"></app-product-type-filter>
+<mat-card class="products__filter" *ngIf="productType">
+  <app-product-type-filter
+    [productTypeId]="productType.id"
+  ></app-product-type-filter>
 </mat-card>
 
 <div class="products__list">
-  <mat-card *ngFor="let product of products$ | async" class="product">
-    <div class="left">
-      <img src="{{ product.imageUrl }}" alt="Фотография товара" class="product__image">
-      <div class="product__price">{{ product.price }} ₸</div>
-    </div>
-    <div class="right">
-      <div class="product__name" [routerLink]="['/product', product.id]">{{ product.name }}</div>
-      <div class="product__description">{{ product.description }}...</div>
-    </div>
-  </mat-card>
+  <app-product-item [productId]="product.id" *ngFor="let product of products$ | async" class="product"></app-product-item>
 </div>

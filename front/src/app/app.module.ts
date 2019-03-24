@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { HeaderDropdownComponent } from './header/header-dropdown/header-dropdown.component';
 import { SearchComponent } from './header/search/search.component';
 import { SearchDropdownComponent } from './header/search/search-dropdown/search-dropdown.component';
 import { SliderComponent } from './core/slider/slider.component';
@@ -38,6 +37,7 @@ import { DictionaryValueInputComponent } from './core/dictionary-value-input/dic
 import { ProductTypeInputComponent } from './core/product-type-input/product-type-input.component';
 import { ProductTypeFilterComponent } from './core/product-type-filter/product-type-filter.component';
 import { ProductPropertyValueEditorComponent } from './core/product-property-value-editor/product-property-value-editor.component';
+import { ProductItemComponent } from './pages/page-products/product-item/product-item.component';
 
 
 const appRoutes: Routes = [
@@ -64,7 +64,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HeaderComponent,
-    HeaderDropdownComponent,
     SearchComponent,
     SearchDropdownComponent,
     SliderComponent,
@@ -90,7 +89,8 @@ const appRoutes: Routes = [
     DictionaryValueInputComponent,
     ProductTypeInputComponent,
     ProductTypeFilterComponent,
-    ProductPropertyValueEditorComponent
+    ProductPropertyValueEditorComponent,
+    ProductItemComponent
   ],
   imports: [
     BrowserModule,
