@@ -26,6 +26,8 @@ export class ProductTypeFilterComponent implements OnInit {
   @Output()
   clean = new EventEmitter<void>();
 
+  applyButtonActive = false;
+
   titles: ProductInfoTitle[];
 
   constructor(private productInfoTitleService: ProductInfoTitleService,
@@ -48,6 +50,12 @@ export class ProductTypeFilterComponent implements OnInit {
     );
   }
 
+  clearFilters() {
+    this.applyButtonActive = false;
+    this.values.forEach( x => x.clear() );
+    this.apply.emit(null);
+  }
+
   applyFilter() {
     let index = 0;
     const valuesList = this.values.toArray();
@@ -57,7 +65,12 @@ export class ProductTypeFilterComponent implements OnInit {
         values: valuesList[index++].getValues().map(x => Number(x))
       };
     }).filter(value => value.values.length > 0);
+    this.applyButtonActive = false;
     this.apply.emit(values);
+  }
+
+  onChangeFilters() {
+    this.applyButtonActive = true;
   }
 
 }

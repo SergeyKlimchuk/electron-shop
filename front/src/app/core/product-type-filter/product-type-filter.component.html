@@ -10,12 +10,13 @@
     <app-dictionary-value-input
       [dictionaryId]="title.dictionary.id"
       [multiply]="true"
+      (change)="onChangeFilters()"
     ></app-dictionary-value-input>
   </mat-expansion-panel>
 </mat-accordion>
 <div class="actions">
-  <button mat-flat-button (click)="clean.emit()" >Сбросить <mat-icon>clear</mat-icon></button>
-  <button mat-raised-button color="primary" (click)="applyFilter()">
+  <button mat-flat-button (click)="clearFilters()" >Сбросить <mat-icon>clear</mat-icon></button>
+  <button mat-raised-button color="primary" (click)="applyFilter()" [disabled]="!applyButtonActive">
     Применить <mat-icon>sort</mat-icon>
   </button>
 </div>

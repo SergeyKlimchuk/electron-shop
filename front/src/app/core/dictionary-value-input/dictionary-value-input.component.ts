@@ -46,6 +46,14 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
     );
   }
 
+  public clear() {
+    if (this.multiply) {
+      this.checkboxes.forEach( x => x.checked = false );
+    } else {
+      this.value = null;
+    }
+  }
+
   public getValues() {
     return this.checkboxes.filter(x => x.checked).map(x => x.value);
   }
@@ -55,7 +63,9 @@ export class DictionaryValueInputComponent implements OnInit, ControlValueAccess
   }
 
   changeValue(newValue: number) {
-    this.onChange(newValue);
+    if (this.onChange) {
+      this.onChange(newValue);
+    }
     this.change.emit(newValue);
   }
 
