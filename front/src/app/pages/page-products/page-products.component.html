@@ -1,9 +1,16 @@
 <mat-card class="products__filter" *ngIf="productType">
   <app-product-type-filter
     [productTypeId]="productType.id"
+    (apply)="onApplyFilter($event)"
+    (clean)="onCleanFilters()"
   ></app-product-type-filter>
 </mat-card>
 
 <div class="products__list">
   <app-product-item [productId]="product.id" *ngFor="let product of products$ | async" class="product"></app-product-item>
+
+  <mat-paginator
+    [pageSizeOptions]="[1, 5, 10, 25, 100]"
+    (page)="onChangePage()">
+  </mat-paginator>
 </div>

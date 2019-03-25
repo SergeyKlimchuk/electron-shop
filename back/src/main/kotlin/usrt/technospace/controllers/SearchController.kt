@@ -7,12 +7,13 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
-import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import usrt.technospace.dto.QuerySegment
 import usrt.technospace.models.product.Product
 import usrt.technospace.repository.ProductRepository
+import java.math.BigInteger
 import javax.persistence.EntityManager
 
 @RestController
@@ -24,7 +25,7 @@ class SearchController {
     @Autowired
     lateinit var entityManager: EntityManager
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     fun search(@RequestBody querySegments: List<QuerySegment>,
                @PageableDefault(sort = ["createdAt"], direction = Sort.Direction.DESC) pageable: Pageable): Page<Product> {
         if (querySegments.isEmpty()) {
@@ -45,9 +46,9 @@ class SearchController {
     }
 
     private fun getSearchResultsTotalCount(query: String): Long {
-        val queryWithTotalCount = "SELECT COUNT(*) FROM ($query)"
-        val nativeQuery = entityManager.createNativeQuery(queryWithTotalCount, Int::class.java)
-        return nativeQuery.firstResult.toLong()
+        val queryWithTotalCount = "SELECT COUNT(pvt.id) FROM ($query) as pvt"
+        val nativeQuery = entityManager.createNativeQuery(queryWithTotalCount)
+        return (nativeQuery.resultList[0] as BigInteger).toLong()
     }
 
     private fun generateQuery(querySegments: List<QuerySegment>): String {
@@ -64,7 +65,7 @@ class SearchController {
                 query.append(" || ")
             }
 
-            query.append("(v.id IN ($valueIds) AND v.title_id = ${querySegment.titleId})")
+            query.append("(CAST(v.value AS int)  IN ($valueIds) AND v.title_id = ${querySegment.titleId})")
         }
         return query.toString()
     }

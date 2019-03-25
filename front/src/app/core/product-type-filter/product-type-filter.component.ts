@@ -1,8 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ProductInfoTitleService } from 'src/app/services/product-info-title/product-info-title.service';
-import { ProductInfoTitle } from 'src/models/products/product-info-title';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
+import { ProductInfoTitleService } from 'src/app/services/product-info-title/product-info-title.service';
+import { SearchRequestSegment } from 'src/app/services/search/search-request-segment';
+import { ProductInfoTitle } from 'src/models/products/product-info-title';
 import { ProductPropertyTitleType } from 'src/models/products/product-property-title-type';
+
+import { DictionaryValueInputComponent } from '../dictionary-value-input/dictionary-value-input.component';
 
 @Component({
   selector: 'app-product-type-filter',
@@ -13,6 +16,15 @@ export class ProductTypeFilterComponent implements OnInit {
 
   @Input()
   productTypeId: number;
+
+  @ViewChildren(DictionaryValueInputComponent)
+  values: QueryList<DictionaryValueInputComponent>;
+
+  @Output()
+  apply = new EventEmitter<SearchRequestSegment[]>();
+
+  @Output()
+  clean = new EventEmitter<void>();
 
   titles: ProductInfoTitle[];
 
@@ -34,6 +46,18 @@ export class ProductTypeFilterComponent implements OnInit {
         this.snack.open('Не удалось получить заголовки для филттрации');
       }
     );
+  }
+
+  applyFilter() {
+    let index = 0;
+    const valuesList = this.values.toArray();
+    const values = this.titles.map(title => {
+      return {
+        titleId: title.id,
+        values: valuesList[index++].getValues().map(x => Number(x))
+      };
+    }).filter(value => value.values.length > 0);
+    this.apply.emit(values);
   }
 
 }

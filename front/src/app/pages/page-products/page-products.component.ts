@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSnackBar, PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
+import { SearchRequestSegment } from 'src/app/services/search/search-request-segment';
+import { SearchService } from 'src/app/services/search/search.service';
 import { Product } from 'src/models/products/product';
-import { ProductInfoTitle } from 'src/models/products/product-info-title';
-import { ProductPropertyTitleType } from 'src/models/products/product-property-title-type';
 import { ProductType } from 'src/models/products/product-type';
 
-import { ProductInfoTitleService } from './../../services/product-info-title/product-info-title.service';
 import { ProductService } from './../../services/product/product.service';
+import { PageableResponse } from 'src/models/system/pageable-response';
 
 @Component({
   selector: 'app-page-products',
@@ -19,24 +19,17 @@ import { ProductService } from './../../services/product/product.service';
 export class PageProductsComponent implements OnInit {
   public productType: ProductType = null;
   public products$ = new Subject<Product[]>();
-  public pageButtons = new Subject<number[]>();
-  public filtrableProperies: ProductInfoTitle[];
 
-  totalPages = 1;
-  totalProducts = 0;
-  size = 6;
-  currentPage = 0;
+  private filters: SearchRequestSegment[];
 
-  priorPageIsAlloved = false;
-  nextPageIsAlloved = false;
+  @ViewChild(MatPaginator)
+  matPaginator: MatPaginator;
 
-  pagesCountOption = [ 10, 20, 30, 40 ];
-
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private productService: ProductService,
-              private productInfoTitleService: ProductInfoTitleService,
+  constructor(private router: Router,
               private snack: MatSnackBar,
+              private route: ActivatedRoute,
+              private searchService: SearchService,
+              private productService: ProductService,
               private productTypeService: ProductTypeService) {
   }
 
@@ -45,7 +38,7 @@ export class PageProductsComponent implements OnInit {
     const productTypeId = this.route.snapshot.paramMap.get('productTypeId');
     if (!productTypeId) {
       this.redirectToMain();
-      console.error('Была запрошена старница с товарами по пустой категории');
+      console.error('Была запрошена старница с товарами по пустой категории!');
       return;
     }
     this.loadProductType(Number(productTypeId));
@@ -59,7 +52,6 @@ export class PageProductsComponent implements OnInit {
     this.productTypeService.getProductType(productTypeId).subscribe(
       productType => {
         this.productType = productType;
-        this.loadFilters();
         this.updateProductsList();
       },
       error => {
@@ -69,66 +61,40 @@ export class PageProductsComponent implements OnInit {
     );
   }
 
-  loadFilters() {
-    this.productInfoTitleService.getProductInfoTitles(this.productType.id).subscribe(
-      (productInfoTitles) => {
-        this.filtrableProperies = productInfoTitles
-          .filter(title => title.type === ProductPropertyTitleType.Dictionary);
-      }
-    );
-  }
 
   updateProductsList() {
-    this.productService
-      .getProducts(this.productType.id, this.currentPage, this.size).subscribe(
+    let request: Observable<PageableResponse<Product>>;
+    if (this.filters) {
+      request = this.searchService.searchProductsByProperties(this.filters, this.matPaginator.pageIndex, this.matPaginator.pageSize);
+    } else {
+      request = this.productService.getProducts(this.productType.id, this.matPaginator.pageIndex, this.matPaginator.pageSize);
+    }
+
+    request.subscribe(
         (page) => {
-          const pagesCount = page.totalPages;
-          this.totalPages = pagesCount;
-          this.totalProducts = page.totalElements;
-          this.updatePageButtons(pagesCount);
-          this.updateButtonsState();
+          this.matPaginator.length = page.totalElements;
           this.products$.next(page.content);
         },
         (error) => {
           console.error('Не удалось получить товары по след. критериям:',
-          {id: this.productType.id, currentPage: this.currentPage, size: this.size, error});
+          {id: this.productType.id, currentPage: this.matPaginator.pageIndex, size: this.matPaginator.pageSize, error});
         }
       );
   }
 
-  updatePageButtons(pageButtonsCount: number) {
-    const numbersArray = Array(pageButtonsCount).map( (x, i) => i);
-    this.pageButtons.next(numbersArray);
-  }
-
-  updateButtonsState() {
-    const currentPageIsNotFirst = this.currentPage !== 0;
-    this.priorPageIsAlloved = currentPageIsNotFirst;
-    const currentPageIsNotLast = this.currentPage !== this.totalPages - 1;
-    this.nextPageIsAlloved = currentPageIsNotLast;
-  }
-
-  changeItemsPageSize(newSize: number) {
-    this.size = newSize;
+  onApplyFilter(filters: SearchRequestSegment[]) {
+    this.filters = filters;
+    this.matPaginator.pageSize = 0;
     this.updateProductsList();
   }
 
-  selectPage(page: number) {
-    this.currentPage = page;
+  onCleanFilters() {
+    this.filters = null;
+    this.matPaginator.pageSize = 0;
     this.updateProductsList();
   }
 
-  nextPage() {
-    if (this.nextPageIsAlloved) {
-      this.currentPage++;
-      this.updateProductsList();
-    }
-  }
-
-  priorPage() {
-    if (this.priorPageIsAlloved) {
-      this.currentPage--;
-      this.updateProductsList();
-    }
+  onChangePage() {
+    this.updateProductsList();
   }
 }

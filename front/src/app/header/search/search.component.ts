@@ -30,11 +30,11 @@ export class SearchComponent implements OnInit {
   }
 
   private searchProductsByPartialName(partialName: string): void {
-    this.searchService.searchProductsByPartialName(partialName).subscribe(products => {
-      console.info(`Был произведен поиск "${partialName}"`, products);
-      this.searchResults.next(products);
-      this.products = products;
-      this.visibleList = products.length > 0;
-    });
+    // this.searchService.searchProductsByPartialName(partialName).subscribe(products => {
+    //   console.info(`Был произведен поиск "${partialName}"`, products);
+    //   this.searchResults.next(products);
+    //   this.products = products;
+    //   this.visibleList = products.length > 0;
+    // });
   }
 }
