@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>usrt</groupId>
-	<artifactId>techno-space</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>techno-space</name>
+	<artifactId>electron-shop</artifactId>
+	<version>0.1</version>
+	<name>electron-shop</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -66,6 +66,7 @@
 	<build>
 		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
 		<testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+		<finalName>${artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

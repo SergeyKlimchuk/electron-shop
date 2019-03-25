@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  database:
+    container_name: electron-database
+    hostname: database
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=123321
+      - POSTGRES_DB=electron
+      - POSTGRES_USER=admin
+    volumes:
+      - '/var/electron-db:/var/lib/postgresql/data'
+  app:
+    container_name: electron-app
+    links:
+      - database
+    build:
+      context: .
+    environment:
+      - DATABASE_ADDRESS=database
+      - DATABASE_USERNAME=admin
+      - DATABASE_PASSWORD=123321
+      - DATABASE_DB=electron
+    ports:
+      - '8080:8080'
+
+    volumes:
+      - ./target:/app
