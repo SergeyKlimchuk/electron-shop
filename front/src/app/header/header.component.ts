@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from 'src/models/users/user';
 
 import { UserService } from './../services/user/user.service';
+import { Roles } from 'src/models/users/roles';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,7 @@ import { UserService } from './../services/user/user.service';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   user: User;
+  userIsAdmin = false;
 
   constructor(
     private userService: UserService) {
@@ -21,6 +23,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       user => {
         console.log('user', user);
         this.user = user;
+        if (user) {
+          this.userIsAdmin = this.user.roles.some(x => x === Roles.admin);
+        }
       }
     );
   }

@@ -10,7 +10,7 @@
   <app-product-item [productId]="product.id" *ngFor="let product of products$ | async" class="product"></app-product-item>
 
   <mat-paginator
-    [pageSizeOptions]="[1, 5, 10, 25, 100]"
+    [pageSizeOptions]="[5, 10, 25, 100]"
     (page)="onChangePage()">
   </mat-paginator>
 </div>

@@ -19,8 +19,8 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item [routerLink]="['/profile']"><mat-icon>person</mat-icon> Профиль</button>
           <button mat-menu-item [routerLink]="['/cart']"><mat-icon>shopping_basket</mat-icon> Корзина</button>
-          <button mat-menu-item [routerLink]="['/favorite']"><mat-icon>favorite</mat-icon> Избранное</button>
-          <button mat-menu-item [routerLink]="['/admin-panel']"><mat-icon>settings</mat-icon> Панель управления</button>
+          <button mat-menu-item [routerLink]="['/favorites']"><mat-icon>favorite</mat-icon> Избранное</button>
+          <button mat-menu-item [routerLink]="['/admin-panel']" *ngIf="userIsAdmin" ><mat-icon>settings</mat-icon> Панель управления</button>
           <button mat-menu-item (click)="signOut()" ><mat-icon>exit_to_app</mat-icon> Выйти</button>
         </mat-menu>
 

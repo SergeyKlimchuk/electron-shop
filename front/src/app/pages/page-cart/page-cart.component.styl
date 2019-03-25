@@ -1,0 +1,61 @@
+:host
+  height 100%
+  display flex
+  justify-content start
+  position relative
+  flex-direction column
+
+.header-row
+  position absolute
+  top 0px
+  left 50%
+  transform translateX(-50vw)
+  width 100vw
+  height 162px
+  background-color #fafafa
+  border-bottom 1px solid #dcdcdc
+
+.cart-head__actions
+  margin-top 20px
+
+.cart__panel
+  margin 20px 0
+  .cart__label
+    margin-bottom 8px
+.cart__table
+  width 100%
+  .mat-header-row
+    height 0px
+
+.product__image
+  position relative
+  overflow hidden
+  width 150px
+  height 150px
+  img
+    position absolute
+    top 50%
+    left 50%
+    width 100%
+    transform translate(-50%, -50%)
+    object-fit cover
+
+.price
+  font-size 1.3em
+  font-weight bold
+  text-align right
+
+.cart__total
+  justify-content right
+  padding-right 32px
+  .price
+    padding-left 12px
+
+.cart__buy
+  float right
+  margin 16px
+
+.cart__bottom-actions
+  display flex
+  justify-content end
+  align-items center

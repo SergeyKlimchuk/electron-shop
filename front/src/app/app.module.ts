@@ -38,20 +38,25 @@ import { ProductTypeInputComponent } from './core/product-type-input/product-typ
 import { ProductTypeFilterComponent } from './core/product-type-filter/product-type-filter.component';
 import { ProductPropertyValueEditorComponent } from './core/product-property-value-editor/product-property-value-editor.component';
 import { ProductItemComponent } from './pages/page-products/product-item/product-item.component';
+import { PageCartComponent } from './pages/page-cart/page-cart.component';
+import { NumberSplitPipe } from './core/pipes/number-split.pipe';
+import { PageFavoritesComponent } from './pages/page-favorites/page-favorites.component';
 
 
 const appRoutes: Routes = [
-  { path: 'main',           component: PageMainComponent        },
-  { path: 'login',          component: PageLoginComponent       },
-  { path: 'registration',   component: PageRegistrationComponent},
-  { path: 'product-types',  component: PageProductGroupComponent},
-  { path: 'products',       component: PageProductsComponent    },
-  { path: 'products/:productTypeId', component: PageProductsComponent    },
-  { path: 'product/:productId',    component: PageProductComponent     },
-  { path: 'addresses',      component: PageAddressesComponent   },
-  { path: 'actions',        component: PageActionsComponent     },
-  { path: 'actions/:id',    component: PageActionsComponent     },
-  { path: 'admin-panel',    component: PageAdminComponent       },
+  { path: 'main',           component: PageMainComponent              },
+  { path: 'login',          component: PageLoginComponent             },
+  { path: 'registration',   component: PageRegistrationComponent      },
+  { path: 'product-types',  component: PageProductGroupComponent      },
+  { path: 'products',       component: PageProductsComponent          },
+  { path: 'products/:productTypeId', component: PageProductsComponent },
+  { path: 'product/:productId',    component: PageProductComponent    },
+  { path: 'addresses',      component: PageAddressesComponent         },
+  { path: 'actions',        component: PageActionsComponent           },
+  { path: 'actions/:id',    component: PageActionsComponent           },
+  { path: 'admin-panel',    component: PageAdminComponent             },
+  { path: 'cart',           component: PageCartComponent              },
+  { path: 'favorites',      component: PageFavoritesComponent         },
   {
     path: '',
     redirectTo: '/main',
@@ -90,7 +95,10 @@ const appRoutes: Routes = [
     ProductTypeInputComponent,
     ProductTypeFilterComponent,
     ProductPropertyValueEditorComponent,
-    ProductItemComponent
+    ProductItemComponent,
+    PageCartComponent,
+    NumberSplitPipe,
+    PageFavoritesComponent
   ],
   imports: [
     BrowserModule,

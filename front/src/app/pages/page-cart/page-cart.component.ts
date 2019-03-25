@@ -1,0 +1,43 @@
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatTableDataSource } from '@angular/material';
+import { Product } from 'src/models/products/product';
+
+import { CartService } from './../../services/cart/cart.service';
+
+@Component({
+  selector: 'app-page-cart',
+  templateUrl: './page-cart.component.html',
+  styleUrls: ['./page-cart.component.styl']
+})
+export class PageCartComponent implements OnInit {
+
+  productsDataSource = new MatTableDataSource<{ product: Product, count: number }>();
+  totalPrice = 0;
+
+  constructor(private snack: MatSnackBar,
+              private cartService: CartService) { }
+
+  ngOnInit() {
+    this.cartService.getProducts().subscribe(
+      products => {
+        this.productsDataSource.data = products.map(x => {
+          return { product: x, count: 1 };
+        });
+        this.onChangeProductsCount();
+      },
+      error => {
+        const message = 'При полечения товаров в корзине проищошла ошибка!';
+        this.snack.open(message);
+      }
+    );
+  }
+
+  onChangeProductsCount() {
+    this.totalPrice = 0;
+    const data = this.productsDataSource.data;
+    if (data) {
+      this.totalPrice = data.reduce( (prior, row) => row.product.price * row.count + prior, 0);
+    }
+  }
+
+}

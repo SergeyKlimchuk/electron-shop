@@ -1,10 +1,12 @@
 <mat-card class="product" *ngIf="product" >
   <div class="left">
-    <img
+    <div class="image-wrapper">
+      <img
       src="{{ product.imageUrl }}"
       alt="Фотография товара"
       class="product__image"
     />
+    </div>
     <div class="product__price">{{ product.price }} ₸</div>
   </div>
   <div class="right">

@@ -1,0 +1,89 @@
+<div class="header-row"></div>
+<div class="cart-head__actions">
+  <button mat-stroked-button><mat-icon>delete</mat-icon> Очистить корзину</button>
+</div>
+<mat-card class="cart__panel">
+  <mat-card-header>
+    <h2 class="cart__label">Корзина</h2>
+  </mat-card-header>
+  <mat-card-content>
+    <table
+      mat-table
+      #table
+      [dataSource]="productsDataSource"
+      class="cart__table"
+    >
+      <!-- Image -->
+      <ng-container matColumnDef="image">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <div class="product__image">
+            <img
+              [src]="row.product.imageUrl"
+              alt="Изображение товара {{ row.product.name }}"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <div class="product__name">{{ row.product.name }}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Кол-во"
+              type="number"
+              [(ngModel)]="row.count"
+              value="1"
+              min="0"
+              (change)="onChangeProductsCount()"
+            />
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row" class="price">
+          {{ row.product.price | numberSplit }}₸
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let product"></td>
+      </ng-container>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="['image', 'name', 'count', 'price', 'actions']"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          columns: ['image', 'name', 'count', 'price', 'actions']
+        "
+      ></tr>
+    </table>
+  </mat-card-content>
+  <mat-card-actions class="cart__bottom-actions">
+      Общая стоимость:
+      <span class="price"> {{ totalPrice | numberSplit }}₸</span>
+    <button
+      mat-flat-button
+      color="primary"
+      class="cart__buy"
+      *ngIf="totalPrice > 0 && productsDataSource.data.length > 0"
+    >
+      Оформить заказ <mat-icon>navigate_next</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
