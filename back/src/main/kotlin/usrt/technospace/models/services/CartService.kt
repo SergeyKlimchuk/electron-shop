@@ -35,4 +35,10 @@ class CartService {
         user.cart!!.remove(product)
         userRepository.save(user)
     }
+
+    fun clearCart() {
+        val user = userService.getCurrentUser()
+        user.cart!!.clear()
+        userRepository.save(user)
+    }
 }

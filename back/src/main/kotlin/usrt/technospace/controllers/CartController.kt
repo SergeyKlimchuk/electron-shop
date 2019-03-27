@@ -25,4 +25,9 @@ class CartController {
     fun removeFromCart(@PathVariable productId: Long) {
         cartService.removeFromCart(productId)
     }
+
+    @DeleteMapping("/cart")
+    fun removeAllFromCart() {
+        cartService.clearCart()
+    }
 }

@@ -31,10 +31,17 @@ export class CartService {
     );
   }
 
+  clearCart() {
+    return this.http.delete<void>('/api/cart').pipe(
+      tap(() => this.updateValues())
+    );
+  }
+
   private updateValues() {
     this.http.get<Product[]>('/api/cart').subscribe(
       products => this.valeus$.next(products),
       error => console.error('Произошла ошибка при получении списка продуктов в корзине!', error)
     );
   }
+
 }
