@@ -1,7 +1,6 @@
-package usrt.technospace.models.services
+package usrt.technospace.services
 
 import org.springframework.stereotype.Service
-import usrt.technospace.models.product.ProductType
 import usrt.technospace.repository.ProductRepository
 import usrt.technospace.repository.ProductTypeRepository
 import javax.annotation.PostConstruct

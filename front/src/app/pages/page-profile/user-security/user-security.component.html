@@ -1,0 +1,48 @@
+<mat-list>
+  <!-- Почта -->
+  <mat-list-item>
+    <div class="property">
+      <div class="property__info">
+        <h4>Email</h4>
+        <div class="property__value">{{ user?.email }}</div>
+      </div>
+      <div>
+        <button mat-stroked-button (click)="updateEmail()">Изменить <mat-icon>edit</mat-icon></button>
+      </div>
+    </div>
+  </mat-list-item>
+
+  <!-- Запосная почта -->
+  <mat-list-item>
+    <div class="property">
+      <div class="property__info">
+        <h4>Запасной Email</h4>
+        <div class="property__value">
+          <div *ngIf="haveSecondaryEmail">{{ user.secondaryEmail }}</div>
+          <div *ngIf="!haveSecondaryEmail">Отсутствует</div>
+        </div>
+      </div>
+      <div>
+        <button *ngIf="haveSecondaryEmail" mat-stroked-button (click)="updateSecondaryEmail()" class="right">
+          Изменить <mat-icon>edit</mat-icon>
+        </button>
+        <button *ngIf="!haveSecondaryEmail" mat-stroked-button (click)="updateSecondaryEmail()" class="right">
+          Добавить <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-list-item>
+
+  <!-- Пароль -->
+  <mat-list-item class="top-padding">
+    <div class="property">
+      <div class="property__info">
+        <h4>Пароль</h4>
+        <div class="property__value">********</div>
+      </div>
+      <div>
+        <button mat-stroked-button (click)="updatePassword()">Изменить <mat-icon>edit</mat-icon></button>
+      </div>
+    </div>
+  </mat-list-item>
+</mat-list>

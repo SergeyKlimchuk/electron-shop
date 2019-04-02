@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-page-profile',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PageProfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private snack: MatSnackBar) { }
 
   ngOnInit() {
   }

@@ -1,3 +1,19 @@
-<p>
-  page-profile works!
-</p>
+<h1 class="profile__label">Профиль</h1>
+<mat-card class="profile__settings">
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab label="Общее">
+      <app-user-info></app-user-info>
+    </mat-tab>
+
+    <mat-tab label="История">
+    </mat-tab>
+
+    <mat-tab label="Безопасность">
+      <app-user-security></app-user-security>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+
+<mat-card class="profile__notifications">
+  <app-notifications-list></app-notifications-list>
+</mat-card>

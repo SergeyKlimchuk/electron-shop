@@ -1,6 +1,6 @@
 <div class="header-row"></div>
 <div class="cart-head__actions">
-  <button mat-stroked-button><mat-icon>delete</mat-icon> Очистить корзину</button>
+  <button mat-stroked-button (click)="clearCart()" ><mat-icon>delete</mat-icon> Очистить корзину</button>
 </div>
 <mat-card class="cart__panel">
   <mat-card-header>
@@ -82,6 +82,7 @@
       color="primary"
       class="cart__buy"
       *ngIf="totalPrice > 0 && productsDataSource.data.length > 0"
+      (click)="pay()"
     >
       Оформить заказ <mat-icon>navigate_next</mat-icon>
     </button>

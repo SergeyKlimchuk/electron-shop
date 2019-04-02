@@ -9,8 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import usrt.technospace.dto.ProductProperty
 import usrt.technospace.models.product.Product
-import usrt.technospace.models.services.ProductService
-import usrt.technospace.repository.ProductInfoValueRepository
+import usrt.technospace.services.ProductService
 import usrt.technospace.repository.ProductRepository
 import javax.validation.Valid
 import javax.validation.constraints.NotNull

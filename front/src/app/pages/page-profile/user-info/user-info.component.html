@@ -1,0 +1,62 @@
+<div *ngIf="user" class="user__info">
+  <mat-form-field class="half-width">
+    <input
+      matInput
+      placeholder="Имя"
+      [disabled]="!editMode"
+      [(ngModel)]="newUser.name"
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field class="half-width">
+    <input
+      matInput
+      [disabled]="!editMode"
+      placeholder="Фамилия"
+      [(ngModel)]="newUser.lastName"
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      placeholder="Отчество"
+      [disabled]="!editMode"
+      [(ngModel)]="newUser.secondName"
+    />
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      placeholder="Номер телефона"
+      [disabled]="!editMode"
+      [(ngModel)]="newUser.phoneNumber"
+      maxlength="10"
+      minlength="10"
+      required
+    />
+  </mat-form-field>
+  <div class="actions full-width">
+    <div *ngIf="editMode; then finishEditActions; else startEditActions"></div>
+    <ng-template #finishEditActions>
+      <button mat-stroked-button (click)="revert()">Отмена</button>
+      <button mat-raised-button (click)="save()" color="primary">
+        Сохранить
+      </button>
+    </ng-template>
+
+    <ng-template class="actions full-width" #startEditActions>
+      <button
+        mat-stroked-button
+        *ngIf="!editMode"
+        (click)="editMode = true"
+        class="edit-btn"
+      >
+        Редактировать<mat-icon>edit</mat-icon>
+      </button>
+    </ng-template>
+  </div>
+</div>

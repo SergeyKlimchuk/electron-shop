@@ -13,11 +13,10 @@ export class UserService {
   private user$ = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient) {
-    this.updateUser().subscribe(
+    this.loadUser().subscribe(
       () => {
         console.log('Пользователь был успешно авторизован!');
-      },
-      error => {}
+      }
     );
   }
 
@@ -25,8 +24,32 @@ export class UserService {
     return 6;
   }
 
-  updateUser() {
+  loadUser() {
     return this.http.get<User>('/api/user/current').pipe(
+      tap(user => this.user$.next(user))
+    );
+  }
+
+  updateEmail(newEmail: string, password: string) {
+    return this.http.post<User>('/api/user/current/email', {newEmail, password}).pipe(
+      tap(user => this.user$.next(user))
+    );
+  }
+
+  updateSecondaryEmail(newEmail: string, password: string) {
+    return this.http.post<User>('/api/user/current/secondaryEmail', {newEmail, password}).pipe(
+      tap(user => this.user$.next(user))
+    );
+  }
+
+  updatePassword(newPassword: string, currentPassword: string) {
+    return this.http.post<User>('/api/user/current/password', {newPassword, currentPassword}).pipe(
+      tap(user => this.user$.next(user))
+    );
+  }
+
+  updateUser(name: string, lastName: string, secondName: string, phoneNumber: string) {
+    return this.http.put<User>('/api/user/current', {name, lastName, secondName, phoneNumber}).pipe(
       tap(user => this.user$.next(user))
     );
   }
@@ -53,7 +76,7 @@ export class UserService {
     const loginRequest = this.http.post<any>('/api/login', formData);
     loginRequest.subscribe(
       () => {
-        this.updateUser().toPromise();
+        this.loadUser().toPromise();
         console.log('Пользователь успешно авторизовался!');
       },
       (error) => {

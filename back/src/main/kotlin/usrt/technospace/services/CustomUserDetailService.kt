@@ -1,4 +1,4 @@
-package usrt.technospace.models.services
+package usrt.technospace.services
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.core.userdetails.UserDetails
@@ -21,7 +21,7 @@ class CustomUserDetailService : UserDetailsService {
         val user = userRepository.findByEmail(email)
 
         if (null == user) {
-            throw UsernameNotFoundException("No user present with username: $email")
+            throw UsernameNotFoundException("No author present with username: $email")
 
         } else {
 

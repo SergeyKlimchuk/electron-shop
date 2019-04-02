@@ -8,7 +8,7 @@ import usrt.technospace.models.roles.Role
 import usrt.technospace.repository.UserRepository
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestBody
-import usrt.technospace.models.services.UserService
+import usrt.technospace.services.UserService
 import javax.validation.Valid
 
 
@@ -38,8 +38,6 @@ class RegistrationController {
 
         user.roles = hashSetOf(Role.USER)
         user.active = true
-//        user.createdAt = Date()
-//        user.createdAt = Date()
         return userRepository.save(user)
     }
 }

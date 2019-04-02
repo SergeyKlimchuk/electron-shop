@@ -1,10 +1,7 @@
 package usrt.technospace.models.identity
 
-import org.springframework.data.annotation.LastModifiedDate
-import org.springframework.data.annotation.CreatedDate
 import usrt.technospace.models.product.Product
 import usrt.technospace.models.roles.Role
-import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.Size
@@ -21,6 +18,9 @@ class User {
     @NotBlank
     @Column(name = "email", nullable = false)
     var email: String? = null
+
+    @Column(name = "secondary_email")
+    var secondaryEmail: String? = null
 
     @NotBlank
     @Column(name = "password", nullable = false)
@@ -42,21 +42,13 @@ class User {
     var lastName: String? = null
 
     @Column(name = "second_name")
-    @Size(min = 2, max = 30)
+    @Size(max = 30)
     var secondName: String? = null
 
     @NotBlank
     @Column(name = "phone_number", nullable = false)
     @Size(min = 10, max = 10)
     var phoneNumber: String? = null
-
-    @Column(name = "created_date", updatable = false)
-    @CreatedDate
-    private var createdAt: Date? = null
-
-    @Column(name = "updated_date")
-    @LastModifiedDate
-    private var updatedAt: Date? = null
 
     @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])

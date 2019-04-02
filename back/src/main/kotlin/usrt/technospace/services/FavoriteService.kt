@@ -1,4 +1,4 @@
-package usrt.technospace.models.services
+package usrt.technospace.services
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

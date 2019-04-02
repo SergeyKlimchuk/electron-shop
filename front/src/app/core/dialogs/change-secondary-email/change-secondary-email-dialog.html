@@ -1,0 +1,20 @@
+<h2>{{ !!oldEmail ? 'Обновление' : 'Добавление' }} запасного почтового адреса</h2>
+
+<mat-form-field class="full-width">
+  <input #email matInput placeholder="Текущий пароль" required type="password" [(ngModel)]="password"/>
+</mat-form-field>
+
+<mat-form-field class="full-width">
+  <input #email matInput placeholder="Почта" required type="email" [(ngModel)]="newEmail"/>
+</mat-form-field>
+
+<span class="info">
+  Запасной почтовый адрес будет использоваться <br>
+  для восстановления доступа к аккаунту если вы<br>
+  забудете пароль, так же при смене настроек<br>
+  безопасности на него будут приходить уведомления!
+</span>
+<div class="actions">
+  <button mat-button (click)="exit()">Отмена</button>
+  <button [disabled]="(newEmail === oldEmail) || !password" mat-flat-button color="primary" (click)="applyChanges()">Сохранить</button>
+</div>

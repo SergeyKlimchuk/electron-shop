@@ -3,7 +3,7 @@ package usrt.technospace.controllers
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import usrt.technospace.models.product.Product
-import usrt.technospace.models.services.CartService
+import usrt.technospace.services.CartService
 
 @RestController
 class CartController {

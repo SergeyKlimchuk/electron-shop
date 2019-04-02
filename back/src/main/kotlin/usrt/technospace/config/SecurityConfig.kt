@@ -10,9 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.crypto.password.NoOpPasswordEncoder
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler
-import usrt.technospace.models.services.CustomUserDetailService
+import usrt.technospace.services.CustomUserDetailService
 import javax.sql.DataSource
-
 
 @Configuration
 @EnableWebSecurity
@@ -28,6 +27,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 ?.antMatchers(
                         "/",
                         "/registration",
+                        "/user/current/email",
+                        "/user/current/secondaryEmail",
                         "/login",
                         "/logout",
                         "/search",
@@ -40,14 +41,18 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/product-info-values",
                         "/product-info-values/**",
                         "/product-types",
+                        "/files",
+                        "/files/**",
+                        "/product-types/**")
+                        ?.permitAll()
+                ?.antMatchers(
+                        "/author/current",
                         "/cart",
                         "/cart/**",
                         "/favorites",
                         "/favorites/**",
-                        "/files",
-                        "/files/**",
-                        "/product-types/**")?.permitAll()
-                ?.antMatchers("/user/current")?.authenticated()
+                        "/generate-pay-link")
+                        ?.authenticated()
                 ?.anyRequest()?.authenticated()
             ?.and()
                 ?.formLogin()

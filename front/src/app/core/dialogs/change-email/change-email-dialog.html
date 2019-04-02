@@ -1,0 +1,19 @@
+<h2>Обновление почтового адреса</h2>
+
+<mat-form-field class="full-width">
+  <input #pass matInput placeholder="Текущий пароль" required type="password" [(ngModel)]="password"/>
+</mat-form-field>
+
+<mat-form-field class="full-width">
+  <input #mail matInput placeholder="Почта" required type="email" [(ngModel)]="newEmail"/>
+</mat-form-field>
+
+<span class="info">
+  Это основной почтовый адрес,<br>
+  он будет использоваться для восстановления<br>
+  доступа к аккаунту если вы забудете пароль!
+</span>
+<div class="actions">
+  <button mat-button (click)="exit()">Отмена</button>
+  <button [disabled]="(newEmail === oldEmail) || (7 > password.length) || !mail" mat-flat-button color="primary" (click)="applyChanges()">Сохранить</button>
+</div>
