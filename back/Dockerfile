@@ -1,12 +1,19 @@
-FROM openjdk:8
+FROM maven:3-jdk-8-alpine AS builder
+WORKDIR /app
+COPY . /app
+# Start build application
+RUN mvn install -Dmaven.test.skip=true compile package
+
+# Create image with compiled service
+FROM openjdk:8-alpine
+WORKDIR /app
+# Copy succes builded service
+COPY --from=builder /app/ /app/
+
+# Configurations
 ENV DATABASE_ADDRESS=database
 ENV DATABASE_DB=electron
 ENV DATABASE_USERNAME=admin
 ENV DATABASE_PASSWORD=123321
-COPY ./target/electron-shop.jar /tmp/electron-shop.jar
-WORKDIR /tmp
-RUN echo $DATABASE_ADDRESS
-RUN echo $DATABASE_DB
-RUN echo $DATABASE_USERNAME
-RUN echo $DATABASE_PASSWORD
+# Start service
 ENTRYPOINT java -jar electron-shop.jar --spring.datasource.url=jdbc:postgresql://$DATABASE_ADDRESS/$DATABASE_DB --spring.datasource.username=$DATABASE_USERNAME --spring.datasource.password=$DATABASE_PASSWORD
