@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 FROM maven:3-jdk-8-alpine AS builder
 WORKDIR /app
 COPY . /app
@@ -11,6 +12,9 @@ WORKDIR /app
 COPY --from=builder /app/ /app/
 
 # Configurations
+=======
+FROM openjdk:8-alpine
+>>>>>>> 8d050c9571ac86e61804a147a97233714887142b
 ENV DATABASE_ADDRESS=database
 ENV DATABASE_DB=electron
 ENV DATABASE_USERNAME=admin
