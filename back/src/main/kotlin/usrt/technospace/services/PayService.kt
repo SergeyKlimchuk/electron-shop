@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 import usrt.technospace.models.payment.Bill
+import usrt.technospace.models.payment.BillStatus
 import usrt.technospace.models.product.Product
 import usrt.technospace.repository.BillRepository
 import java.math.BigDecimal
@@ -40,6 +41,10 @@ class PayService {
     fun generatePayLink(bill: Bill, successUrl: String): String {
         if (bill.id == null) {
             throw Error("Could not use unsaved bill!")
+        }
+
+        if (bill.status.ordinal > BillStatus.PENDING_PAY.ordinal) {
+            throw Error("Could not generate pay link for bill, because bill already paid!")
         }
 
         val totalPrice = bill.products!!.sumBy { x -> x.price!! }
