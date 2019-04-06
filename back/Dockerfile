@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:8-alpine
 ENV DATABASE_ADDRESS=database
 ENV DATABASE_DB=electron
 ENV DATABASE_USERNAME=admin
