@@ -1,7 +1,7 @@
 package usrt.technospace.models.payment
 
-import usrt.technospace.models.core.Auditable
 import com.fasterxml.jackson.annotation.JsonBackReference
+import usrt.technospace.models.core.Auditable
 import usrt.technospace.models.identity.User
 import usrt.technospace.models.product.Product
 import javax.persistence.*
@@ -30,4 +30,8 @@ class Bill: Auditable() {
 
     @Column(name = "external_bill_id")
     var externalBillId: String? = null
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
+    var status: BillStatus = BillStatus.PENDING_PAY
 }
