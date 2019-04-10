@@ -16,6 +16,7 @@ import { DictionaryValueInputComponent } from './core/dictionary-value-input/dic
 import { HistoryListComponent } from './core/history-list/history-list.component';
 import { LoadableImageComponent } from './core/loadable-image/loadable-image.component';
 import { NotificationsListComponent } from './core/notifications-list/notifications-list.component';
+import { BillStatusPipe } from './core/pipes/bill-status.pipe';
 import { NumberSplitPipe } from './core/pipes/number-split.pipe';
 import {
   ProductPropertyValueEditorComponent,
@@ -58,6 +59,7 @@ import { PageProfileComponent } from './pages/page-profile/page-profile.componen
 import { UserInfoComponent } from './pages/page-profile/user-info/user-info.component';
 import { UserSecurityComponent } from './pages/page-profile/user-security/user-security.component';
 import { PageRegistrationComponent } from './pages/page-registration/page-registration.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 const appRoutes: Routes = [
@@ -123,7 +125,8 @@ const appRoutes: Routes = [
     UserSecurityComponent,
     ChangeEmailDialog,
     ChangeSecondaryEmailDialog,
-    ChangePasswordDialog
+    ChangePasswordDialog,
+    BillStatusPipe
   ],
   imports: [
     BrowserModule,
@@ -137,7 +140,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes
     ),
-    MaterialModule
+    MaterialModule,
+    InfiniteScrollModule
     // other imports here
   ],
   entryComponents: [
@@ -150,6 +154,7 @@ const appRoutes: Routes = [
   providers: [
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [BillStatusPipe]
 })
 export class AppModule { }

@@ -28,9 +28,6 @@ class Bill: Auditable() {
     )
     var products: List<Product>? = null
 
-    @Column(name = "external_bill_id")
-    var externalBillId: String? = null
-
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     var status: BillStatus = BillStatus.PENDING_PAY

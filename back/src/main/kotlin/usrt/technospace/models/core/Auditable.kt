@@ -17,12 +17,12 @@ open class Auditable {
 
     @CreatedDate
     @Column(name = "created_date")
-    private var createdDate: Date? = null
+    var createdDate: Date? = null
 
 //    @LastModifiedBy
 //    private val lastModifiedBy: User? = null
 
     @LastModifiedDate
     @Column(name = "last_modified_date")
-    private var lastModifiedDate: Date? = null
+    var lastModifiedDate: Date? = null
 }

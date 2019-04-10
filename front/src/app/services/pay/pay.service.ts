@@ -14,6 +14,6 @@ export class PayService {
   }
 
   generatePayLink(productIds: number[]) {
-    return this.http.post<string>('/api/generate-pay-link', { productIds, successUrl: this.successPayLink});
+    return this.http.post<string>('/api/generate-pay-link', productIds);
   }
 }

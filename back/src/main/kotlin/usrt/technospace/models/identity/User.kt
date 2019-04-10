@@ -53,7 +53,7 @@ class User {
     @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])
     @Enumerated(EnumType.STRING)
-    var roles: Set<Role>? = null
+    var roles: Set<Role> = setOf(Role.USER)
 
 
     // CART

@@ -1,0 +1,44 @@
+:host
+  min-height 300px
+  max-height 350px
+  display flex
+  flex-direction column
+
+.history__list
+  flex-grow 2
+  display flex
+  flex-direction column
+  align-items stretch
+  overflow-y auto
+  li
+    box-sizing border-box
+    display flex
+    padding 20px 10px
+    border-bottom 1px solid #ddd
+    .status
+      font-weight bold
+      flex-grow 2
+  .end
+    padding 20px
+    display flex
+    justify-content center
+    align-items center
+    .text
+      padding 8px 24px
+      background-color #ddd
+      border-radius 8px
+      cursor default
+
+
+.not-found-message
+  flex-grow 2
+  display flex
+  flex-direction column
+  justify-content center
+  align-items center
+  .img
+    color #777
+    font-size 64px
+    width 64px
+    height 64px
+

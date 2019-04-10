@@ -1,3 +1,29 @@
-<p>
-  history-list works!
-</p>
+<mat-progress-bar mode="query" *ngIf="load"></mat-progress-bar>
+<ng-container
+  *ngIf="(bills$ | async).length > 0; then billsFound; else billsNotFound"
+></ng-container>
+<ng-template #billsFound>
+  <ul class="history__list"
+    infiniteScroll
+    [infiniteScrollDistance]="6"
+    [infiniteScrollThrottle]="1000"
+    (scrolled)="scroll()"
+    [scrollWindow]="false">
+    <li *ngFor="let bill of bills$ | async">
+      {{ bill.status.ordinl }}
+      <div class="status">{{ bill.status | billStatus }}</div>
+      <div class="last-update-status">{{ bill.createdDate | date:'HH:mm dd.MM.yyyy' }}</div>
+    </li>
+
+    <div class="end" *ngIf="finished" >
+      <div class="text">Конец списка</div>
+    </div>
+  </ul>
+</ng-template>
+<ng-template #billsNotFound>
+  <div class="not-found-message">
+    <mat-icon class="img">inbox</mat-icon>
+    <div class="text">Ваша история покупок пуста!</div>
+    <a [routerLink]="['/product-types']">Перейти к покупкам..</a>
+  </div>
+</ng-template>
