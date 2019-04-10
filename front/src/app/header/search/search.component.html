@@ -1,8 +1,0 @@
-<div class="container">
-  <input #searchField type="text" maxlength=90 placeholder="Поиск по сайту..."
-        (keyup)="searchTerm$.next($event.target.value)"
-        (focus)="this.visibleList = this.products.length > 0"
-        (blur)="this.visibleList = false" >
-  <mat-icon class="loop">search</mat-icon>
-  <app-search-dropdown #dropdown [products]="products" [ngClass]="visibleList ? '' : 'hidden'"></app-search-dropdown>
-</div>

@@ -25,8 +25,6 @@ import { ProductTypeFilterComponent } from './core/product-type-filter/product-t
 import { ProductTypeInputComponent } from './core/product-type-input/product-type-input.component';
 import { SliderComponent } from './core/slider/slider.component';
 import { HeaderComponent } from './header/header.component';
-import { SearchDropdownComponent } from './header/search/search-dropdown/search-dropdown.component';
-import { SearchComponent } from './header/search/search.component';
 import { MaterialModule } from './material/material.module';
 import { PageActionsComponent } from './pages/page-actions/page-actions.component';
 import { PageAddressesComponent } from './pages/page-addresses/page-addresses.component';
@@ -89,8 +87,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HeaderComponent,
-    SearchComponent,
-    SearchDropdownComponent,
     SliderComponent,
     PageNotFoundComponent,
     PageMainComponent,
