@@ -1,34 +1,30 @@
-<header class="header">
-  <div class="container-center">
-    <a [routerLink]="['/main']" class="item">
+<header>
+  <mat-toolbar class="header">
+    <button mat-button [routerLink]="['/main']">
       <img src="./../../assets/icons/icon.svg" class="icon" alt="" /> Электрон
-    </a>
-    <a [routerLink]="['/product-types']" class="item">Каталог</a>
-    <a [routerLink]="['/addresses']" class="item">Центры</a>
-    <a [routerLink]="['/actions']" class="item">Акции</a>
+    </button>
 
-    <!-- Account block -->
-    <div class="item_right">
-      <app-search class="search"></app-search>
+    <button mat-button [routerLink]="['/product-types']">Каталог</button>
+    <button mat-button [routerLink]="['/addresses']">Центры</button>
+    <button mat-button [routerLink]="['/actions']">Акции</button>
+    <div class="spacer"></div>
+    <ng-container *ngIf="user; then userIsAuthenticated; else userIsNotAuthenticated"></ng-container>
+    <ng-template #userIsAuthenticated>
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>person</mat-icon> {{ user.name }} {{ user.lastName }}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [routerLink]="['/profile']"><mat-icon>person</mat-icon> Профиль</button>
+        <button mat-menu-item [routerLink]="['/cart']"><mat-icon>shopping_basket</mat-icon> Корзина</button>
+        <button mat-menu-item [routerLink]="['/favorites']"><mat-icon>favorite</mat-icon> Избранное</button>
+        <button mat-menu-item [routerLink]="['/admin-panel']" *ngIf="userIsAdmin" ><mat-icon>settings</mat-icon> Панель управления</button>
+        <button mat-menu-item (click)="signOut()" ><mat-icon>exit_to_app</mat-icon> Выйти</button>
+      </mat-menu>
+    </ng-template>
+    <ng-template #userIsNotAuthenticated>
+      <button mat-button [routerLink]="['/login']">Вход</button>
+    </ng-template>
 
-      <div *ngIf="user; then userBlock; else signInBlock"></div>
-      <ng-template #userBlock>
-        <button mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>person</mat-icon> {{ user.name }} {{ user.lastName }}
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="['/profile']"><mat-icon>person</mat-icon> Профиль</button>
-          <button mat-menu-item [routerLink]="['/cart']"><mat-icon>shopping_basket</mat-icon> Корзина</button>
-          <button mat-menu-item [routerLink]="['/favorites']"><mat-icon>favorite</mat-icon> Избранное</button>
-          <button mat-menu-item [routerLink]="['/admin-panel']" *ngIf="userIsAdmin" ><mat-icon>settings</mat-icon> Панель управления</button>
-          <button mat-menu-item (click)="signOut()" ><mat-icon>exit_to_app</mat-icon> Выйти</button>
-        </mat-menu>
 
-      </ng-template>
-
-      <ng-template #signInBlock>
-        <a [routerLink]="['/login']" class="item">Вход</a>
-      </ng-template>
-    </div>
-  </div>
+  </mat-toolbar>
 </header>
