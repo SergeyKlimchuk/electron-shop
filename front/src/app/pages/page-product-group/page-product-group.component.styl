@@ -3,36 +3,39 @@
 $transition-time = .2s
 
 :host
-  height 100%
   display flex
   flex-direction column
+  flex-grow 2
+  padding 0 20px 20px 20px
 
-.panel
-  height 100%
-  border-radius 0px
-  display flex
-  justify-content space-between
-  flex-wrap wrap
+.label
+  padding 20px 0
 
+.categories-list
+  display grid
+  grid-template-columns 1fr 1fr 1fr 1fr
+  grid-gap 20px
 
-.group
-  width 24%
-  border 1px solid #333
-  transition $transition-time
+.category
   display flex
   flex-direction column
-  height 200px
+  align-items center
   cursor pointer
-  .icon-block
-    flex-grow 2
-    display flex
-    justify-content center
-    align-items center
+  padding-bottom 0
+  overflow hidden
   &:hover
-    border-color $main-color
-    .info
+    box-shadow 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3)
+    .text
       color $main-color
-  .info
+  .icon
+    box-sizing border-box
+    padding 20px
+    width 80%
+    flex-grow 2
+  .text
+    font-weight bold
+    border-top 1px solid #ddd
+    padding 16px
+    width 100%
     text-align center
-    padding 8px
-    transition $transition-time
+    transition .1s
