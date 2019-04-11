@@ -1,6 +1,7 @@
 import { Action } from './../../../models/actions/actions';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PageableResponse } from 'src/models/system/pageable-response';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class ActionService {
       params.set('size', size.toString());
     }
     params.set('active', 'true');
-    return this.http.get<Action[]>('/api/actions');
+    return this.http.get<PageableResponse<Action>>('/api/actions');
   }
 
   updateProduct(action: Action) {

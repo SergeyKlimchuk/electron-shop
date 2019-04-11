@@ -1,14 +1,13 @@
-<app-slider [pages]="sliderPages" *ngIf="sliderPages && sliderPages.length > 0"></app-slider>
 <h2 class="label">Каталог</h2>
 <div class="categories-list">
   <mat-card class="category"
-    *ngFor="let productType of productsTypes | async"
+    *ngFor="let productType of (productsTypes$ | async)"
     [routerLink]="['/products', productType.id]">
     <img class="icon" src="{{productType.imageUrl}}" alt="Тут должна быть картинка, но её нет">
     <div class="text" color="primary">{{productType.name}}</div>
   </mat-card>
 </div>
 
-<div class="not-found" *ngIf="(productsTypes | async).length === 0">
+<div class="not-found" *ngIf="productsNotFound">
   Пока что здесь ничего нет, как товар появится - приходите!
 </div>

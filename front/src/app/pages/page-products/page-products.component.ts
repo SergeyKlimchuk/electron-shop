@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSnackBar, PageEvent } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
 import { SearchRequestSegment } from 'src/app/services/search/search-request-segment';
 import { SearchService } from 'src/app/services/search/search.service';
@@ -18,9 +18,10 @@ import { PageableResponse } from 'src/models/system/pageable-response';
 })
 export class PageProductsComponent implements OnInit {
   public productType: ProductType = null;
-  public products$ = new Subject<Product[]>();
+  public products$ = new BehaviorSubject<Product[]>([]);
 
   private filters: SearchRequestSegment[];
+  minItemsCount = 5;
 
   @ViewChild(MatPaginator)
   matPaginator: MatPaginator;

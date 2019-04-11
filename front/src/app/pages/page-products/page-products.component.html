@@ -7,10 +7,20 @@
 </mat-card>
 
 <div class="products__list">
-  <app-product-item [productId]="product.id" *ngFor="let product of products$ | async" class="product"></app-product-item>
+  <app-product-item
+    [productId]="product.id"
+    *ngFor="let product of (products$ | async)"
+    class="product"
+  ></app-product-item>
 
-  <mat-paginator
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    (page)="onChangePage()">
-  </mat-paginator>
+  <div
+    class="paginator-wrapper"
+    [hidden]="minItemsCount > (products$ | async).length"
+  >
+    <mat-paginator
+      [pageSizeOptions]="[minItemsCount, 10, 25, 100]"
+      (page)="onChangePage()"
+    >
+    </mat-paginator>
+  </div>
 </div>
