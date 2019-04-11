@@ -1,10 +1,12 @@
-<mat-card class="products__filter" *ngIf="productType">
+<div class="products__filter">
+  <mat-card *ngIf="productType">
   <app-product-type-filter
     [productTypeId]="productType.id"
     (apply)="onApplyFilter($event)"
     (clean)="onCleanFilters()"
   ></app-product-type-filter>
 </mat-card>
+</div>
 
 <div class="products__list">
   <app-product-item
