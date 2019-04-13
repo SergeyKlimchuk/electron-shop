@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  domain: 'http://localhost:4200'
+  domain: 'http://localhost:4200',
+  googleMapApiToken: 'AIzaSyC9cSzN5u_aolSc4HTkDDn08FoLHdrUubE'
 };
 
 /*

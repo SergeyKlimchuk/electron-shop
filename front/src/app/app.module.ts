@@ -58,6 +58,8 @@ import { UserInfoComponent } from './pages/page-profile/user-info/user-info.comp
 import { UserSecurityComponent } from './pages/page-profile/user-security/user-security.component';
 import { PageRegistrationComponent } from './pages/page-registration/page-registration.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { AgmCoreModule } from '@agm/core';
+import { environment } from 'src/environments/environment';
 
 
 const appRoutes: Routes = [
@@ -133,6 +135,9 @@ const appRoutes: Routes = [
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: environment.googleMapApiToken
+  }),
     RouterModule.forRoot(
       appRoutes
     ),
