@@ -2,10 +2,7 @@ package usrt.technospace.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import usrt.technospace.repository.ProductRepository
 import usrt.technospace.services.PayService
 
@@ -21,12 +18,15 @@ class PayController {
     @Value("\${site.domain}")
     lateinit var siteDomain: String
 
-    @PostMapping("/generate-pay-link")
+    @RequestMapping(
+            value = ["/generate-pay-link"],
+            method = [RequestMethod.POST],
+            produces = ["text/plain"]
+            )
     @ResponseBody fun generatePayLink(@RequestBody productIds: List<Long>): String {
         val products = productRepository.findAllById(productIds)
         val bill = payService.createBillForProducts(products)
-        val payLink = payService.generatePayLink(bill, "$siteDomain/pay-success")
-        return "\"$payLink\""
+        return payService.generatePayLink(bill, "$siteDomain/pay-success")
     }
 
     @PostMapping("/pay-success")
