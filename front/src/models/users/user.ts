@@ -1,14 +1,16 @@
+import { City } from 'src/models/map/city';
 import { Roles } from './roles';
 
 export class User {
-  public id: number;
-  public username: string;
-  public password: string;
-  public email: string;
-  public secondaryEmail: string;
-  public name: string;
-  public lastName: string;
-  public secondName: string;
-  public phoneNumber: string;
-  public roles: Roles[];
+  id: number;
+  username: string;
+  password: string;
+  email: string;
+  secondaryEmail: string;
+  name: string;
+  lastName: string;
+  secondName: string;
+  phoneNumber: string;
+  roles: Roles[];
+  city: City;
 }
