@@ -36,6 +36,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/user/current/bills",
                         "/login",
                         "/logout",
+                        "/map",
+                        "/map/**",
                         "/search",
                         "/products",
                         "/products/**",
