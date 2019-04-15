@@ -60,6 +60,7 @@ import { PageRegistrationComponent } from './pages/page-registration/page-regist
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
+import { PointSelectorComponent } from './pages/page-addresses/point-selector/point-selector.component';
 
 
 const appRoutes: Routes = [
@@ -124,7 +125,8 @@ const appRoutes: Routes = [
     ChangeEmailDialog,
     ChangeSecondaryEmailDialog,
     ChangePasswordDialog,
-    BillStatusPipe
+    BillStatusPipe,
+    PointSelectorComponent
   ],
   imports: [
     BrowserModule,

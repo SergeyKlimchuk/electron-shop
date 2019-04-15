@@ -1,0 +1,13 @@
+<mat-select placeholder="Страна" [(ngModel)]="selectedCountry" (selectionChange)="onSelectCountry()">
+  <mat-option [value]="country" *ngFor="let country of (countries$ | async)">
+    {{ country.name }}
+  </mat-option>
+</mat-select>
+<div class="block" *ngIf="selectedCountry" >
+  <mat-icon>chevron_right</mat-icon>
+  <mat-select placeholder="Город" [(ngModel)]="selectedCity">
+    <mat-option [value]="city" *ngFor="let city of selectedCountry.cities" (click)="onSelectCity(city)" >
+      {{ city.name }}
+    </mat-option>
+  </mat-select>
+</div>

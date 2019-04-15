@@ -1,4 +1,4 @@
 export class Point {
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
 }

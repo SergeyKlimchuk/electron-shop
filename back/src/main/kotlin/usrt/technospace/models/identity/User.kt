@@ -1,6 +1,6 @@
 package usrt.technospace.models.identity
 
-import usrt.technospace.models.addresses.City
+import usrt.technospace.models.map.City
 import usrt.technospace.models.product.Product
 import usrt.technospace.models.roles.Role
 import javax.persistence.*
@@ -53,7 +53,7 @@ class User {
 
     @ManyToOne
     @JoinColumn(name = "city_id")
-    lateinit var city: City
+    var city: City? = null
 
     @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])

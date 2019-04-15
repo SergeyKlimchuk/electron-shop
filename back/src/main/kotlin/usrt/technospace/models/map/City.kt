@@ -1,5 +1,6 @@
-package usrt.technospace.models.addresses
+package usrt.technospace.models.map
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import javax.persistence.*
 
 @Entity
@@ -17,6 +18,7 @@ class City : Point() {
     @OneToMany(mappedBy = "city")
     lateinit var addresses: List<Address>
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
     lateinit var country: Country

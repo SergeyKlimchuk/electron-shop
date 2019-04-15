@@ -19,7 +19,8 @@ import {MatNativeDateModule,
         MatRippleModule,
         MatExpansionModule,
         MatProgressBarModule,
-        MatChipsModule} from '@angular/material';
+        MatChipsModule,
+        MatTreeModule} from '@angular/material';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -67,7 +68,8 @@ exports: [MatNativeDateModule,
   MatSelectModule,
   MatExpansionModule,
   MatProgressBarModule,
-  MatChipsModule
+  MatChipsModule,
+  MatTreeModule
 ],
 })
 export class MaterialModule { }

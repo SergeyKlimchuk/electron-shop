@@ -1,6 +1,7 @@
-package usrt.technospace.models.addresses
+package usrt.technospace.models.map
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import java.time.LocalTime
 import java.util.*
 import javax.persistence.*
 
@@ -19,10 +20,10 @@ class Address : Point() {
     lateinit var info: String
 
     @Column(name = "begin_work_day")
-    lateinit var beginWotkDay: Date
+    lateinit var beginWotkDay: LocalTime
 
     @Column(name = "end_work_day")
-    lateinit var endWotkDay: Date
+    lateinit var endWotkDay: LocalTime
 
     @ElementCollection
     @Column(name = "work_days")

@@ -1,3 +1,36 @@
-<p>
-  page-addresses works!
-</p>
+<menu>
+  <mat-card class="points">
+    <div class="actions">
+      <button mat-stroked-button (click)="selectUserCity()"><mat-icon>explore</mat-icon> Выбрать мой город</button>
+    </div>
+    <app-point-selector></app-point-selector>
+  </mat-card>
+  <mat-card class="addresses">
+    <h3>{{ label }}</h3>
+    <button
+      *ngFor="let marker of (markers$ | async)"
+      mat-button
+      (click)="showAddress(marker)"><mat-icon class="mat-18">location_city</mat-icon> {{ marker.info }}</button>
+  </mat-card>
+</menu>
+
+<mat-card class="map">
+  <agm-map
+    *ngIf="currentPoint"
+    [latitude]="currentPoint.latitude"
+    [zoom]="currentZoom"
+    [longitude]="currentPoint.longitude"
+  >
+    <agm-marker
+      *ngFor="let marker of (markers$ | async)"
+      [latitude]="marker.latitude"
+      [longitude]="marker.longitude"
+      [iconUrl]="icon"
+    ></agm-marker>
+  </agm-map>
+  <div class="map-error" *ngIf="error">
+    <mat-icon class="icon">map</mat-icon>Произошла ошибка при отображении
+    карты!<br />
+    Приносим свои извенения! :(
+  </div>
+</mat-card>

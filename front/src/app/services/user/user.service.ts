@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { User } from './../../../models/users/user';
@@ -10,14 +10,17 @@ import { User } from './../../../models/users/user';
 })
 export class UserService {
 
-  private user$ = new BehaviorSubject<User>(null);
+  private user$ = new Subject<User>();
+  private isAuthenticated = false;
 
   constructor(private http: HttpClient) {
     this.loadUser().subscribe(
       () => {
         console.log('Пользователь был успешно авторизован!');
-      }
+      },
+      error => this.isAuthenticated = false
     );
+    this.user$.subscribe(user => this.isAuthenticated = !!user);
   }
 
   getRequiredPasswordLength() {
@@ -28,6 +31,10 @@ export class UserService {
     return this.http.get<User>('/api/user/current').pipe(
       tap(user => this.user$.next(user))
     );
+  }
+
+  userIsAuthenticated() {
+    return this.isAuthenticated;
   }
 
   updateEmail(newEmail: string, password: string) {
@@ -54,16 +61,12 @@ export class UserService {
     );
   }
 
-  getCurrentUserValue(): User {
-    return this.user$.getValue();
-  }
-
   getCurrentUser(): Observable<User> {
     return this.user$;
   }
 
   registration(user: User) {
-    if (this.user$.getValue()) {
+    if (this.isAuthenticated) {
       return;
     }
     return this.http.post<User>('/api/registration', user);
