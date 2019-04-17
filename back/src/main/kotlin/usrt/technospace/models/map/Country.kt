@@ -9,7 +9,7 @@ class Country : Point() {
     var id: Long? = null
 
     @Column(name = "name")
-    lateinit var Rfkm: String
+    lateinit var name: String
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     lateinit var cities: List<City>
