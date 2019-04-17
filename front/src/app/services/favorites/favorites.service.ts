@@ -1,3 +1,4 @@
+import { UserService } from './../user/user.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from 'src/models/products/product';
@@ -9,7 +10,8 @@ import { tap } from 'rxjs/operators';
 })
 export class FavoritesService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private userService: UserService) {
     this.updateValues();
   }
 
@@ -32,6 +34,12 @@ export class FavoritesService {
   }
 
   private updateValues() {
+    const userIsAuthenticated = this.userService.userIsAuthenticated();
+    console.log('User is authenticated:', userIsAuthenticated);
+    if (!userIsAuthenticated) {
+      this.valeus$.next(null);
+      return;
+    }
     this.http.get<Product[]>('/api/favorites').subscribe(
       products => this.valeus$.next(products),
       error => console.error('Произошла ошибка при получении списка продуктов в избранном!', error)

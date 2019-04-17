@@ -19,14 +19,14 @@ export class ProductItemComponent implements OnInit {
   constructor(private productService: ProductService,
               private userService: UserService,
               private cartService: CartService,
-              private favoritesService : FavoritesService,
+              private favoritesService: FavoritesService,
               private snack: MatSnackBar) { }
 
   @Input()
   productId: number;
 
   product: Product;
-  actionsVisible = false;
+  userIsAuthenticated = false;
   inCart = false;
   inFavorites = false;
 
@@ -34,8 +34,8 @@ export class ProductItemComponent implements OnInit {
     console.log('productId', this.productId);
     this.loadProduct();
     const user$ = this.userService.getCurrentUser().pipe(
-      tap(x => this.actionsVisible = !!x),
-      filter(x => !!x)
+      tap(x => this.userIsAuthenticated = !!x),
+      filter(x => !!x),
     );
 
     this.subscrubeOnUserFavorites(user$);

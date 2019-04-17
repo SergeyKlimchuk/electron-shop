@@ -6,6 +6,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Product } from 'src/models/products/product';
 import { ProductProperty } from 'src/models/products/product-property';
+import { tap, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-page-product',
@@ -32,11 +33,12 @@ export class PageProductComponent implements OnInit {
 
   loadProduct() {
     const productId = this.route.snapshot.paramMap.get('productId');
-    this.productService.getProduct(Number(productId)).subscribe(
+    this.productService.getProduct(Number(productId)).pipe(
+      tap(product => this.product = product),
+      tap(() => this.applyproductProperties()),
+    ).subscribe(
       (product) => {
-        this.product = product;
-        this.applyproductProperties();
-        if (this.userService.getCurrentUser()) {
+        if (this.userService.userIsAuthenticated) {
           this.checkProductInCart();
         }
       },
