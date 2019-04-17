@@ -1,10 +1,4 @@
-<menu>
-  <mat-card class="points">
-    <div class="actions">
-      <button mat-stroked-button (click)="selectUserCity()"><mat-icon>explore</mat-icon> Выбрать мой город</button>
-    </div>
-    <app-point-selector></app-point-selector>
-  </mat-card>
+<!-- <menu>
   <mat-card class="addresses">
     <h3>{{ label }}</h3>
     <button
@@ -12,17 +6,24 @@
       mat-button
       (click)="showAddress(marker)"><mat-icon class="mat-18">location_city</mat-icon> {{ marker.info }}</button>
   </mat-card>
-</menu>
+</menu> -->
 
 <mat-card class="map">
+  <mat-card-header class="map__label">
+    <h2>Адреса</h2>
+  </mat-card-header>
+  <div class="actions">
+    <button mat-stroked-button (click)="selectUserCity()"><mat-icon>explore</mat-icon> Выбрать мой город</button>
+    <app-point-selector (selectPoint)="showPointWithMarkers($event)"></app-point-selector>
+  </div>
   <agm-map
-    *ngIf="currentPoint"
-    [latitude]="currentPoint.latitude"
-    [zoom]="currentZoom"
-    [longitude]="currentPoint.longitude"
+    *ngIf="state && state.targetPoint"
+    [latitude]="state.targetPoint.latitude"
+    [longitude]="state.targetPoint.longitude"
+    [zoom]="state.zoom"
   >
     <agm-marker
-      *ngFor="let marker of (markers$ | async)"
+      *ngFor="let marker of state.markers"
       [latitude]="marker.latitude"
       [longitude]="marker.longitude"
       [iconUrl]="icon"

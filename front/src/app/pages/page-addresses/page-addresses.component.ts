@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
-import { Country } from 'src/models/map/country';
-import { Point } from 'src/models/map/point';
+import { Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
+import { MapState } from 'src/models/map/map-state';
+import { MapZoom } from 'src/models/map/map-zoom';
 
-import { Address } from './../../../models/map/address';
-import { City } from './../../../models/map/city';
 import { MapService } from './../../services/map/map.service';
 import { UserService } from './../../services/user/user.service';
 
@@ -23,19 +21,12 @@ export class PageAddressesComponent implements OnInit, OnDestroy {
   readonly labelForCountries = 'Список стран';
   readonly labelForCities = 'Список кородов';
   readonly labelForAddresses = 'Адреса магазинов';
-
-  countries$ = new BehaviorSubject<Country[]>([]); // TODO: add btns
-  cities$ = new BehaviorSubject<City[]>([]);
-  addresses$ = new BehaviorSubject<Address[]>([]);
-  unsubscribe$ = new Subject();
-
   label: string;
 
-  currentPoint: Point;
-  markers$ = new BehaviorSubject<Point[]>([]);
-  currentZoom = this.zoomForCity;
+  state: MapState;
 
   error = false;
+  unsubscribe$ = new Subject();
 
   constructor(
     private mapService: MapService,
@@ -59,22 +50,25 @@ export class PageAddressesComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  loadUserCity() {
-    this.userService
-      .getCurrentUser()
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        tap(user => this.showCity(user.city))
-      )
-      .subscribe();
-  }
-
   selectUserCity() {
     if (this.userService.userIsAuthenticated()) {
       this.loadUserCity();
     } else {
       this.FindUserCity();
     }
+  }
+
+  loadUserCity() {
+    this.userService
+      .getCurrentUser()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(user => {
+        this.state = {
+          targetPoint: user.city,
+          markers: user.city.addresses,
+          zoom: MapZoom.CITY
+        };
+      });
   }
 
   FindUserCity() {
@@ -89,9 +83,13 @@ export class PageAddressesComponent implements OnInit, OnDestroy {
       .subscribe(
         city => {
           if (city) {
-            this.showCity(city);
+            this.state = {
+              targetPoint: city,
+              markers: city.addresses,
+              zoom: MapZoom.CITY
+            };
           } else {
-            this.showWorld();
+            this.selectWorld();
           }
         },
         error => {
@@ -100,35 +98,18 @@ export class PageAddressesComponent implements OnInit, OnDestroy {
       );
   }
 
-  showWorld() {
-    this.label = this.labelForCountries;
+  selectWorld() {
     this.mapService.getCountries().subscribe(countries => {
-      this.currentZoom = this.zoomForWorld;
-      this.markers$.next(countries);
-      this.currentPoint = { latitude: 50, longitude: 50 };
+      this.state = {
+        targetPoint: {latitude: 50, longitude: 50},
+        markers: countries,
+        zoom: MapZoom.CITY
+      };
     });
   }
 
-  showCountry(country: Country) {
-    console.log('select country', country);
-    this.label = this.labelForCities;
-    this.currentZoom = this.zoomForCountry;
-    this.currentPoint = country;
-    this.markers$.next(country.cities);
-  }
-
-  showCity(city: City) {
-    console.log('select city', city);
-    this.label = this.labelForAddresses;
-    this.currentZoom = this.zoomForCity;
-    this.currentPoint = city;
-    this.markers$.next(city.addresses);
-  }
-
-  showAddress(address: Address) {
-    console.log('select address', address);
-    this.label = this.labelForAddresses;
-    this.currentZoom = this.zoomForShop;
-    this.currentPoint = address;
+  showPointWithMarkers(newState: MapState) {
+    console.log('LOG:', newState);
+    this.state = newState;
   }
 }

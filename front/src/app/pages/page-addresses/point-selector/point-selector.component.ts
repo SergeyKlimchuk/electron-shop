@@ -1,45 +1,57 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Address } from 'src/models/map/address';
 import { Country } from 'src/models/map/country';
+import { MapState } from 'src/models/map/map-state';
 
 import { City } from './../../../../models/map/city';
 import { MapService } from './../../../services/map/map.service';
+import { MapZoom } from 'src/models/map/map-zoom';
 
 @Component({
   selector: 'app-point-selector',
   templateUrl: './point-selector.component.html',
   styleUrls: ['./point-selector.component.styl']
 })
-export class PointSelectorComponent implements OnInit {
+export class PointSelectorComponent {
 
   @Output()
-  selectCity = new EventEmitter<City>();
-
-  @Output()
-  unselectCity = new EventEmitter<void>();
+  selectPoint = new EventEmitter<MapState>();
 
   countries$ = this.mapService.getCountries();
-  selectedCountry: Country;
-  selectedCity: City;
-  cityIsSelected = false;
+  selectedCountry: Country = null;
+  selectedCity: City = null;
+  selectedAddress: Address = null;
 
   constructor(private mapService: MapService) { }
 
-  ngOnInit() {
+  onChangeCountry() {
+    this.selectedAddress = null;
+    this.selectedCity = null;
   }
 
-  onSelectCountry() {
-    if (this.cityIsSelected) {
-      this.selectedCity = null;
-      this.unselectCity.emit();
-      console.log('Unselect city');
+  onChangeCity() {
+    if (this.selectedCity as any === -1) {
+      this.selectPoint.emit({
+        targetPoint: this.selectedCountry,
+        markers: this.selectedCountry.cities,
+        zoom: MapZoom.COUNTRY
+      });
+    } else {
+      this.selectPoint.emit({
+        targetPoint: this.selectedCity,
+        markers: this.selectedCity.addresses,
+        zoom: MapZoom.CITY
+      });
+      this.selectedAddress = null;
     }
-    this.cityIsSelected = false;
   }
 
-  onSelectCity(city: City) {
-    this.cityIsSelected = true;
-    this.selectCity.emit(city);
-    console.log('Select city');
+  onSelectAddress(address: Address) {
+    this.selectPoint.emit({
+      targetPoint: this.selectedAddress,
+      markers: this.selectedCity.addresses,
+      zoom: MapZoom.SHOP
+    });
   }
 
 }

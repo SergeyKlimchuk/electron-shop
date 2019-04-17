@@ -1,9 +1,11 @@
-$gray-color = rgba(0,0,0,.36)
+$gray-color = rgba(0,0,0,.12)
 
 :host
   display flex
-  padding 16px
   align-items center
+  box-sizing border-box
+  border 1px solid $gray-color
+  border-radius 4px
 
 .block
   display flex
@@ -12,9 +14,12 @@ $gray-color = rgba(0,0,0,.36)
 mat-select
   max-width 240px
   min-width 120px
-  border-top 1px solid $gray-color
-  border-bottom 1px solid $gray-color
-  padding 10px
+  & >>> > div
+    padding 10px
+
+.arrow
+  color rgba(0,0,0,.54)
+  cursor default
 
 mat-icon
   font-size 32px
