@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { User } from './../../../models/users/user';
@@ -10,7 +10,7 @@ import { User } from './../../../models/users/user';
 })
 export class UserService {
 
-  private user$ = new Subject<User>();
+  private user$ = new BehaviorSubject<User>(null);
   private isAuthenticated = false;
 
   constructor(private http: HttpClient) {
