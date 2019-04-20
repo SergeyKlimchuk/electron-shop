@@ -9,6 +9,7 @@ import javax.persistence.*
 @Table(name = "addresses")
 class Address : Point() {
     @Id
+    @GeneratedValue
     var id: Long? = null
 
     @ManyToOne

@@ -6,6 +6,7 @@ import javax.persistence.*
 @Table(name = "countries")
 class Country : Point() {
     @Id
+    @GeneratedValue
     var id: Long? = null
 
     @Column(name = "name")
