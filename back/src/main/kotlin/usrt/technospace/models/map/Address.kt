@@ -2,7 +2,6 @@ package usrt.technospace.models.map
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import java.time.LocalTime
-import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -20,13 +19,13 @@ class Address : Point() {
     @Column(name = "info")
     lateinit var info: String
 
-    @Column(name = "begin_work_day")
+    @Column(name = "begin_work_day", columnDefinition = "TIME")
     lateinit var beginWotkDay: LocalTime
 
-    @Column(name = "end_work_day")
+    @Column(name = "end_work_day", columnDefinition = "TIME")
     lateinit var endWotkDay: LocalTime
 
     @ElementCollection
     @Column(name = "work_days")
-    lateinit var workDays: List<Int>
+    var workDays: List<Int> = arrayListOf()
 }

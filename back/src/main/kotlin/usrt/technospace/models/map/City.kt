@@ -17,7 +17,7 @@ class City : Point() {
     lateinit var nameEn: String
 
     @OneToMany(mappedBy = "city")
-    lateinit var addresses: List<Address>
+    var addresses: MutableList<Address> = arrayListOf()
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

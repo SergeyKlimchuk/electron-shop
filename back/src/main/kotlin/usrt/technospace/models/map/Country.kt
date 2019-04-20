@@ -13,5 +13,5 @@ class Country : Point() {
     lateinit var name: String
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
-    lateinit var cities: List<City>
+    var cities: MutableList<City> = arrayListOf()
 }
