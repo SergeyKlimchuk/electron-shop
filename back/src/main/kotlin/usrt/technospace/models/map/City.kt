@@ -1,6 +1,8 @@
 package usrt.technospace.models.map
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.CascadeType
 import javax.persistence.*
 
 @Entity
@@ -17,6 +19,7 @@ class City : Point() {
     lateinit var nameEn: String
 
     @OneToMany(mappedBy = "city")
+    @Cascade(CascadeType.DELETE)
     var addresses: MutableList<Address> = arrayListOf()
 
     @JsonBackReference

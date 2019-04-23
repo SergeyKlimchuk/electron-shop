@@ -1,5 +1,7 @@
 package usrt.technospace.models.map
 
+import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.CascadeType
 import javax.persistence.*
 
 @Entity
@@ -13,5 +15,6 @@ class Country : Point() {
     lateinit var name: String
 
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    @Cascade(CascadeType.DELETE)
     var cities: MutableList<City> = arrayListOf()
 }
