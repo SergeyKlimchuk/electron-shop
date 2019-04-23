@@ -22,40 +22,72 @@ class AddressesController {
     @Autowired
     lateinit var addressesRepository: AddressRepository
 
-    @GetMapping("/countries")
-    fun getAllCountries(): List<Country> {
-        return countryRepository.findAll()
-    }
-
-    @GetMapping("/{country}")
-    fun getCitiesInCountry(country: Country): List<City> {
-        return country.cities
-    }
-
-    @GetMapping("/city/{city}")
-    fun getAddressesInCity(city: City): List<Address> {
-        return city.addresses
-    }
-
-    @GetMapping("/city")
-    @ResponseBody fun searchCity(@RequestParam name: String): City {
-        return cityRepository.findFirstByNameOrNameEn(name, name)
-    }
-
     @PostMapping("/countries")
     fun addCountry(@RequestBody country: Country): Country {
         return countryRepository.save(country)
     }
 
-    @PostMapping("/{country}/cities")
+    @GetMapping("/countries")
+    fun getAllCountries(): List<Country> {
+        return countryRepository.findAll()
+    }
+
+    @GetMapping("/countries/{country}")
+    fun getCountry(country: Country): Country {
+        return country
+    }
+
+    @GetMapping("/countries/{country}/cities")
+    fun getCitiesInCountry(country: Country): List<City> {
+        return country.cities
+    }
+
+    @DeleteMapping("/countries/{countryId}")
+    fun deleteCountry(@PathVariable countryId: Long) {
+        this.countryRepository.deleteById(countryId)
+    }
+
+
+    @PostMapping("/countries/{country}/cities")
     fun addCityToCountry(country: Country, @RequestBody city: City): City {
         city.country = country
         return cityRepository.save(city)
     }
 
-    @PostMapping("/addresses")
+    @GetMapping("/cities/{city}")
+    fun getCity(city: City): City {
+        return city
+    }
+
+    @GetMapping("/cities/{city}/addresses")
+    fun getAddressesInCity(city: City): List<Address> {
+        return city.addresses
+    }
+
+    @GetMapping("/cities/search")
+    @ResponseBody fun searchCity(@RequestParam name: String): City {
+        return cityRepository.findFirstByNameOrNameEn(name, name)
+    }
+
+    @DeleteMapping("/cities/{cityId}")
+    fun deleteCity(@PathVariable cityId: Long) {
+        this.cityRepository.deleteById(cityId)
+    }
+
+
+    @PostMapping("/cities/{city}/addresses")
     fun addAddressToCity(@RequestParam city: City, @RequestBody address: Address): Address? {
         address.city = city
         return addressesRepository.save(address)
+    }
+
+    @GetMapping("/addresses/{address}")
+    fun getAddress(address: Address): Address {
+        return address
+    }
+
+    @DeleteMapping("/addresses/{addressId}")
+    fun deleteAddress(@PathVariable addressId: Long) {
+        this.addressesRepository.deleteById(addressId)
     }
 }

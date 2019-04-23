@@ -16,14 +16,14 @@ class Address : Point() {
     @JsonBackReference
     lateinit var city: City
 
-    @Column(name = "info")
-    lateinit var info: String
+    @Column(name = "name")
+    lateinit var name: String
 
     @Column(name = "begin_work_day", columnDefinition = "TIME")
-    lateinit var beginWotkDay: LocalTime
+    var beginWorkDay: LocalTime? = null
 
     @Column(name = "end_work_day", columnDefinition = "TIME")
-    lateinit var endWotkDay: LocalTime
+    var endWorkDay: LocalTime? = null
 
     @ElementCollection
     @Column(name = "work_days")
