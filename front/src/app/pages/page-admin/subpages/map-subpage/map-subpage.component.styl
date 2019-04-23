@@ -1,0 +1,77 @@
+:host
+  display grid
+  grid-template-columns 400px 1fr
+  grid-gap 20px
+  padding 20px
+  min-height 500px
+
+.list__panel
+  padding 0px
+
+.list__header
+  padding 16px
+  border-bottom 1px solid rgba(0, 0, 0, 0.12)
+  display flex
+  .list__label
+    display flex
+    align-items center
+    padding-left 16px
+
+.list
+  display flex
+  flex-direction column
+  .list__item
+    display flex
+    padding-left 24px
+    border-bottom 1px solid rgba(0, 0, 0, 0.12)
+    &:hover
+      background-color #eee
+    .item__text
+      flex-grow 2
+      cursor pointer
+      display flex
+      align-items center
+
+.map
+  agm-map
+    width 100%
+    height 100%
+
+.edit__panel
+  display flex
+  flex-direction column
+  padding 16px
+
+
+
+.list__header-edit
+  display flex
+  flex-direction column
+  .list__label
+    display flex
+    padding 16px
+    .list__label__text
+      display flex
+      align-items center
+      padding-left 16px
+  .list__actions
+    display flex
+    border-bottom 1px solid rgba(0, 0, 0, 0.12)
+    border-top 1px solid rgba(0, 0, 0, 0.12)
+    color rgba(0,0,0,.7)
+    button
+      border-radius 2px
+      font-size 20px
+      width 32px
+      height 32px
+      line-height 32px
+      margin 4px
+    button:not([disabled]):hover
+      background-color rgba(0, 0, 0, 0.12)
+
+.position__actions
+  display flex
+  justify-content right
+
+.save-btn
+  margin-top 24px

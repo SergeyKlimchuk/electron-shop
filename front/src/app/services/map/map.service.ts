@@ -16,22 +16,55 @@ export class MapService {
   constructor(private http: HttpClient,
               private userService: UserService) { }
 
+
+  createCountry(country: Country) {
+    return this.http.post<Country>('/api/map/countries', country);
+  }
+
   getCountries() {
     return this.http.get<Country[]>('/api/map/countries');
   }
 
   getCitiesInCountry(countryId: number) {
-    return this.http.get<City[]>(`/api/map/${countryId}`);
+    return this.http.get<City[]>(`/api/map/countries/${countryId}`);
+  }
+
+  deleteCountry(countryId: number) {
+    return this.http.delete<void>(`/api/map/countries/${countryId}`);
+  }
+
+
+  createCity(countryId: number, city: City) {
+    return this.http.post<City>(`/api/map/countries/${countryId}/cities`, city);
+  }
+
+  getCity(cityId: number) {
+    return this.http.get<City>(`/api/map/countries/${cityId}/cities`);
   }
 
   getAddressesInCity(cityId: number) {
-    return this.http.get<Address[]>(`/api/map/city/${cityId}`);
+    return this.http.get<Address[]>(`/api/map/cities/${cityId}/addresses`);
   }
 
   findCityByName(name: string) {
-    console.log('name', name);
+    return this.http.get<City>(`/api/map/cities/search?name=${name}`);
+  }
 
-    return this.http.get<City>(`/api/map/city?name=${name}`);
+  deleteCity(cityId: number) {
+    return this.http.delete<void>(`/api/map/sities/${cityId}`);
+  }
+
+
+  createAddress(cityId: number, address: Address) {
+    return this.http.post<Address>(`/api/map/cities/${cityId}/addresses`, address);
+  }
+
+  getAddress(addressId: number) {
+    return this.http.get<Address>(`/api/map/addresses/${addressId}`);
+  }
+
+  deleteAddress(addressId: number) {
+    return this.http.delete<void>(`/api/map/addresses/${addressId}`);
   }
 
   getUserLocation() {

@@ -1,0 +1,125 @@
+<div>
+    <mat-card class="list__panel">
+      <!-- Header of left collumn -->
+      <ng-container *ngIf="!editMode; else headerInEditMode">
+        <div class="list__header">
+          <button mat-stroked-button (click)="back()" *ngIf="pointsStack.length > 0">
+            <mat-icon>keyboard_backspace</mat-icon>
+          </button>
+          <div class="list__label"><h3>{{ label }}</h3></div>
+        </div>
+      </ng-container>
+
+      <ng-template #headerInEditMode>
+        <div class="list__header-edit">
+          <div class="list__label">
+            <button mat-button (click)="exitFromEditMode()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <h3 class="list__label__text">Редактирование: "{{ selectedNode.name }}"</h3>
+          </div>
+          <div class="list__actions">
+            <button mat-icon-button>
+              <mat-icon
+                [inline]="true"
+                (click)="discarChanges()"
+              >
+              settings_backup_restore</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="true">
+              <mat-icon [inline]="true">undo</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="true">
+              <mat-icon [inline]="true">redo</mat-icon>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+
+
+
+      <!-- List of geo-points -->
+      <ng-container *ngIf="!editMode; else listInEditMode">
+        <ul class="list">
+          <li
+            *ngFor="let item of values"
+            class="list__item"
+            >
+            <div class="item__text" (click)="selectPoint(item)">{{item.name}}</div>
+            <div class="item__actions">
+              <mat-menu #itemActions="matMenu">
+                <button mat-menu-item (click)="editPoint(item)">Редактировать</button>
+                <button mat-menu-item (click)="onDelete(item)">Удалить</button>
+              </mat-menu>
+
+              <button mat-icon-button [matMenuTriggerFor]="itemActions" class="item__actions">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </ng-container>
+
+      <ng-template #listInEditMode>
+        <div class="edit__panel">
+          <mat-form-field>
+            <input matInput placeholder="Название" [(ngModel)]="targetNode.name">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Ширина" [(ngModel)]="targetNode.longitude">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Долгота" [(ngModel)]="targetNode.latitude">
+          </mat-form-field>
+          <ng-container *ngIf="!editPointMode; else elseTemplate">
+            <button mat-button (click)="enableEditPointMode()">
+              <mat-icon>room</mat-icon>Укзаать расположение на карте
+            </button>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <div class="position__actions">
+              <button mat-button (click)="revertNodePosition()" color="warn">Отменить</button>
+              <button mat-button (click)="saveNodePosition()" color="primary">Сохранить</button>
+            </div>
+          </ng-template>
+
+          <button mat-raised-button (click)="saveNode()" color="primary" class="save-btn">
+            <mat-icon>save</mat-icon>Сохранить
+          </button>
+        </div>
+      </ng-template>
+
+    </mat-card>
+</div>
+
+<mat-card class="map">
+  <agm-map
+    [latitude]="selectedNode.latitude"
+    [longitude]="selectedNode.longitude"
+    [zoom]="12"
+    (centerChange)="targetPoint = $event"
+    [streetViewControl]="false"
+  >
+    <!-- Marker with preview -->
+    <agm-marker
+      *ngIf="!editMode"
+      [latitude]="selectedNode.latitude"
+      [longitude]="selectedNode.longitude"
+      [iconUrl]="icon"
+    ></agm-marker>
+
+
+    <agm-marker
+      *ngIf="editMode && !editPointMode"
+      [latitude]="targetNode.latitude"
+      [longitude]="targetNode.longitude"
+      [iconUrl]="icon"
+    ></agm-marker>
+    <agm-marker
+      *ngIf="editMode && editPointMode"
+      [latitude]="targetPoint.lat"
+      [longitude]="targetPoint.lng"
+      [iconUrl]="icon"
+    ></agm-marker>
+  </agm-map>
+</mat-card>

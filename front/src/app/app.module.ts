@@ -61,6 +61,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AgmCoreModule } from '@agm/core';
 import { environment } from 'src/environments/environment';
 import { PointSelectorComponent } from './pages/page-addresses/point-selector/point-selector.component';
+import { MapSubpageComponent } from './pages/page-admin/subpages/map-subpage/map-subpage.component';
 
 
 const appRoutes: Routes = [
@@ -126,7 +127,8 @@ const appRoutes: Routes = [
     ChangeSecondaryEmailDialog,
     ChangePasswordDialog,
     BillStatusPipe,
-    PointSelectorComponent
+    PointSelectorComponent,
+    MapSubpageComponent
   ],
   imports: [
     BrowserModule,
