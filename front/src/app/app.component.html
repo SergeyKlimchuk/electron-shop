@@ -2,12 +2,21 @@
 
 <section>
   <div class="content-wrapper">
-      <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
   </div>
 </section>
 
 <footer>
-  <div class="content-wrapper">
-    TODO Доделать
+  <div class="content-wrapper footer-wrapper">
+    <div class="categories">
+      <a
+        *ngFor="let category of (categories$ | async)"
+        [routerLink]="['/products/' + category.id]"
+        >{{ category.name }}</a
+      >
+    </div>
+    <div class="contacts">
+      Почта для связи: <i class="mail">support.electron.shop.kz@gmail.com</i>
+    </div>
   </div>
 </footer>
