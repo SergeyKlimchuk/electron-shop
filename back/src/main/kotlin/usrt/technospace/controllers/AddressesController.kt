@@ -2,6 +2,7 @@ package usrt.technospace.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
+import usrt.technospace.exceptions.NotFoundException
 import usrt.technospace.models.map.Address
 import usrt.technospace.models.map.City
 import usrt.technospace.models.map.Country
@@ -48,6 +49,11 @@ class AddressesController {
     }
 
 
+    @GetMapping("/cities/main")
+    fun getMainCity(): City {
+        return cityRepository.findByIsMainTrue()
+    }
+
     @PostMapping("/countries/{country}/cities")
     fun addCityToCountry(country: Country, @RequestBody city: City): City {
         city.country = country
@@ -66,7 +72,11 @@ class AddressesController {
 
     @GetMapping("/cities/search")
     @ResponseBody fun searchCity(@RequestParam name: String): City {
-        return cityRepository.findFirstByNameOrNameEn(name, name)
+        val cities = cityRepository.findByNameOrNameEn(name, name)
+        if (cities.size != 1) {
+            throw NotFoundException()
+        }
+        return cities[0]
     }
 
     @DeleteMapping("/cities/{cityId}")
@@ -76,7 +86,7 @@ class AddressesController {
 
 
     @PostMapping("/cities/{city}/addresses")
-    fun addAddressToCity(@RequestParam city: City, @RequestBody address: Address): Address? {
+    fun addAddressToCity(@PathVariable city: City, @RequestBody address: Address): Address? {
         address.city = city
         return addressesRepository.save(address)
     }

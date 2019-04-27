@@ -6,5 +6,6 @@ import usrt.technospace.models.map.City
 
 @Repository
 interface CityRepository : JpaRepository<City, Long> {
-    fun findFirstByNameOrNameEn(name: String, nameEn: String): City
+    fun findByNameOrNameEn(name: String, nameEn: String): List<City>
+    fun findByIsMainTrue(): City
 }

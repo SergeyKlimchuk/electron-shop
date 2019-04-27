@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Subject } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Country } from 'src/models/map/country';
 
@@ -25,7 +26,7 @@ export class MapSubpageComponent {
   // All countries
   countries: Country[];
   // Call stack of points
-  pointsStack = new Array<NamedPoint>();
+  pointsStack: NamedPoint[] = [];
   // Values of list
   values: NamedPoint[] = [];
   // Selected node for view thare childs
@@ -47,11 +48,24 @@ export class MapSubpageComponent {
     }
   };
 
-  constructor(private mapService: MapService) {
-    this.mapService.getCountries().pipe(
+  constructor(private mapService: MapService,
+              private snack: MatSnackBar) {
+    this.reloadCountries().subscribe();
+  }
+
+  private reloadCountries() {
+    return this.mapService.getCountries().pipe(
+      tap(x => this.pointsStack = []),
       tap(x => this.countries = x),
       tap(x => this.values = x)
-    ).subscribe();
+    );
+  }
+
+  private refresh() {
+    this.editMode = false;
+    this.selectedNode = this.worldPoint;
+    this.reloadCountries()
+      .subscribe(() => this.updateLabel());
   }
 
   private updateLabel() {
@@ -79,6 +93,26 @@ export class MapSubpageComponent {
     this.pointsStack.push(point);
     this.values = values;
     this.updateLabel();
+  }
+
+  addPoint() {
+    const point: NamedPoint = {
+      latitude: this.selectedNode.latitude,
+      longitude: this.selectedNode.longitude,
+      name: 'Новая точка'
+    };
+
+    const lastPoint = this.getLastPoint();
+    switch (this.getPointType(lastPoint)) {
+      case null:
+      (point as any).cities = [];
+      break;
+      case 'Country':
+      (point as any).addresses = [];
+      break;
+    }
+
+    this.editPoint(point);
   }
 
   back() {
@@ -127,11 +161,62 @@ export class MapSubpageComponent {
     this.editPointMode = false;
   }
 
-  onDelete(item: Point) {
-    console.log('onDelete', item);
+  onDelete(item: any) {
+    const itemId = item.id;
+    let obs: Observable<void>;
+    if (item.cities) {
+      obs = this.mapService.deleteCountry(itemId);
+    } else if (item.addresses) {
+      obs = this.mapService.deleteCity(itemId);
+    } else {
+      obs = this.mapService.deleteAddress(itemId);
+    }
+    obs.subscribe(() => this.refresh(), error => {
+      this.snack.open('Не удалось сохранить!');
+      console.error(error);
+    });
   }
 
   saveNode() {
-    console.log('save');
+    const item = this.targetNode as any;
+    let obs: Observable<any>;
+    if (item.cities) {
+      obs = this.mapService.createCountry(item);
+    } else if (item.addresses) {
+      obs = this.mapService.createCity(this.getLastPointId(), item);
+    } else {
+      obs = this.mapService.createAddress(this.getLastPointId(), item);
+    }
+    obs.subscribe(() => {
+      this.refresh();
+    },
+    error => {
+      this.snack.open('Не удалось сохранить!');
+      console.error(error);
+    });
+  }
+
+  private getLastPoint() {
+    return this.pointsStack.length > 0
+      ? (this.pointsStack[this.pointsStack.length - 1] as any)
+      : null;
+  }
+
+  private getLastPointId(): number {
+    const lastPoint = this.getLastPoint();
+    return lastPoint == null ? null : lastPoint.id;
+  }
+
+  private getPointType(point: any) {
+    if (point == null) {
+      return null;
+    }
+    if (point.cities) {
+      return 'Country';
+    } else if (point.addresses) {
+      return 'City';
+    } else {
+      return 'Address';
+    }
   }
 }

@@ -18,6 +18,9 @@ class City : Point() {
     @Column(name = "name_en")
     lateinit var nameEn: String
 
+    @Column(name = "is_main")
+    var isMain: Boolean = false
+
     @OneToMany(mappedBy = "city")
     @Cascade(CascadeType.DELETE)
     var addresses: MutableList<Address> = arrayListOf()
