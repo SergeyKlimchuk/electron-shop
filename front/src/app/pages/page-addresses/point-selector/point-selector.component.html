@@ -1,34 +1,40 @@
-<mat-select
-  placeholder="Страна"
-  [(ngModel)]="selectedCountry"
-  (valueChange)="onChangeCountry()"
->
-  <mat-option [value]="country" *ngFor="let country of (countries$ | async)">
-    {{ country.name }}
-  </mat-option>
-</mat-select>
-<div class="block" *ngIf="selectedCountry">
-  <mat-icon class="arrow">chevron_right</mat-icon>
+<button mat-stroked-button (click)="selectUserCity()" class="choose-city">
+  <mat-icon>explore</mat-icon> Выбрать мой город
+</button>
+
+<div class="line">
   <mat-select
-    placeholder="Город"
-    [(ngModel)]="selectedCity"
-    (selectionChange)="onChangeCity()"
-    >
-    <mat-option *ngFor="let city of selectedCountry.cities" [value]="city">
-      {{ city.name }}
-    </mat-option>
-    <mat-option [value]="-1">Все</mat-option>
-  </mat-select>
-</div>
-<div class="block" *ngIf="selectedCity && selectedCity !== -1">
-  <mat-icon class="arrow">chevron_right</mat-icon>
-  <mat-select placeholder="Отдел" [(ngModel)]="selectedAddress">
-    <mat-option
-      *ngFor="let address of selectedCity.addresses"
-      (click)="onSelectAddress(address)"
-      [value]="address"
-    >
-      {{ address.name }}
+    placeholder="Страна"
+    [(ngModel)]="selectedCountry"
+    (valueChange)="onChangeCountry()"
+  >
+    <mat-option [value]="country" *ngFor="let country of (countries$ | async)">
+      {{ country.name }}
     </mat-option>
   </mat-select>
+  <div class="block" *ngIf="selectedCountry">
+    <mat-icon class="arrow">chevron_right</mat-icon>
+    <mat-select
+      placeholder="Город"
+      [(ngModel)]="selectedCity"
+      (selectionChange)="onChangeCity()"
+    >
+      <mat-option *ngFor="let city of selectedCountry.cities" [value]="city">
+        {{ city.name }}
+      </mat-option>
+      <mat-option [value]="-1">Все</mat-option>
+    </mat-select>
+  </div>
+  <div class="block" *ngIf="selectedCity && selectedCity !== -1">
+    <mat-icon class="arrow">chevron_right</mat-icon>
+    <mat-select placeholder="Отдел" [(ngModel)]="selectedAddress">
+      <mat-option
+        *ngFor="let address of selectedCity.addresses"
+        (click)="onSelectAddress(address)"
+        [value]="address"
+      >
+        {{ address.name }}
+      </mat-option>
+    </mat-select>
+  </div>
 </div>

@@ -3,7 +3,6 @@
     <h2>Адреса</h2>
   </mat-card-header>
   <div class="actions">
-    <button mat-stroked-button (click)="selectUserCity()"><mat-icon>explore</mat-icon> Выбрать мой город</button>
     <app-point-selector (selectPoint)="showPointWithMarkers($event)"></app-point-selector>
   </div>
   <agm-map

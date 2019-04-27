@@ -42,6 +42,10 @@ export class MapService {
     return this.http.get<City>(`/api/map/countries/${cityId}/cities`);
   }
 
+  getMainCity() {
+    return this.http.get<City>(`/api/map/cities/main`);
+  }
+
   getAddressesInCity(cityId: number) {
     return this.http.get<Address[]>(`/api/map/cities/${cityId}/addresses`);
   }
@@ -51,7 +55,7 @@ export class MapService {
   }
 
   deleteCity(cityId: number) {
-    return this.http.delete<void>(`/api/map/sities/${cityId}`);
+    return this.http.delete<void>(`/api/map/cities/${cityId}`);
   }
 
 

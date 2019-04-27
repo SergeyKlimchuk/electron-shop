@@ -1,3 +1,6 @@
+.item-hover
+  background-color rgba(0, 0, 0, 0.12)
+
 :host
   display grid
   grid-template-columns 400px 1fr
@@ -25,7 +28,7 @@
     padding-left 24px
     border-bottom 1px solid rgba(0, 0, 0, 0.12)
     &:hover
-      background-color #eee
+      @extend .item-hover
     .item__text
       flex-grow 2
       cursor pointer
@@ -67,7 +70,8 @@
       line-height 32px
       margin 4px
     button:not([disabled]):hover
-      background-color rgba(0, 0, 0, 0.12)
+      @extend .item-hover
+
 
 .position__actions
   display flex
@@ -75,3 +79,13 @@
 
 .save-btn
   margin-top 24px
+
+.list__add
+  list-style none
+  display flex
+  justify-content center
+  align-items center
+  padding 12px
+  cursor pointer
+  &:hover
+    @extend .item-hover
