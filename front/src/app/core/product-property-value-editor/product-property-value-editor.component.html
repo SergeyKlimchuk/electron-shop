@@ -9,6 +9,52 @@
   <ng-container matColumnDef="value">
     <th mat-header-cell *matHeaderCellDef>Значение</th>
     <td mat-cell *matCellDef="let property">
+
+      <span [ngSwitch]="property.title.type">
+      <p *ngSwitchCase="'Dictionary'">
+        <app-dictionary-value-input
+          [dictionaryId]="property.title.dictionary.id"
+          [(ngModel)]="property.value.value"
+          (change)="onValueUpdate()"
+          ></app-dictionary-value-input>
+      </p>
+      <p *ngSwitchCase="'String'">
+        <mat-form-field>
+          <input
+            matInput
+            required
+            placeholder="Строковое значение"
+            [(ngModel)]="property.value.value"
+            (keyup)="onValueUpdate()"
+            />
+        </mat-form-field>
+      </p>
+      <p *ngSwitchCase="'Integer'">
+        <mat-form-field>
+          <input
+            matInput
+            required
+            placeholder="Числовое значение"
+            [(ngModel)]="property.value.value"
+            [type]="'number'"
+            type="number"
+            (keyup)="onValueUpdate()"
+            />
+        </mat-form-field>
+      </p>
+      <p *ngSwitchCase="'Boolean'">
+        <mat-select
+          placeholder="Значение справочника"
+          [(ngModel)]="property.value.value">
+          <mat-option [value]="'true'">Да</mat-option>
+          <mat-option [value]="'false'">Нет</mat-option>
+        </mat-select>
+      </p>
+      <p *ngSwitchDefault>
+        ОШИБКА!
+      </p>
+      </span>
+
       <ng-container
         *ngIf="
           property.title.type == 'Dictionary';
@@ -18,22 +64,11 @@
       ></ng-container>
 
       <ng-template #hasDictionary>
-        <app-dictionary-value-input
-          [dictionaryId]="property.title.dictionary.id"
-          [(ngModel)]="property.value.value"
-          (change)="onValueUpdate()"
-        ></app-dictionary-value-input>
+
       </ng-template>
 
       <ng-template #hasNative>
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Значение"
-            [(ngModel)]="property.value.value"
-            (keyup)="onValueUpdate()"
-          />
-        </mat-form-field>
+
       </ng-template>
 
     </td>
