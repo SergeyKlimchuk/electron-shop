@@ -30,9 +30,10 @@ class ProductController {
         return productRepository.save(product)
     }
 
-    @GetMapping("/products/{id}")
-    fun getProduct(@PathVariable id: Long): Product {
-        return productRepository.getOne(id)
+    @GetMapping("/products/{product}")
+    fun getProduct(@PathVariable product: Product): Product {
+        product.views++
+        return productRepository.save(product)
     }
 
     @GetMapping("/products")

@@ -1,0 +1,19 @@
+<div class="label">{{ label }}</div>
+<div class="btn__wrapper">
+  <mat-icon class="btn btn-left" [inline]="true">chevron_left</mat-icon>
+</div>
+<section class="list">
+  <div
+    class="list__item"
+    *ngFor="let value of values"
+    [routerLink]="['/product/' + value.id]"
+  >
+    <div class="item__image">
+      <img [src]="value.imageUrl" alt="Изображение {{ value.name }}" />
+    </div>
+    <div class="item__text">{{ value.name }}</div>
+  </div>
+</section>
+<div class="btn__wrapper">
+  <mat-icon class="btn btn-right" [inline]="true">chevron_right</mat-icon>
+</div>

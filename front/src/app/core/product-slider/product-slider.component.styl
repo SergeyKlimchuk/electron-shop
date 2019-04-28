@@ -1,0 +1,62 @@
+@import '../../../stylus/colors.styl';
+
+:host
+  display flex
+  background-color #fff
+  position relative
+
+.label
+  background-color $main-color
+  color #fff
+  position absolute
+  padding 8px
+  z-index 1
+  left 0
+  top 0
+
+.btn__wrapper
+  display flex
+  justify-content center
+  align-items center
+
+.btn
+  cursor pointer
+  font-size 48px !important
+  color #fff
+  background-color rgba(0,0,0,.12)
+  transition .2s
+  &:hover
+    background-color rgba(0,0,0,.24)
+  &.&-right
+    right 0
+  &.&-left
+    left 0
+
+
+.list
+  display flex
+  flex-grow 2
+  position relative
+  overflow-x hidden
+  .list__item
+    min-width 25%
+    list-style none
+    display flex
+    flex-direction column
+    padding 24px
+    box-sizing border-box
+    border-bottom 4px solid transparent
+    cursor pointer
+    &:hover
+      border-bottom-color #673AB7
+    .item__image
+      display flex
+      justify-content center
+      align-items center
+      height 180px
+      img
+        height 80%
+        object-fit cover
+    .item__text
+      font-weight bold
+      text-align center

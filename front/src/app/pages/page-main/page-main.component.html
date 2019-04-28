@@ -1,8 +1,17 @@
 <div class="container">
   <!-- Слайдер активных акций -->
   <app-slider class="slider" [pages]="this.pages"></app-slider>
+  <mat-divider></mat-divider>
+
+  <!-- Новые товары -->
+  <app-product-slider [values]="newestProducts" [label]="'Новинки'"></app-product-slider>
+  <mat-divider></mat-divider>
 
   <!-- Популярные товары -->
+  <app-product-slider [values]="bestProducts" [label]="'Популярное за все время'"></app-product-slider>
+  <mat-divider></mat-divider>
 
-  <app-best-categories class="best-categories"></app-best-categories>
+  <!-- Товары недели -->
+  <app-product-slider [values]="bestProducts" [label]="'Товары недели'"></app-product-slider>
+  <mat-divider></mat-divider>
 </div>

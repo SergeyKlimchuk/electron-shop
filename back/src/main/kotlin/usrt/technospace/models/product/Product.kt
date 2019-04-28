@@ -1,14 +1,12 @@
 package usrt.technospace.models.product
 
 import com.fasterxml.jackson.annotation.JsonBackReference
-import org.springframework.data.annotation.CreatedDate
-import org.springframework.data.annotation.LastModifiedDate
-import java.util.*
+import usrt.technospace.models.core.Auditable
 import javax.persistence.*
 
 @Entity
 @Table(name = "products")
-class Product {
+class Product : Auditable() {
     @Id
     @GeneratedValue
     var id: Long? = null
@@ -21,6 +19,9 @@ class Product {
 
     @Column(name = "image_url")
     var imageUrl: String? = null
+
+    @Column(name = "views", nullable = false)
+    var views: Int = 0
 
     /**
      * Information about product. (Dynamic multiline)
@@ -43,12 +44,4 @@ class Product {
 
     @Column(name = "description")
     var description: String? = null
-
-    @Column(name = "created_date", updatable = false)
-    @CreatedDate
-    private var createdAt: Date? = null
-
-    @Column(name = "updated_date")
-    @LastModifiedDate
-    private var updatedAt: Date? = null
 }

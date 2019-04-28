@@ -19,7 +19,12 @@ export class ProductService {
     return this.http.get<Product>(`/api/products/${id}`);
   }
 
-  getProducts(productTypeId: number = null, page: number = null, size: number = null) {
+  getProducts(
+    productTypeId: number = null,
+    page: number = null,
+    size: number = null,
+    sort: string = null) {
+
     let params = new HttpParams();
     if (productTypeId) {
       params = params.set('productTypeId', productTypeId.toString());
@@ -29,6 +34,9 @@ export class ProductService {
     }
     if (size) {
       params = params.set('size', size.toString());
+    }
+    if (sort) {
+      params = params.set('sort', sort);
     }
     return this.http.get< PageableResponse<Product> >('/api/products', { params });
   }

@@ -68,7 +68,14 @@ export class PageProductComponent implements OnInit {
     this.productService.getProductProperties(this.product.id).subscribe(
       (properties) => {
         this.properties = new Array<ProductProperty>();
-        this.properties = properties;
+        this.properties = properties.map(x => {
+          if (x.value === 'true') {
+            x.value = 'Да';
+          } else if (x.value === 'false') {
+            x.value = 'Нет';
+          }
+          return x;
+        });
       },
       (error) => {
         console.error('Не удалось получить свойства товара!', error);

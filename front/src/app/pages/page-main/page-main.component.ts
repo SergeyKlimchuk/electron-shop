@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ProductService } from 'src/app/services/product/product.service';
+
 import { SliderPage } from '../../core/slider/slider-page';
+import { Product } from './../../../models/products/product';
 
 @Component({
   selector: 'app-page-main',
   templateUrl: './page-main.component.html',
   styleUrls: ['./page-main.component.styl']
 })
-export class PageMainComponent implements OnInit {
+export class PageMainComponent {
   pages = new Array<SliderPage>();
+  bestProducts: Product[] = [];
+  newestProducts: Product[] = [];
 
-  constructor() {
+  constructor(private productService: ProductService) {
     this.pages.push(
       {
         url: '/actions/1',
@@ -28,7 +33,19 @@ export class PageMainComponent implements OnInit {
         imgUrl: 'assets/resources/4_1920x360.jpg'
       }
     );
+    this.loadBestProducts();
+    this.loadNewestProducts();
   }
 
-  ngOnInit() {}
+  loadBestProducts() {
+    this.productService.getProducts(null, 0, 12, 'views,desc').subscribe(
+      products => this.bestProducts = products.content
+    );
+  }
+
+  loadNewestProducts() {
+    this.productService.getProducts(null, 0, 12, 'createdDate,desc').subscribe(
+      products => this.newestProducts = products.content
+    );
+  }
 }
