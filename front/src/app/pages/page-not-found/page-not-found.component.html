@@ -1,3 +1,13 @@
-<p>
-    Hey buddy, I think you've got the wrong door, the leather club's two blocks down.
-</p>
+<ng-container *ngIf="original; else gachi">
+  <div class="not-found-default">
+    <div class="code">404</div>
+    <div class="text">СОРЕ, не нашель, но пытался!</div>
+  </div>
+</ng-container>
+<ng-template #gachi>
+  <img src="/assets/resources/gachi.png" class="img">
+  <p class="text">
+    **Хей, дружок-пирожок, клуб любителей страницы 404 две ссылки вниз**
+  </p>
+  <button mat-button class="down" (click)="original = true">Перейти на 2 ссылки вниз</button>
+</ng-template>
