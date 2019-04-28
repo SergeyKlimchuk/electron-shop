@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './product-slider.component.html',
   styleUrls: ['./product-slider.component.styl']
 })
-export class ProductSliderComponent implements OnInit {
+export class ProductSliderComponent {
 
   @Input()
   values: Product[] = [];
@@ -14,13 +14,27 @@ export class ProductSliderComponent implements OnInit {
   @Input()
   label = '';
 
-  index = 0;
+  @Input()
+  showItemsCount = 4;
 
-  transform = '-50';
+  index = 0;
 
   constructor() { }
 
-  ngOnInit() {
+
+  next() {
+    if (this.values.length - this.showItemsCount !== this.index) {
+      this.index++;
+    } else {
+      this.index = 0;
+    }
   }
 
+  prior() {
+    if (this.index !== 0) {
+      this.index--;
+    } else {
+      this.index = this.values.length - this.showItemsCount;
+    }
+  }
 }

@@ -1,8 +1,9 @@
 <div class="label">{{ label }}</div>
-<div class="btn__wrapper">
-  <mat-icon class="btn btn-left" [inline]="true">chevron_left</mat-icon>
+<div class="btn__wrapper btn__wrapper-left">
+  <mat-icon class="btn" [inline]="true" (click)="prior()" >chevron_left</mat-icon>
 </div>
-<section class="list">
+<!-- TODO: Add responsible for this scrollabel list -->
+<section class="list" [ngStyle]="{'transform': 'translateX(-' + 317.5 * index +'px)'}">
   <div
     class="list__item"
     *ngFor="let value of values"
@@ -14,6 +15,6 @@
     <div class="item__text">{{ value.name }}</div>
   </div>
 </section>
-<div class="btn__wrapper">
-  <mat-icon class="btn btn-right" [inline]="true">chevron_right</mat-icon>
+<div class="btn__wrapper btn__wrapper-right">
+  <mat-icon class="btn" [inline]="true" (click)="next()" >chevron_right</mat-icon>
 </div>
