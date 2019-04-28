@@ -40,7 +40,7 @@ class ProductController {
     fun getProductsByProductTypeId(
             @RequestParam("productTypeId")
             productTypeId: Long?,
-            @PageableDefault(sort = ["createdAt"], direction = Sort.Direction.DESC)
+            @PageableDefault(sort = ["createdDate"], direction = Sort.Direction.DESC)
             pageable: Pageable): Page<Product> {
 
         if (productTypeId == null) {
