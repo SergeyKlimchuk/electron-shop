@@ -19,6 +19,19 @@ export class LoadableImageComponent implements ControlValueAccessor {
 
   @Input()
   dafaultImage: string = null;
+
+  @Input()
+  minWidth = 0;
+
+  @Input()
+  maxWidth = 100000;
+
+  @Input()
+  minHeight = 0;
+
+  @Input()
+  maxHeight = 100000;
+
   @ViewChild('selectImage') selectImageElement: ElementRef<HTMLElement>;
   @ViewChild('image') image: ElementRef<HTMLElement>;
 
@@ -82,12 +95,12 @@ export class LoadableImageComponent implements ControlValueAccessor {
       reader.onload = () => {
         const imageWidth = this.image.nativeElement.offsetWidth;
         const imageHeight = this.image.nativeElement.offsetHeight;
-        if (imageWidth >= 100 && imageWidth <= 200
-          && imageHeight >= 100 && imageHeight <= 200) {
+        if (imageWidth >= this.minWidth && imageWidth <= this.maxWidth
+          && imageHeight >= this.minHeight && imageHeight <= this.maxHeight) {
           this.imageUrl = reader.result.toString();
           this.newImage = event.target.files[0];
         } else {
-          this.snack.open('Изобржение должно быть размеров [200-300]X[200-300]!', undefined, {duration: 7500});
+          this.snack.open('Изобржение должно быть приемлемого размера!', undefined, {duration: 7500});
         }
       };
     }

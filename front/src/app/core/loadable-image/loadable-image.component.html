@@ -1,21 +1,26 @@
-<div class="wrapper">
-  <img
-    src="{{ imageUrl }}"
-    class="image"
-    alt="Без изображения"
-    #image
-    (error)="onImageWasBroken($event)"
-  />
-  <div class="select-image-panel mat-ripple" (click)="selectNewImage()" matRipple>
-    <mat-icon>add_photo_alternate</mat-icon>
-  </div>
-  <button
-    mat-mini-fab
-    class="restore-btn"
-    (click)="restoreImage()"
-    [disabled]="this.oldImageUrl === this.imageUrl"
-  >
-    <mat-icon>restore</mat-icon>
-  </button>
+<img
+  src="{{ imageUrl }}"
+  class="image"
+  alt="Без изображения"
+  #image
+  (error)="onImageWasBroken($event)"
+/>
+
+<div
+  class="select-image-panel mat-ripple"
+  (click)="selectNewImage()"
+  matRipple
+  color="primary"
+>
+  <mat-icon>add_photo_alternate</mat-icon>
 </div>
+<button
+  mat-mini-fab
+  class="restore-btn"
+  (click)="restoreImage()"
+  [disabled]="this.oldImageUrl === this.imageUrl"
+  color="primary"
+>
+  <mat-icon>restore</mat-icon>
+</button>
 <input #selectImage type="file" (change)="onImageSelect($event)" hidden />
