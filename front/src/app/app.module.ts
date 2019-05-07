@@ -46,7 +46,6 @@ import {
 import { PageCartComponent } from './pages/page-cart/page-cart.component';
 import { PageFavoritesComponent } from './pages/page-favorites/page-favorites.component';
 import { PageLoginComponent } from './pages/page-login/page-login.component';
-import { BestCategoriesComponent } from './pages/page-main/best-categories/best-categories.component';
 import { PageMainComponent } from './pages/page-main/page-main.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { PageProductGroupComponent } from './pages/page-product-group/page-product-group.component';
@@ -63,6 +62,9 @@ import { environment } from 'src/environments/environment';
 import { PointSelectorComponent } from './pages/page-addresses/point-selector/point-selector.component';
 import { MapSubpageComponent } from './pages/page-admin/subpages/map-subpage/map-subpage.component';
 import { ProductSliderComponent } from './core/product-slider/product-slider.component';
+import { ActionsSubpageComponent } from './pages/page-admin/subpages/actions-subpage/actions-subpage.component';
+import { PageActionComponent } from './pages/page-actions/page-action/page-action.component';
+import { ProductSelectDialog } from './core/product-select/product-select.component';
 
 
 const appRoutes: Routes = [
@@ -98,7 +100,6 @@ const appRoutes: Routes = [
     PageProductComponent,
     PageActionsComponent,
     PageAddressesComponent,
-    BestCategoriesComponent,
     PageLoginComponent,
     PageRegistrationComponent,
     PageProfileComponent,
@@ -130,7 +131,10 @@ const appRoutes: Routes = [
     BillStatusPipe,
     PointSelectorComponent,
     MapSubpageComponent,
-    ProductSliderComponent
+    ProductSliderComponent,
+    ActionsSubpageComponent,
+    PageActionComponent,
+    ProductSelectDialog
   ],
   imports: [
     BrowserModule,
@@ -156,7 +160,8 @@ const appRoutes: Routes = [
     EditProductDialog,
     ChangeEmailDialog,
     ChangeSecondaryEmailDialog,
-    ChangePasswordDialog
+    ChangePasswordDialog,
+    ProductSelectDialog
   ],
   providers: [
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}

@@ -1,0 +1,23 @@
+<h2 class="name">{{ action.name }}</h2>
+<img
+  class="img"
+  [src]="action.imageUrl"
+  alt="Изображение товара {{ action.name }}"
+/>
+<div class="text">{{ action.info }}</div>
+
+<ng-container *ngIf="action.products.length > 0">
+  <br />
+  <hr />
+  <br />
+  <h4>В акции принмают участие товары:</h4>
+  <div class="products__list">
+    <mat-chip-list>
+      <mat-chip
+        *ngFor="let product of action.products"
+        [routerLink]="['/product/' + product.id]"
+        >{{ product.name }}</mat-chip
+      >
+    </mat-chip-list>
+  </div>
+</ng-container>

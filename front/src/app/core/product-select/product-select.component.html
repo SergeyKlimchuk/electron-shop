@@ -1,0 +1,35 @@
+<h2>Выбор продуктов</h2>
+<ng-container *ngIf="isMultiply; else singleValue">
+  <table mat-table [dataSource]="dataSource">
+    <!-- Checkbox -->
+    <ng-container matColumnDef="check">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox color="primary"></mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox
+          color="primary"
+          class="check"
+          (change)="$event ? selectedProducts.toggle(element) : null"
+          [checked]="selectedProducts.isSelected(element)"
+        ></mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Название</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['check', 'name']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['check', 'name']"></tr>
+  </table>
+
+  <mat-paginator
+    [hidePageSize]="true"
+    (page)="loadPage(this.paginator.pageIndex)"
+  ></mat-paginator>
+</ng-container>
+<ng-template #singleValue> </ng-template>
+<button mat-button (click)="save()">Применить</button>

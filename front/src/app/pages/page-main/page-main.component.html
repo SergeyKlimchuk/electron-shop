@@ -1,6 +1,6 @@
 <div class="container">
   <!-- Слайдер активных акций -->
-  <app-slider class="slider" [pages]="this.pages"></app-slider>
+  <app-slider class="slider" [pages]="actions$ | async" *ngIf="(actions$ | async).length > 0" ></app-slider>
   <mat-divider></mat-divider>
 
   <!-- Новые товары -->

@@ -43,7 +43,7 @@ export class ProductTypeSubpageComponent implements OnInit {
 
   setPageUpdateEvent() {
     this.paginator.page.subscribe(
-      success => {
+      () => {
         this.updatePage();
       }
     );
@@ -74,7 +74,7 @@ export class ProductTypeSubpageComponent implements OnInit {
         alert('Ошибочка');
         console.error(error);
       }
-    )
+    );
   }
 
   showAddValueForm() {

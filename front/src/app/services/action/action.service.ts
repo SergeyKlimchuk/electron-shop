@@ -18,6 +18,20 @@ export class ActionService {
     return this.http.get<Action>(`/api/actions/${id}`);
   }
 
+  getActions(page: number = 1, size: number = 10, sort: string = null) {
+    const params = new HttpParams();
+    if (page) {
+      params.set('page', page.toString());
+    }
+    if (size) {
+      params.set('size', size.toString());
+    }
+    if (sort) {
+      params.set('sort', sort);
+    }
+    return this.http.get<PageableResponse<Action>>('/api/actions');
+  }
+
   getActiveActions(page: number = 1, size: number = 10) {
     const params = new HttpParams();
     if (page) {
@@ -30,7 +44,11 @@ export class ActionService {
     return this.http.get<PageableResponse<Action>>('/api/actions');
   }
 
-  updateProduct(action: Action) {
+  updateAction(action: Action) {
     return this.http.put<Action>('/api/actions', action);
+  }
+
+  deleteAction(actionId: number) {
+    return this.http.delete<void>(`/api/actions/${actionId}`);
   }
 }

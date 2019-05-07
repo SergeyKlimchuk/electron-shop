@@ -28,6 +28,8 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                 ?.authorizeRequests()
                 ?.antMatchers(
                         "/",
+                        "/actions",
+                        "/actions/**",
                         "/registration",
                         "/user/current/email",
                         "/user/current/secondaryEmail",

@@ -1,0 +1,82 @@
+<div>
+  <mat-card class="list">
+    <mat-card-header class="list__title">
+      <h3>Список</h3>
+    </mat-card-header>
+    <mat-card-content class="list__content">
+      <ul
+        class="list__list"
+        *ngIf="(actions$ | async).length > 0; else haveNoElements"
+      >
+        <li class="list__item" *ngFor="let action of actions$ | async">
+          <div class="item__text" (click)="selectAction(action)" >{{ action.name }}</div>
+          <div>
+            <mat-menu #itemActions="matMenu">
+              <button mat-menu-item (click)="editAction(action)">
+                Редактировать
+              </button>
+              <button mat-menu-item (click)="deleteAction(action.id)">Удалить</button>
+            </mat-menu>
+
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="itemActions"
+              class="item__actions"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+        </li>
+      </ul>
+      <ng-template #haveNoElements>
+        <div class="not-found">(Отсутствуют элементы)</div>
+      </ng-template>
+    </mat-card-content>
+    <mat-card-footer class="footer">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="addNewAction()"
+        [disabled]="editMode"
+      >
+        <mat-icon>add</mat-icon> Добавить
+      </button>
+    </mat-card-footer>
+  </mat-card>
+</div>
+<!-- 1370X360 -->
+<div>
+  <mat-card class="panel">
+    <ng-container *ngIf="!editMode; else editModeTemplate">
+      <app-page-action [action]="selectedAction" *ngIf="selectedAction" ></app-page-action>
+    </ng-container>
+    <ng-template #editModeTemplate>
+      <mat-form-field>
+        <input matInput placeholder="Название акции" [(ngModel)]="editedAction.name" />
+      </mat-form-field>
+      <app-loadable-image class="image" [(ngModel)]="editedAction.imageUrl"></app-loadable-image>
+      <mat-form-field>
+        <textarea matInput placeholder="Описание" [(ngModel)]="editedAction.info"></textarea>
+      </mat-form-field>
+      <div class="products">
+        <ul class="products-list">
+          <li *ngFor="let product of editedAction.products" >{{ product.name }}</li>
+        </ul>
+        <div class="products-not-found" *ngIf="editedAction.products.length == 0" >
+          Товары отсутствуют
+        </div>
+        <button class="product-choose" mat-raised-button (click)="openSelectProductsDialog()">Выбрать товары</button>
+      </div>
+      <div class="actions">
+        <button mat-raised-button (click)="cancel()">Отмена</button>
+        <button mat-raised-button (click)="save()" color="primary">
+          Сохранить
+        </button>
+      </div>
+    </ng-template>
+
+    <div class="await-message" *ngIf="!selectedAction && !editedAction">
+      <mat-icon>arrow_back</mat-icon>Ожидается выбор акции из списка
+    </div>
+  </mat-card>
+</div>

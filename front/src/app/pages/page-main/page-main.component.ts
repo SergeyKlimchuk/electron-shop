@@ -1,8 +1,10 @@
+import { ActionService } from './../../services/action/action.service';
 import { Component } from '@angular/core';
 import { ProductService } from 'src/app/services/product/product.service';
 
 import { SliderPage } from '../../core/slider/slider-page';
 import { Product } from './../../../models/products/product';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-page-main',
@@ -10,28 +12,18 @@ import { Product } from './../../../models/products/product';
   styleUrls: ['./page-main.component.styl']
 })
 export class PageMainComponent {
-  pages = new Array<SliderPage>();
+  actions$ = new BehaviorSubject<SliderPage[]>([]);
   bestProducts: Product[] = [];
   newestProducts: Product[] = [];
 
-  constructor(private productService: ProductService) {
-    this.pages.push(
-      {
-        url: '/actions/1',
-        imgUrl: 'assets/resources/1_1920x360.jpg'
-      },
-      {
-        url: '/actions/2',
-        imgUrl: 'assets/resources/2_1920x360.jpg'
-      },
-      {
-        url: '/actions/3',
-        imgUrl: 'assets/resources/3_1920x360.jpg'
-      },
-      {
-        url: '/actions/4',
-        imgUrl: 'assets/resources/4_1920x360.jpg'
-      }
+  constructor(private productService: ProductService,
+              private actionService: ActionService) {
+    this.actionService.getActions(0, 10).subscribe(
+      actions => this.actions$.next(actions.content.map( x => {
+        return {
+          url: `/actions/${x.id}`, imgUrl: x.imageUrl
+        };
+       }))
     );
     this.loadBestProducts();
     this.loadNewestProducts();

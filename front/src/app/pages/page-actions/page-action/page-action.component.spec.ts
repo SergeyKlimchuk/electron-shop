@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BestCategoriesComponent } from './best-categories.component';
+import { PageActionComponent } from './page-action.component';
 
-describe('BestCategoriesComponent', () => {
-  let component: BestCategoriesComponent;
-  let fixture: ComponentFixture<BestCategoriesComponent>;
+describe('PageActionComponent', () => {
+  let component: PageActionComponent;
+  let fixture: ComponentFixture<PageActionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BestCategoriesComponent ]
+      declarations: [ PageActionComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BestCategoriesComponent);
+    fixture = TestBed.createComponent(PageActionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
