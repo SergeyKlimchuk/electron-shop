@@ -65,6 +65,7 @@ import { ProductSliderComponent } from './core/product-slider/product-slider.com
 import { ActionsSubpageComponent } from './pages/page-admin/subpages/actions-subpage/actions-subpage.component';
 import { PageActionComponent } from './pages/page-actions/page-action/page-action.component';
 import { ProductSelectDialog } from './core/product-select/product-select.component';
+import { PageActionViewComponent } from './pages/page-actions/page-action-view/page-action-view.component';
 
 
 const appRoutes: Routes = [
@@ -77,7 +78,7 @@ const appRoutes: Routes = [
   { path: 'product/:productId',      component: PageProductComponent      },
   { path: 'addresses',               component: PageAddressesComponent    },
   { path: 'actions',                 component: PageActionsComponent      },
-  { path: 'actions/:id',             component: PageActionsComponent      },
+  { path: 'actions/:actionId',       component: PageActionViewComponent   },
   { path: 'admin-panel',             component: PageAdminComponent        },
   { path: 'cart',                    component: PageCartComponent         },
   { path: 'favorites',               component: PageFavoritesComponent    },
@@ -134,7 +135,8 @@ const appRoutes: Routes = [
     ProductSliderComponent,
     ActionsSubpageComponent,
     PageActionComponent,
-    ProductSelectDialog
+    ProductSelectDialog,
+    PageActionViewComponent
   ],
   imports: [
     BrowserModule,

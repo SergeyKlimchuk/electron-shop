@@ -10,10 +10,12 @@ import { state, style, transition, trigger, animate } from '@angular/animations'
     trigger('visibility', [
 
       state('visible', style({
-        opacity: 1
+        opacity: 1,
+        display: 'block'
       })),
       state('hidden', style({
-        opacity: 0
+        opacity: 0,
+        display: 'none'
       })),
 
       transition('visible => hidden', [
