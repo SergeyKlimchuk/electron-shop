@@ -1,20 +1,31 @@
 <div class="label">{{ label }}</div>
 <div class="btn__wrapper btn__wrapper-left">
-  <mat-icon class="btn" [inline]="true" (click)="prior()" >chevron_left</mat-icon>
+  <mat-icon class="btn" [inline]="true" (click)="prior()"
+    >chevron_left</mat-icon
+  >
 </div>
 <!-- TODO: Add responsible for this scrollabel list -->
-<section class="list" [ngStyle]="{'transform': 'translateX(-' + 317.5 * index +'px)'}">
+<section
+  class="list"
+  [ngStyle]="{ transform: 'translateX(-' + 25 * index + '%)' }"
+>
   <div
-    class="list__item"
+    class="list__item square"
     *ngFor="let value of values"
     [routerLink]="['/product/' + value.id]"
   >
-    <div class="item__image">
-      <img [src]="value.imageUrl" alt="Изображение {{ value.name }}" />
+    <div class="square__content">
+      <div class="item">
+        <div class="item__img">
+          <img [src]="value.imageUrl" [alt]="value.name">
+        </div>
+        <div class="item__text">{{ value.name }}</div>
+      </div>
     </div>
-    <div class="item__text">{{ value.name }}</div>
   </div>
 </section>
 <div class="btn__wrapper btn__wrapper-right">
-  <mat-icon class="btn" [inline]="true" (click)="next()" >chevron_right</mat-icon>
+  <mat-icon class="btn" [inline]="true" (click)="next()"
+    >chevron_right</mat-icon
+  >
 </div>

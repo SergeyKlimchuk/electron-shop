@@ -1,5 +1,5 @@
 import { Product } from './../../../models/products/product';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-product-slider',
@@ -21,9 +21,8 @@ export class ProductSliderComponent {
 
   constructor() { }
 
-
   next() {
-    if (this.values.length - this.showItemsCount !== this.index) {
+    if (this.index + this.showItemsCount < this.values.length) {
       this.index++;
     } else {
       this.index = 0;

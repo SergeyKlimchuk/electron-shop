@@ -4,6 +4,7 @@
   display flex
   position relative
   overflow hidden
+  min-height 240px
 
 .label
   background-color $main-color
@@ -39,28 +40,42 @@
     background-color rgba(0,0,0,.24)
 
 
+.square
+  position relative
+  &:after
+    content ""
+    display block
+    padding-bottom 100%
+  .square__content
+    position absolute
+    width 100%
+    height 100%
+
 .list
-  display inherit
-  padding 0 50px
-  transition .2s
+  display flex
+  width 100%
+  height 100%
   .list__item
+    min-width 25%
+
+.item
+  box-sizing border-box
+  padding 10px
+  width 100%
+  height 100%
+  display flex
+  flex-direction column
+  cursor pointer
+  &:hover
+    color $main-color
+  .item__img
+    flex-grow 2
+    padding 20px
     display flex
-    flex-direction column
-    padding 24px
-    box-sizing border-box
-    border-bottom 4px solid transparent
-    cursor pointer
-    min-width 17.4%
-    &:hover
-      border-bottom-color #673AB7
-    .item__image
-      display flex
-      justify-content center
-      align-items center
-      height 180px
-      img
-        height 80%
-        object-fit cover
-    .item__text
-      font-weight bold
-      text-align center
+    justify-content center
+    img
+      width 100%
+  .item__text
+    text-align center
+    font-weight bold
+    height 24px

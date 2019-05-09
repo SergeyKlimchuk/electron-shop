@@ -1,17 +1,15 @@
 <div class="container">
   <!-- Слайдер активных акций -->
   <app-slider class="slider" [pages]="actions$ | async" *ngIf="(actions$ | async).length > 0" ></app-slider>
-  <mat-divider></mat-divider>
 
   <!-- Новые товары -->
-  <app-product-slider [values]="newestProducts" [label]="'Новинки'"></app-product-slider>
-  <mat-divider></mat-divider>
+  <app-product-slider [values]="newestProducts" [label]="'Новинки'" class="color__white"></app-product-slider>
 
   <!-- Популярные товары -->
-  <app-product-slider [values]="bestProducts" [label]="'Популярное за все время'"></app-product-slider>
-  <mat-divider></mat-divider>
+  <app-product-slider [values]="bestProducts" [label]="'Популярное за все время'" class="color__white"></app-product-slider>
 
   <!-- Товары недели -->
-  <app-product-slider [values]="bestProducts" [label]="'Товары недели'"></app-product-slider>
-  <mat-divider></mat-divider>
+  <app-product-slider [values]="bestProducts" [label]="'Товары недели'" class="color__white"></app-product-slider>
+  <br>
+  <br>
 </div>
