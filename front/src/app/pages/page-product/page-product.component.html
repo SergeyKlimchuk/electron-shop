@@ -1,52 +1,62 @@
-<div class="info">
-  <div class="info__image">
+<mat-card>
+  <div class="info">
+    <div class="info__image">
+      <img src="{{ product.imageUrl }}" alt="Картинка продукта" />
       <img
-      src="{{ product.imageUrl }}"
-      alt="Картинка продукта">
-      <img src="./../../../assets/icons/discount.svg" class="discount__icon" *ngIf="product.price !== product.priceWithDiscount" >
-  </div>
-  <div class="info__text">
-    <h2 class="product__name">{{ product.name }}</h2>
-    <div class="product_count">Кол-во продуктов: {{ product.count }}</div>
-    <div class="price__block">
+        src="./../../../assets/icons/discount.svg"
+        class="discount__icon"
+        *ngIf="product.price !== product.priceWithDiscount"
+      />
+    </div>
+    <div class="info__text">
+      <h1 class="product__name">{{ product.name }}</h1>
+      <div class="product_count">Кол-во продуктов: {{ product.count }}</div>
+      <div class="price__block">
         <span class="product__price">
-          <ng-container *ngIf="product.price === product.priceWithDiscount; else productWithDiscount">
+          <ng-container
+            *ngIf="
+              product.price === product.priceWithDiscount;
+              else productWithDiscount
+            "
+          >
             {{ product.price }} ₸
           </ng-container>
           <ng-template #productWithDiscount>
-            <s>{{ product.price }} ₸</s> <b>{{ product.priceWithDiscount }} ₸</b>
+            <s>{{ product.price }} ₸</s>
+            <b>{{ product.priceWithDiscount }} ₸</b>
           </ng-template>
-
         </span>
-      <button mat-raised-button
-        class="buy"
-        color="primary"
-        (click)="cartAction()" >Добавить в корзину <mat-icon class="mat-18">shopping_cart</mat-icon></button>
+        <button
+          mat-raised-button
+          class="buy"
+          color="primary"
+          (click)="cartAction()"
+        >
+          Добавить в корзину <mat-icon class="mat-18">shopping_cart</mat-icon>
+        </button>
+      </div>
+      <section *ngIf="product.description">
+        Информация:
+        <span class="product__description">{{ product.description }}</span>
+      </section>
     </div>
-    <section *ngIf="product.description">
-      Информация:
-      <span class="product__description">{{ product.description }}</span>
-    </section>
   </div>
+  <h3 class="label">Технические характеристики:</h3>
+  <table mat-table [dataSource]="properties" class="product__properties">
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
 
-</div>
-<table mat-table [dataSource]="properties" class="mat-elevation-z8">
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
 
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
+    <!-- Name Column -->
+    <ng-container matColumnDef="value">
+      <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+    </ng-container>
 
-  <!-- Position Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Технические характеристики</th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="value">
-    <th mat-header-cell *matHeaderCellDef class="grey">{{ product.name }}</th>
-    <td mat-cell *matCellDef="let element"> {{element.value}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="properties__row"></tr>
+  </table>
+  <h3 class="label">Комментарии:</h3>
+</mat-card>
