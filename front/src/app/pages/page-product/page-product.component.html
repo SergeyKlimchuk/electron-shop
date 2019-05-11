@@ -3,12 +3,21 @@
       <img
       src="{{ product.imageUrl }}"
       alt="Картинка продукта">
+      <img src="./../../../assets/icons/discount.svg" class="discount__icon" *ngIf="product.price !== product.priceWithDiscount" >
   </div>
   <div class="info__text">
     <h2 class="product__name">{{ product.name }}</h2>
     <div class="product_count">Кол-во продуктов: {{ product.count }}</div>
     <div class="price__block">
-        <span class="product__price">{{ product.price }} ₸</span>
+        <span class="product__price">
+          <ng-container *ngIf="product.price === product.priceWithDiscount; else productWithDiscount">
+            {{ product.price }} ₸
+          </ng-container>
+          <ng-template #productWithDiscount>
+            <s>{{ product.price }} ₸</s> <b>{{ product.priceWithDiscount }} ₸</b>
+          </ng-template>
+
+        </span>
       <button mat-raised-button
         class="buy"
         color="primary"
