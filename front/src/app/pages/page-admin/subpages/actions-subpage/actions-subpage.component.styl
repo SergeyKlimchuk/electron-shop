@@ -79,3 +79,16 @@
     list-style none
     li
       padding 8px
+
+.discount
+  padding 24px
+  margin-bottom 1.25em
+  border-radius 4px
+  border 1px solid rgba(0,0,0,.12)
+  .discount__properties
+    display flex
+    flex-direction column
+    & > *
+      min-width 240px
+  & > *:not(:first-child)
+    margin-top 24px

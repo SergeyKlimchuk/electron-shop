@@ -7,10 +7,12 @@ import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
+import usrt.technospace.dto.ProductDto
 import usrt.technospace.dto.ProductProperty
 import usrt.technospace.models.product.Product
 import usrt.technospace.services.ProductService
 import usrt.technospace.repository.ProductRepository
+import usrt.technospace.utils.ProductDtoConverter
 import javax.validation.Valid
 import javax.validation.constraints.NotNull
 
@@ -23,17 +25,22 @@ class ProductController {
     @Autowired
     private lateinit var productService: ProductService
 
+    @Autowired
+    private lateinit var productDtoConverter: ProductDtoConverter
+
     @PostMapping("/products")
     @Transactional
-    fun addProduct(@Valid @RequestBody @NotNull product: Product): Product {
+    fun addProduct(@Valid @RequestBody @NotNull product: Product): ProductDto {
         product.values!!.forEach { x -> x.product = product }
-        return productRepository.save(product)
+        productRepository.save(product)
+        return productDtoConverter.convert(product)
     }
 
     @GetMapping("/products/{product}")
-    fun getProduct(@PathVariable product: Product): Product {
+    fun getProduct(@PathVariable product: Product): ProductDto {
         product.views++
-        return productRepository.save(product)
+        productRepository.save(product)
+        return productDtoConverter.convert(product)
     }
 
     @GetMapping("/products")
@@ -51,8 +58,9 @@ class ProductController {
     }
 
     @PutMapping("/products")
-    fun updateProduct(@Valid @RequestBody product: Product): Product {
-        return productRepository.save(product)
+    fun updateProduct(@Valid @RequestBody product: Product): ProductDto {
+        productRepository.save(product)
+        return productDtoConverter.convert(product)
     }
 
     @GetMapping("/products/count")

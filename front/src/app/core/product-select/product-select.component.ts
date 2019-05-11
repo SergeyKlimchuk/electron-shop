@@ -46,4 +46,8 @@ export class ProductSelectDialog {
     this.dialogRef.close(this.selectedProducts.selected);
   }
 
+  close() {
+    this.dialogRef.close();
+  }
+
 }

@@ -32,4 +32,5 @@
   ></mat-paginator>
 </ng-container>
 <ng-template #singleValue> </ng-template>
-<button mat-button (click)="save()">Применить</button>
+<button mat-raised-button (click)="save()" class="right-btn" color="primary">Применить</button>
+<button mat-button (click)="close()" class="right-btn">Отмена</button>

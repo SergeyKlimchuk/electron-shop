@@ -1,11 +1,14 @@
 package usrt.technospace.models.product
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import usrt.technospace.models.actions.Action
 import usrt.technospace.models.core.Auditable
 import javax.persistence.*
 
 @Entity
 @Table(name = "products")
+@JsonIgnoreProperties("actions")
 class Product : Auditable() {
     @Id
     @GeneratedValue
@@ -44,4 +47,9 @@ class Product : Auditable() {
 
     @Column(name = "description")
     var description: String? = null
+
+    @ManyToMany(
+            mappedBy = "products"
+    )
+    var actions: Set<Action> = emptySet()
 }

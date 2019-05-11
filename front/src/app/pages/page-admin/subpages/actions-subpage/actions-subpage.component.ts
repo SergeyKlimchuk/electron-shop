@@ -1,12 +1,12 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { FileService } from './../../../../services/file/file.service';
-import { map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { Action } from './../../../../../models/actions/actions';
-import { ActionService } from './../../../../services/action/action.service';
-import { Component, OnInit, ViewChildren, ViewChild } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { LoadableImageComponent } from 'src/app/core/loadable-image/loadable-image.component';
 import { ProductSelectDialog } from 'src/app/core/product-select/product-select.component';
+
+import { Action } from './../../../../../models/actions/actions';
+import { ActionService } from './../../../../services/action/action.service';
 
 @Component({
   selector: 'app-actions-subpage',
@@ -23,6 +23,8 @@ export class ActionsSubpageComponent implements OnInit {
 
   editMode = false;
   editedAction: Action;
+
+  percentDiscount = true;
 
   constructor(private actionService: ActionService,
               private matDialog: MatDialog,
@@ -76,7 +78,7 @@ export class ActionsSubpageComponent implements OnInit {
 
   async save() {
     this.editMode = false;
-    this.editedAction.imageUrl = await this.picture.uploadImage() as any;
+    await this.picture.uploadImage();
     this.actionService.saveAction(this.editedAction).subscribe(
       () => {
         this.loadActions();

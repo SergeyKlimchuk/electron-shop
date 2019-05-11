@@ -9,13 +9,17 @@
         *ngIf="(actions$ | async).length > 0; else haveNoElements"
       >
         <li class="list__item" *ngFor="let action of actions$ | async">
-          <div class="item__text" (click)="selectAction(action)" >{{ action.name }}</div>
+          <div class="item__text" (click)="selectAction(action)">
+            {{ action.name }}
+          </div>
           <div>
             <mat-menu #itemActions="matMenu">
               <button mat-menu-item (click)="editAction(action)">
                 Редактировать
               </button>
-              <button mat-menu-item (click)="deleteAction(action.id)">Удалить</button>
+              <button mat-menu-item (click)="deleteAction(action.id)">
+                Удалить
+              </button>
             </mat-menu>
 
             <button
@@ -48,24 +52,77 @@
 <div>
   <mat-card class="panel">
     <ng-container *ngIf="!editMode; else editModeTemplate">
-      <app-page-action [action]="selectedAction" *ngIf="selectedAction" ></app-page-action>
+      <app-page-action
+        [action]="selectedAction"
+        *ngIf="selectedAction"
+      ></app-page-action>
     </ng-container>
     <ng-template #editModeTemplate>
       <mat-form-field>
-        <input matInput placeholder="Название акции" [(ngModel)]="editedAction.name" />
+        <input
+          matInput
+          placeholder="Название акции"
+          [(ngModel)]="editedAction.name"
+        />
       </mat-form-field>
-      <app-loadable-image class="image" [(ngModel)]="editedAction.imageUrl"></app-loadable-image>
+      <app-loadable-image
+        class="image"
+        [(ngModel)]="editedAction.imageUrl"
+      ></app-loadable-image>
       <mat-form-field>
-        <textarea matInput placeholder="Описание" [(ngModel)]="editedAction.info"></textarea>
+        <textarea
+          matInput
+          placeholder="Описание"
+          [(ngModel)]="editedAction.info"
+        ></textarea>
       </mat-form-field>
+      <div class="discount">
+        <h4>Скидка</h4>
+        <mat-form-field>
+          <mat-label>Использовать скидку?</mat-label>
+          <mat-select [(ngModel)]="editedAction.hasDiscount">
+            <mat-option [value]="true">Да</mat-option>
+            <mat-option [value]="false">Нет</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div *ngIf="editedAction.hasDiscount" class="discount__properties">
+          <mat-form-field>
+            <mat-label>Тип скидки</mat-label>
+            <mat-select
+              [(ngModel)]="editedAction.discountInPercent"
+            >
+              <mat-option [value]="true">Процентная скидка</mat-option>
+              <mat-option [value]="false">Фиксированая сумма</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Значение скидки"
+              [(ngModel)]="editedAction.discountValue"
+            />
+          </mat-form-field>
+        </div>
+      </div>
       <div class="products">
         <ul class="products-list">
-          <li *ngFor="let product of editedAction.products" >{{ product.name }}</li>
+          <li *ngFor="let product of editedAction.products">
+            {{ product.name }}
+          </li>
         </ul>
-        <div class="products-not-found" *ngIf="editedAction.products.length == 0" >
+        <div
+          class="products-not-found"
+          *ngIf="editedAction.products.length == 0"
+        >
           Товары отсутствуют
         </div>
-        <button class="product-choose" mat-raised-button (click)="openSelectProductsDialog()">Выбрать товары</button>
+        <button
+          class="product-choose"
+          mat-raised-button
+          (click)="openSelectProductsDialog()"
+        >
+          Выбрать товары
+        </button>
       </div>
       <div class="actions">
         <button mat-raised-button (click)="cancel()">Отмена</button>

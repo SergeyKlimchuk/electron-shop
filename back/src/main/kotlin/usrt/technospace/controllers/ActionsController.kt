@@ -17,7 +17,7 @@ class ActionsController {
     lateinit var actionRepository: ActionRepository
 
     @PostMapping("/actions")
-    fun addAction(@RequestBody @Valid action: Action): Action {
+    fun addAction(@RequestBody action: Action): Action {
         return actionRepository.save(action)
     }
 

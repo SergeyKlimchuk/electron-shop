@@ -7,5 +7,8 @@ export class Action {
   dateFinish: string;
   info: string;
   imageUrl: string;
+  discountInPercent: boolean;
+  discountValue: number;
+  hasDiscount: boolean;
   products: Product[] = [];
 }

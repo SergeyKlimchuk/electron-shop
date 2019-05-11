@@ -1,5 +1,6 @@
 package usrt.technospace.models.actions
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import usrt.technospace.models.core.Auditable
 import usrt.technospace.models.product.Product
 import java.util.*
@@ -27,6 +28,15 @@ class Action : Auditable() {
 
     @Column(name = "date_finish")
     var dateFinish: Date? = null
+
+    @Column(name = "discount_in_percent")
+    var discountInPercent: Boolean? = false
+
+    @Column(name = "discount_value")
+    var discountValue: Double? = 0.0
+
+    @Column(name = "has_discount")
+    var hasDiscount: Boolean? = false
 
     @Column(name = "img_url")
     var imageUrl: String? = null

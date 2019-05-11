@@ -5,6 +5,7 @@ export class Product {
   id: number;
   name: string;
   price: number;
+  priceWithDiscount: number;
   count: number;
   imageUrl: string;
   description: string;
