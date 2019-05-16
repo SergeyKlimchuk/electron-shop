@@ -2,6 +2,7 @@ import { Action } from './../../../models/actions/actions';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PageableResponse } from 'src/models/system/pageable-response';
+import { Product } from 'src/models/products/product';
 
 @Injectable({
   providedIn: 'root'

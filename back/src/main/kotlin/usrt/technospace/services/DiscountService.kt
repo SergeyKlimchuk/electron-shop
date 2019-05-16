@@ -3,26 +3,36 @@ package usrt.technospace.services
 import org.springframework.stereotype.Service
 import usrt.technospace.models.actions.Action
 import usrt.technospace.models.product.Product
+import java.util.stream.Collectors
 
 @Service
 class DiscountService {
-    fun getPriceWithDiscount(product: Product): Int {
-        if (product.actions.isEmpty() || !product.actions.any { x -> x.hasDiscount!!}) {
-            return product.price!!
-        }
+    fun calculateDiscount(product: Product): Int {
+        val actionsWithDiscount = product.actions
+                .stream()
+                .filter { x -> x.hasDiscount }
+                .sorted { x, y -> sortByDiscountType(x, y) }
+                .collect(Collectors.toList())
 
-        return product.actions.stream()
-                .filter { x -> x.hasDiscount!! }
-                .map { x -> calculateDiscount(product, x) }
-                .max { o1, o2 -> maxOf(o1, o2) }
-                .get()
+        var price = product.price.toDouble()
+        for (action in actionsWithDiscount) {
+
+            price -= if (action.discountInPercent) {
+                (price / 100) * action.discountValue!!
+            } else {
+                price - action.discountValue!!
+            }
+        }
+        return product.price - price.toInt()
     }
 
-    private fun calculateDiscount(product: Product, action: Action): Int {
-        return if (action.discountInPercent!!) { //TODO: GET PERCENTAGE
-            ((product.price!!.toDouble() / 100) * (100 - action.discountValue!!)).toInt()
-        } else {
-            (product.price!!.toDouble() - action.discountValue!!).toInt()
+    private fun sortByDiscountType(x: Action, y: Action): Int {
+        if (x.discountInPercent == y.discountInPercent) {
+            return 0
         }
+        if (x.discountInPercent) {
+            return -1
+        }
+        return 1
     }
 }

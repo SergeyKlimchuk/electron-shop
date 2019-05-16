@@ -1,12 +1,14 @@
-import { UserService } from './../../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ProductService } from 'src/app/services/product/product.service';
+import { Action } from 'src/models/actions/actions';
 import { Product } from 'src/models/products/product';
 import { ProductProperty } from 'src/models/products/product-property';
-import { tap, filter } from 'rxjs/operators';
+
+import { UserService } from './../../services/user/user.service';
 
 @Component({
   selector: 'app-page-product',
@@ -19,6 +21,7 @@ export class PageProductComponent implements OnInit {
   productInCart = false;
   displayedColumns = ['name', 'value'];
   properties: ProductProperty[];
+  bestAction = new Action();
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -38,7 +41,7 @@ export class PageProductComponent implements OnInit {
       tap(() => this.applyproductProperties()),
     ).subscribe(
       (product) => {
-        if (this.userService.userIsAuthenticated) {
+        if (this.userService.userIsAuthenticated()) {
           this.checkProductInCart();
         }
       },

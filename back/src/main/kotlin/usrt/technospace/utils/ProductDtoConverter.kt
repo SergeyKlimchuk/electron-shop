@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service
 import usrt.technospace.dto.ProductDto
 import usrt.technospace.models.product.Product
 import usrt.technospace.services.DiscountService
+import java.util.*
+import java.util.stream.Collectors
 
 @Service
 class ProductDtoConverter {
@@ -21,8 +23,9 @@ class ProductDtoConverter {
         productDto.imageUrl = product.imageUrl
         productDto.name = product.name
         productDto.productType = product.productType
-        productDto.priceWithDiscount = discountService.getPriceWithDiscount(product)
-        productDto.actions = product.actions
+        productDto.values = product.values
+        productDto.discount = discountService.calculateDiscount(product)
+        productDto.actions = product.actions.stream().filter { x -> x.dateFinish!! < Date() }.collect(Collectors.toList())
         return productDto
     }
 }

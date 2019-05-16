@@ -5,7 +5,9 @@
       <img
         src="./../../../assets/icons/discount.svg"
         class="discount__icon"
-        *ngIf="product.price !== product.priceWithDiscount"
+        *ngIf="product.discount !== 0"
+        matTooltip="{{ bestAction.name }}"
+        matTooltipPosition="'right'"
       />
     </div>
     <div class="info__text">
@@ -13,17 +15,12 @@
       <div class="product_count">Кол-во продуктов: {{ product.count }}</div>
       <div class="price__block">
         <span class="product__price">
-          <ng-container
-            *ngIf="
-              product.price === product.priceWithDiscount;
-              else productWithDiscount
-            "
-          >
+          <ng-container *ngIf="product.discount === 0; else productWithDiscount">
             {{ product.price }} ₸
           </ng-container>
           <ng-template #productWithDiscount>
             <s>{{ product.price }} ₸</s>
-            <b>{{ product.priceWithDiscount }} ₸</b>
+            <b>{{ product.price - product.discount }} ₸</b>
           </ng-template>
         </span>
         <button
@@ -56,7 +53,12 @@
       <td mat-cell *matCellDef="let element">{{ element.value }}</td>
     </ng-container>
 
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="properties__row"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      class="properties__row"
+    ></tr>
   </table>
+
   <h3 class="label">Комментарии:</h3>
 </mat-card>

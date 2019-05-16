@@ -18,7 +18,7 @@ class Product : Auditable() {
     var name: String? = null
 
     @Column(name = "price", nullable = false)
-    var price: Int? = null
+    var price: Int = Int.MAX_VALUE
 
     @Column(name = "image_url")
     var imageUrl: String? = null
@@ -36,14 +36,14 @@ class Product : Auditable() {
             orphanRemoval = true,
             cascade = [CascadeType.ALL]
     )
-    var values: Set<ProductInfoValue>? = null
+    var values: Set<ProductInfoValue> = emptySet()
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_type_id", nullable = false)
     var productType: ProductType? = null
 
     @Column(name = "count", nullable = false)
-    var count: Int? = null
+    var count: Int = 0
 
     @Column(name = "description")
     var description: String? = null
