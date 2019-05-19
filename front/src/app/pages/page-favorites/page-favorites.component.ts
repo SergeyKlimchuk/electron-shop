@@ -18,14 +18,8 @@ export class PageFavoritesComponent implements OnInit, OnDestroy {
               private snack: MatSnackBar) { }
 
   ngOnInit() {
-    console.log('!!!');
-
     this.subscribtion = this.favoritesService.getProducts().subscribe(
-      products => {
-        console.log('@@@', products);
-
-        this.products$.next(products);
-      },
+      products => this.products$.next(products),
       error => {
         const message = 'При запросе продуктов из избранного произошла ошибка!';
         console.error(message, error);
