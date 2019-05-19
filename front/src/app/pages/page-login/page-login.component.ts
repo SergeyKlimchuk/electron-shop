@@ -16,9 +16,9 @@ export class PageLoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private userService: UserService,
               private router: Router) {
-    userService.getCurrentUser().subscribe(
-      user => {
-        if (user) {
+    userService.userIsAuthenticated().subscribe(
+      isAuthenticated => {
+        if (isAuthenticated) {
           this.redirectToMainPage();
         }
       }

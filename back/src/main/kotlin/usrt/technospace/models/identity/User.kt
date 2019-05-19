@@ -67,7 +67,7 @@ class User {
             joinColumns = [JoinColumn(name = "user_id")],
             inverseJoinColumns = [JoinColumn(name = "product_id")]
     )
-    var cart: MutableList<Product>? = null
+    var cart: MutableList<Product> = arrayListOf()
 
     // Favorites
     @ManyToMany
@@ -75,5 +75,5 @@ class User {
             joinColumns = [JoinColumn(name = "user_id")],
             inverseJoinColumns = [JoinColumn(name = "product_id")]
     )
-    var favorites: MutableList<Product>? = null
+    var favorites: MutableList<Product> = arrayListOf()
 }

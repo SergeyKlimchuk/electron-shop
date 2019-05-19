@@ -18,21 +18,27 @@ class FavoriteService {
     @Autowired
     lateinit var productRepository: ProductRepository
 
-    fun getProductsInUserFavorites(): List<Product>? {
+    fun getProductsInUserFavorites(): List<Product> {
         return userService.getCurrentUser().favorites
+    }
+
+    fun checkProductInFavorites(productId: Long): Boolean {
+        return getProductsInUserFavorites()
+                .stream()
+                .anyMatch { x-> x.id == productId }
     }
 
     fun addProductInFavorites(productId: Long) {
         val user = userService.getCurrentUser()
         val product = productRepository.getOne(productId)
-        user.favorites!!.add(product)
+        user.favorites.add(product)
         userRepository.save(user)
     }
 
     fun removeFromFavorites(productId: Long) {
         val user = userService.getCurrentUser()
         val product = productRepository.getOne(productId)
-        user.favorites!!.remove(product)
+        user.favorites.remove(product)
         userRepository.save(user)
     }
 }

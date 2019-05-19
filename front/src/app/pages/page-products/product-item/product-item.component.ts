@@ -31,7 +31,6 @@ export class ProductItemComponent implements OnInit {
   inFavorites = false;
 
   ngOnInit() {
-    console.log('productId', this.productId);
     this.loadProduct();
     const user$ = this.userService.getCurrentUser().pipe(
       tap(x => this.userIsAuthenticated = !!x),
@@ -74,44 +73,7 @@ export class ProductItemComponent implements OnInit {
     );
   }
 
-  addToFavorite(product: Product) {
-    this.favoritesService.addProduct(product.id).subscribe(
-      () => this.inFavorites = true,
-      error => {
-        this.snack.open('При добавлении в избранное произошла ошибка!');
-        console.error(error);
-      }
-    );
-  }
 
-  removeFromFavorite(product: Product) {
-    this.favoritesService.removeProduct(product.id).subscribe(
-      () => this.inFavorites = false,
-      error => {
-        this.snack.open('При удалении из избранного произошла ошибка!');
-        console.error(error);
-      }
-    );
-  }
 
-  addToCart(product: Product) {
-    this.cartService.addProduct(product.id).subscribe(
-      () => this.inCart = true,
-      error => {
-        this.snack.open('При добавлении в корзину произошла ошибка!');
-        console.error(error);
-      }
-    );
-  }
-
-  removeFromCart(product: Product) {
-    this.cartService.removeProduct(product.id).subscribe(
-      () => this.inCart = false,
-      error => {
-        this.snack.open('При удалении из корзины произошла ошибка!');
-        console.error(error);
-      }
-    );
-  }
 
 }

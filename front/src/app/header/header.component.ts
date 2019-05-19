@@ -21,12 +21,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userService.getCurrentUser().subscribe(
       user => {
-        console.log('user', user);
         this.user = user;
         if (user) {
           this.userIsAdmin = this.user.roles.some(x => x === Roles.admin);
         }
-      }
+      },
+      _ => {}
     );
   }
 

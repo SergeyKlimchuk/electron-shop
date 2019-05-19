@@ -18,27 +18,33 @@ class CartService {
     @Autowired
     lateinit var productRepository: ProductRepository
 
-    fun getProductsInUserCart(): List<Product>? {
+    fun getProductsInUserCart(): List<Product> {
         return userService.getCurrentUser().cart
+    }
+
+    fun checkProductInFavorites(productId: Long): Boolean {
+        return getProductsInUserCart()
+                .stream()
+                .anyMatch { x-> x.id == productId }
     }
 
     fun addProductInCart(productId: Long) {
         val user = userService.getCurrentUser()
         val product = productRepository.getOne(productId)
-        user.cart!!.add(product)
+        user.cart.add(product)
         userRepository.save(user)
     }
 
     fun removeFromCart(productId: Long) {
         val user = userService.getCurrentUser()
         val product = productRepository.getOne(productId)
-        user.cart!!.remove(product)
+        user.cart.remove(product)
         userRepository.save(user)
     }
 
     fun clearCart() {
         val user = userService.getCurrentUser()
-        user.cart!!.clear()
+        user.cart.clear()
         userRepository.save(user)
     }
 }

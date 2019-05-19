@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
-import { CartService } from 'src/app/services/cart/cart.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { Action } from 'src/models/actions/actions';
 import { Product } from 'src/models/products/product';
 import { ProductProperty } from 'src/models/products/product-property';
-
-import { UserService } from './../../services/user/user.service';
 
 @Component({
   selector: 'app-page-product',
@@ -18,47 +14,31 @@ import { UserService } from './../../services/user/user.service';
 export class PageProductComponent implements OnInit {
 
   product: Product = new Product();
-  productInCart = false;
   displayedColumns = ['name', 'value'];
   properties: ProductProperty[];
   bestAction = new Action();
 
+  userIsAuthenticated = false;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private snack: MatSnackBar,
-              private productService: ProductService,
-              private userService: UserService,
-              private cartService: CartService) { }
+              private productService: ProductService) { }
 
   ngOnInit() {
     this.loadProduct();
   }
 
   loadProduct() {
-    const productId = this.route.snapshot.paramMap.get('productId');
-    this.productService.getProduct(Number(productId)).pipe(
-      tap(product => this.product = product),
-      tap(() => this.applyproductProperties()),
-    ).subscribe(
-      (product) => {
-        if (this.userService.userIsAuthenticated()) {
-          this.checkProductInCart();
-        }
+    const productId = Number(this.route.snapshot.paramMap.get('productId'));
+    this.productService.getProduct(productId).subscribe(
+      product => {
+        this.product = product;
+        this.applyproductProperties();
       },
       (error) => {
         console.error(error);
         this.snack.open('Произошла ошибка при получении информации о продукте!');
-      }
-    );
-  }
-
-  checkProductInCart() {
-    this.cartService.getProducts().subscribe(
-      productsInCart => {
-        this.productInCart = productsInCart.some(x => x.id === this.product.id);
-      },
-      error => {
-        console.error('Произошла ошибка при получении списка товаров в корзине!', error);
       }
     );
   }
@@ -85,37 +65,4 @@ export class PageProductComponent implements OnInit {
       }
     );
   }
-
-  cartAction() {
-    if (this.productInCart) {
-      this.removeFromCart();
-    } else {
-      this.addToCart();
-    }
-  }
-
-  addToCart() {
-    this.cartService.addProduct(this.product.id).subscribe(
-      () => {
-        this.productInCart = true;
-      },
-      error => {
-        console.error(error);
-        this.snack.open('Произошла ошибка при добавлении в корзину!');
-      }
-    );
-  }
-
-  removeFromCart() {
-    this.cartService.removeProduct(this.product.id).subscribe(
-      () => {
-        this.productInCart = false;
-      },
-      error => {
-        console.error(error);
-        this.snack.open('Произошла ошибка при удалинеии товраа из корзины!');
-      }
-    );
-  }
-
 }

@@ -99,11 +99,15 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
   }
 
   selectUserCity() {
-    if (this.userService.userIsAuthenticated()) {
-      this.loadUserCity();
-    } else {
-      this.FindUserCity();
-    }
+    this.userService.userIsAuthenticated().subscribe(
+      isAuthenticated => {
+        if (isAuthenticated) {
+          this.loadUserCity();
+        } else {
+          this.FindUserCity();
+        }
+      }
+    );
   }
 
   loadUserCity() {

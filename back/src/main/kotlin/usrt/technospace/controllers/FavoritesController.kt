@@ -16,6 +16,11 @@ class FavoritesController {
         return favoriteService.getProductsInUserFavorites()
     }
 
+    @GetMapping("/favorites/check/{productId}")
+    fun checkProductInFavorites(@PathVariable productId: Long): Boolean {
+        return favoriteService.checkProductInFavorites(productId)
+    }
+
     @PostMapping("/favorites/{productId}")
     fun add(@PathVariable productId: Long) {
         favoriteService.addProductInFavorites(productId)

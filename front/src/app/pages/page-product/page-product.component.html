@@ -23,14 +23,8 @@
             <b>{{ product.price - product.discount }} ₸</b>
           </ng-template>
         </span>
-        <button
-          mat-raised-button
-          class="buy"
-          color="primary"
-          (click)="cartAction()"
-        >
-          Добавить в корзину <mat-icon class="mat-18">shopping_cart</mat-icon>
-        </button>
+        <app-favorites-button [productId]="product.id"></app-favorites-button>
+        <app-cart-button [productId]="product.id"></app-cart-button>
       </div>
       <section *ngIf="product.description">
         Информация:

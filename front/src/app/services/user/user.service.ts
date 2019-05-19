@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map, flatMap } from 'rxjs/operators';
 
 import { User } from './../../../models/users/user';
 
@@ -10,83 +10,66 @@ import { User } from './../../../models/users/user';
 })
 export class UserService {
 
-  private user$ = new BehaviorSubject<User>(null);
-  private isAuthenticated = false;
-
   constructor(private http: HttpClient) {
-    this.loadUser().subscribe(
-      () => {
-        console.log('Пользователь был успешно авторизован!');
-      },
-      error => this.isAuthenticated = false
-    );
-    this.user$.subscribe(user => this.isAuthenticated = !!user);
   }
 
   getRequiredPasswordLength() {
     return 6;
   }
 
-  loadUser() {
-    return this.http.get<User>('/api/user/current').pipe(
-      tap(user => this.user$.next(user))
-    );
-  }
-
   userIsAuthenticated() {
-    return this.isAuthenticated;
+    return new Observable<boolean>(observer => {
+      this.getCurrentUser().subscribe(
+        currentUser => {
+          observer.next(!!currentUser);
+        },
+        _ => {
+          observer.next(false);
+        }
+      );
+    });
   }
 
   updateEmail(newEmail: string, password: string) {
-    return this.http.post<User>('/api/user/current/email', {newEmail, password}).pipe(
-      tap(user => this.user$.next(user))
-    );
+    return this.http.post<User>('/api/user/current/email', {newEmail, password});
   }
 
   updateSecondaryEmail(newEmail: string, password: string) {
-    return this.http.post<User>('/api/user/current/secondaryEmail', {newEmail, password}).pipe(
-      tap(user => this.user$.next(user))
-    );
+    return this.http.post<User>('/api/user/current/secondaryEmail', {newEmail, password});
   }
 
   updatePassword(newPassword: string, currentPassword: string) {
-    return this.http.post<User>('/api/user/current/password', {newPassword, currentPassword}).pipe(
-      tap(user => this.user$.next(user))
-    );
+    return this.http.post<User>('/api/user/current/password', {newPassword, currentPassword});
   }
 
   updateUser(name: string, lastName: string, secondName: string, phoneNumber: string) {
-    return this.http.put<User>('/api/user/current', {name, lastName, secondName, phoneNumber}).pipe(
-      tap(user => this.user$.next(user))
-    );
+    return this.http.put<User>('/api/user/current', {name, lastName, secondName, phoneNumber});
   }
 
   getCurrentUser(): Observable<User> {
-    return this.user$;
+    return this.http.get<User>('/api/user/current');
   }
 
   registration(user: User) {
-    if (this.isAuthenticated) {
-      return;
-    }
-    return this.http.post<User>('/api/registration', user);
+    return this.userIsAuthenticated().pipe(
+      flatMap(isAuthenticated => {
+        if (isAuthenticated) {
+          throw new Error('User is already atuhenticated!');
+        }
+        return this.http.post<User>('/api/registration', user);
+      })
+    );
   }
 
-  signIn(email: string, password: string): Observable<any> {
+  signIn(email: string, password: string) {
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
-    const loginRequest = this.http.post<any>('/api/login', formData);
-    loginRequest.subscribe(
-      () => {
-        this.loadUser().toPromise();
-        console.log('Пользователь успешно авторизовался!');
-      },
-      (error) => {
-        console.log('Пользователь не смог авторизоваться!', error);
+    this.http.post<any>('/api/login', formData).subscribe(
+      user => {
+        window.location.reload();
       }
     );
-    return loginRequest;
   }
 
   signOut() {

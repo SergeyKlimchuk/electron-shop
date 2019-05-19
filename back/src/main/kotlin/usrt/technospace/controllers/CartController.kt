@@ -16,6 +16,11 @@ class CartController {
         return cartService.getProductsInUserCart()
     }
 
+    @GetMapping("/cart/check/{productId}")
+    fun checkProductInFavorites(@PathVariable productId: Long): Boolean {
+        return cartService.checkProductInFavorites(productId)
+    }
+
     @PostMapping("/cart/{productId}")
     fun addProductInCart(@PathVariable productId: Long) {
         cartService.addProductInCart(productId)

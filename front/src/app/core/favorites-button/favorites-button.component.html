@@ -1,0 +1,19 @@
+<div *ngIf="userIsAuthenticated">
+  <ng-container
+    *ngIf="
+      inFavorites;
+      then removeFromFavoritesTemplate;
+      else addToFavoritesTemplate
+    "
+  ></ng-container>
+  <ng-template #removeFromFavoritesTemplate>
+    <button mat-raised-button (click)="removeFromFavorite()">
+      <mat-icon>favorite</mat-icon> Удалить из избранного
+    </button>
+  </ng-template>
+  <ng-template #addToFavoritesTemplate>
+    <button mat-raised-button (click)="addToFavorite()">
+      <mat-icon>favorite_border</mat-icon> Добавить в избранное
+    </button>
+  </ng-template>
+</div>

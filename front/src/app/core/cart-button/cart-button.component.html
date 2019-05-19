@@ -1,0 +1,15 @@
+<ng-container *ngIf="userIsAuthenticated">
+  <ng-container
+    *ngIf="inCart; then removeFromCartTemplate; else addToCartTemplate"
+  ></ng-container>
+  <ng-template #removeFromCartTemplate>
+    <button mat-raised-button (click)="removeFromCart()">
+      <mat-icon>remove_shopping_cart</mat-icon> Удалить из корзины
+    </button>
+  </ng-template>
+  <ng-template #addToCartTemplate>
+    <button mat-raised-button (click)="addToCart()">
+      <mat-icon>add_shopping_cart</mat-icon> Добавить в корзину
+    </button>
+  </ng-template>
+</ng-container>

@@ -66,6 +66,8 @@ import { ActionsSubpageComponent } from './pages/page-admin/subpages/actions-sub
 import { PageActionComponent } from './pages/page-actions/page-action/page-action.component';
 import { ProductSelectDialog } from './core/product-select/product-select.component';
 import { PageActionViewComponent } from './pages/page-actions/page-action-view/page-action-view.component';
+import { CartButtonComponent } from './core/cart-button/cart-button.component';
+import { FavoritesButtonComponent } from './core/favorites-button/favorites-button.component';
 
 
 const appRoutes: Routes = [
@@ -136,7 +138,9 @@ const appRoutes: Routes = [
     ActionsSubpageComponent,
     PageActionComponent,
     ProductSelectDialog,
-    PageActionViewComponent
+    PageActionViewComponent,
+    CartButtonComponent,
+    FavoritesButtonComponent
   ],
   imports: [
     BrowserModule,
