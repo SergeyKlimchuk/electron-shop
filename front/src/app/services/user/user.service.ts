@@ -65,10 +65,10 @@ export class UserService {
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
-    this.http.post<any>('/api/login', formData).subscribe(
-      user => {
+    this.http.post<any>('/api/login', formData).pipe(
+      tap(user => {
         window.location.reload();
-      }
+      })
     );
   }
 

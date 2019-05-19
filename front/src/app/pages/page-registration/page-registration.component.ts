@@ -47,15 +47,7 @@ export class PageRegistrationComponent implements OnInit {
     this.userService.registration(form.value)
       .subscribe(
         (newAccount) => {
-          this.userService.signIn(newAccount.email, newAccount.password).subscribe(
-            (success) => {
-              this.router.navigate(['/main']);
-            },
-            error => {
-              console.error(error);
-              this.snack.open('Во время пост аутентификации произошла ошибка!');
-            }
-          );
+          this.userService.signIn(newAccount.email, newAccount.password);
         },
         (error) => {
           console.error(error);

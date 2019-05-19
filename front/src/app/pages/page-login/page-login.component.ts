@@ -42,19 +42,7 @@ export class PageLoginComponent implements OnInit {
   }
 
   signIn() {
-    this.userService.signIn(this.authForm.value.email, this.authForm.value.password)
-      .subscribe(
-        () => {
-          this.redirectToMainPage();
-        },
-        (error) => {
-          console.log('error', error);
-          this.failAuth = true;
-          setTimeout( () => {
-            this.failAuth = false;
-          }, 5000);
-        }
-      );
+    this.userService.signIn(this.authForm.value.email, this.authForm.value.password);
   }
 
   redirectToMainPage() {
