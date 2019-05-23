@@ -1,4 +1,4 @@
-<h2 class="name">{{ action.name }}</h2>
+<h2 class="name">{{ action.name }} ({{ action.dateStart | date:'dd.MM.yyyy' }} - {{ action.dateFinish | date:'dd.MM.yyyy' }})</h2>
 <img
   class="img"
   [src]="action.imageUrl"
@@ -7,10 +7,7 @@
 <div class="text">{{ action.info }}</div>
 
 <ng-container *ngIf="action.products.length > 0">
-  <br />
-  <hr />
-  <br />
-  <h4>В акции принмают участие товары:</h4>
+  <h4 class="products__label">В акции принмают участие товары:</h4>
   <div class="products__list">
     <mat-chip-list>
       <mat-chip
