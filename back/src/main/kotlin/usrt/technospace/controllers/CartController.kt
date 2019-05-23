@@ -2,8 +2,9 @@ package usrt.technospace.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import usrt.technospace.models.product.Product
+import usrt.technospace.dto.ProductDto
 import usrt.technospace.services.CartService
+import usrt.technospace.utils.ProductDtoConverter
 
 @RestController
 class CartController {
@@ -11,9 +12,12 @@ class CartController {
     @Autowired
     lateinit var cartService: CartService
 
+    @Autowired
+    lateinit var productDtoConverter: ProductDtoConverter
+
     @GetMapping("/cart")
-    fun getProductsInUserCart(): List<Product>? {
-        return cartService.getProductsInUserCart()
+    fun getProductsInUserCart(): List<ProductDto>? {
+        return productDtoConverter.convert(cartService.getProductsInUserCart())
     }
 
     @GetMapping("/cart/check/{productId}")

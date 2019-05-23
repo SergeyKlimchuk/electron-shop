@@ -43,7 +43,7 @@ export class PageCartComponent implements OnInit {
     this.totalPrice = 0;
     const data = this.productsDataSource.data;
     if (data) {
-      this.totalPrice = data.reduce( (prior, row) => row.product.price * row.count + prior, 0);
+      this.totalPrice = data.reduce( (prior, row) => (row.product.price - row.product.discount) * row.count + prior, 0);
     }
   }
 

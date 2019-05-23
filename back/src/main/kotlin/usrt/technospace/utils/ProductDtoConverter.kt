@@ -14,6 +14,10 @@ class ProductDtoConverter {
     @Autowired
     private lateinit var discountService: DiscountService
 
+    fun convert(product: List<Product>): List<ProductDto> {
+        return product.map { x -> convert(x) }
+    }
+
     fun convert(product: Product): ProductDto {
         val productDto = ProductDto()
         productDto.id = product.id
