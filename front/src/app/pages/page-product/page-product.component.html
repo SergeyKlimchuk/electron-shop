@@ -16,7 +16,7 @@
       <div class="price__block">
         <span class="product__price">
           <ng-container *ngIf="product.discount === 0; else productWithDiscount">
-            {{ product.price }} ₸
+            {{ product.price | numberSplit }} ₸
           </ng-container>
           <ng-template #productWithDiscount>
             <s>{{ product.price }} ₸</s>
