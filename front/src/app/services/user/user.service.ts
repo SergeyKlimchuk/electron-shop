@@ -69,7 +69,7 @@ export class UserService {
       tap(user => {
         window.location.reload();
       })
-    );
+    ).subscribe();
   }
 
   signOut() {
