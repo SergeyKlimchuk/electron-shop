@@ -36,6 +36,10 @@ export class PageCartComponent implements OnInit {
   }
 
   onChangeProductsCount() {
+    this.updateTotalPrice();
+  }
+
+  updateTotalPrice() {
     this.totalPrice = 0;
     const data = this.productsDataSource.data;
     if (data) {
@@ -47,6 +51,7 @@ export class PageCartComponent implements OnInit {
     this.cartService.clearCart().subscribe(
       () => {
         this.productsDataSource.data = [];
+        this.updateTotalPrice();
       },
       error => {
         const message = 'При получении товаров в корзине произошла ошибка!';
