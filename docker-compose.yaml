@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.4'
 
 services:
   electron.database:
@@ -18,7 +18,7 @@ services:
     links:
       - electron.database
     build:
-      context: .
+      context: ./back
     environment:
       - DATABASE_ADDRESS=database
       - DATABASE_USERNAME=admin
@@ -26,6 +26,14 @@ services:
       - DATABASE_DB=electron
     ports:
       - '8080:8080'
-
     volumes:
       - ./target:/app
+  electron.front:
+    container_name: electron.front
+    links:
+      - electron.back
+    build: 
+      context: ./front
+      # TODO: save picrutes on disk
+    ports:
+      - "80:80"
