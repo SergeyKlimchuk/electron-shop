@@ -22,10 +22,10 @@
       <mat-option *ngFor="let city of selectedCountry.cities" [value]="city">
         {{ city.name }}
       </mat-option>
-      <mat-option [value]="-1">Все</mat-option>
+      <mat-option [value]="false">Все</mat-option>
     </mat-select>
   </div>
-  <div class="block" *ngIf="selectedCity && selectedCity !== -1">
+  <div class="block" *ngIf="selectedCity && selectedCity">
     <mat-icon class="arrow">chevron_right</mat-icon>
     <mat-select placeholder="Отдел" [(ngModel)]="selectedAddress">
       <mat-option
