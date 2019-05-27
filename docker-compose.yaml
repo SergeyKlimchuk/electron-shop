@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  electron.database:
-    container_name: electron.database
+  database:
+    container_name: database
     hostname: database
     image: postgres:11-alpine
     ports:
@@ -13,10 +13,10 @@ services:
       - POSTGRES_USER=admin
     volumes:
       - '/var/electron-db:/var/lib/postgresql/data'
-  electron.back:
-    container_name: electron.back
+  back:
+    container_name: back
     links:
-      - electron.database
+      - database
     build:
       context: ./back
     environment:
@@ -26,12 +26,10 @@ services:
       - DATABASE_DB=electron
     ports:
       - '8080:8080'
-    volumes:
-      - ./target:/app
-  electron.front:
-    container_name: electron.front
+  front:
+    container_name: front
     links:
-      - electron.back
+      - back
     build: 
       context: ./front
       # TODO: save picrutes on disk
