@@ -31,7 +31,7 @@ class ProductController {
     @PostMapping("/products")
     @Transactional
     fun addProduct(@Valid @RequestBody @NotNull product: Product): ProductDto {
-        product.values!!.forEach { x -> x.product = product }
+        product.values.forEach { x -> x.product = product }
         productRepository.save(product)
         return productDtoConverter.convert(product)
     }

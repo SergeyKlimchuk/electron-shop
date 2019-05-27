@@ -18,4 +18,4 @@ ENV DATABASE_PASSWORD=123321
 # Start service
 # ENTRYPOINT [ "ping", "localhost", "-c", "999999999" ]
 
-ENTRYPOINT java -jar app.jar --spring.datasource.url=jdbc:postgresql://$DATABASE_ADDRESS/$DATABASE_DB --spring.datasource.username=$DATABASE_USERNAME --spring.datasource.password=$DATABASE_PASSWORD
+ENTRYPOINT java -jar app.jar --spring.datasource.url=jdbc:postgresql://$DATABASE_ADDRESS/$DATABASE_DB --spring.datasource.username=$DATABASE_USERNAME --spring.datasource.password=$DATABASE_PASSWORD --assets.path=$PATH_TO_FILES

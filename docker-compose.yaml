@@ -12,7 +12,7 @@ services:
       - POSTGRES_DB=electron
       - POSTGRES_USER=admin
     volumes:
-      - '/var/electron-db:/var/lib/postgresql/data'
+      - './content/database:/var/lib/postgresql/data'
   back:
     container_name: back
     links:
@@ -24,8 +24,11 @@ services:
       - DATABASE_USERNAME=admin
       - DATABASE_PASSWORD=123321
       - DATABASE_DB=electron
+      - PATH_TO_FILES=/files
     ports:
       - '8080:8080'
+    volumes:
+      - './content/files:/files'
   front:
     container_name: front
     links:
