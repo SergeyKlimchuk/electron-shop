@@ -1,0 +1,11 @@
+<div class="address-not-found" *ngIf="addresses.length === 0" >
+  <div class="container">
+    <mat-icon class="icon" [inline]="true">not_listed_location</mat-icon>
+    <div class="text">Адреса доставки отсутствуют</div> <!-- Добавьте адрес доставки сейчас, или вы можете добавить его при совершении покупки! -->
+  </div>
+</div>
+
+<app-address-view *ngFor="let address of addresses" [address]="address"></app-address-view>
+<div class="actions__panel">
+   <button mat-raised-button (click)="addAddress()" color="primary">Добавить адрес <mat-icon>add</mat-icon></button>
+</div>

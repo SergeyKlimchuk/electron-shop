@@ -1,6 +1,7 @@
 package usrt.technospace.models.identity
 
 import usrt.technospace.models.map.City
+import usrt.technospace.models.payment.DeliveryAddress
 import usrt.technospace.models.product.Product
 import usrt.technospace.models.roles.Role
 import javax.persistence.*
@@ -76,4 +77,13 @@ class User {
             inverseJoinColumns = [JoinColumn(name = "product_id")]
     )
     var favorites: MutableList<Product> = arrayListOf()
+
+    // Favorites
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            mappedBy = "user",
+            orphanRemoval = true,
+            cascade = [CascadeType.ALL]
+    )
+    var addresses: MutableList<DeliveryAddress> = arrayListOf()
 }

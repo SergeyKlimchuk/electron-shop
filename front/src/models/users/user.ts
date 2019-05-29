@@ -1,5 +1,6 @@
 import { City } from 'src/models/map/city';
 import { Roles } from './roles';
+import { DeliveryAddress } from './address';
 
 export class User {
   id: number;
@@ -13,4 +14,5 @@ export class User {
   phoneNumber: string;
   roles: Roles[];
   city: City;
+  addresses: DeliveryAddress[];
 }
