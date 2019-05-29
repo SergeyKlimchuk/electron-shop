@@ -2,22 +2,19 @@ package usrt.technospace.services
 
 import org.springframework.stereotype.Service
 import usrt.technospace.models.mails.MailTemplate
-import usrt.technospace.utils.FileUtils
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.*
 import javax.annotation.PostConstruct
-import kotlin.collections.HashMap
 
 @Service
 class MailTemplateService {
 
-    private lateinit var paths: Dictionary<MailTemplate, File>
+    private lateinit var paths: Dictionary<MailTemplate, String>
 
     @PostConstruct
     private fun init() {
-        val values = Hashtable<MailTemplate, File>()
+        val values = Hashtable<MailTemplate, String>()
         for (value in MailTemplate.values()) {
             values[value] = loadTemplate(value)
         }
@@ -25,8 +22,7 @@ class MailTemplateService {
     }
 
     fun build(mailTemplate: MailTemplate, values: HashMap<String, String>): String {
-        val templateFile = paths[mailTemplate]
-        var template = FileUtils.convertFileToString(templateFile)
+        var template = paths[mailTemplate]
         for (key in values.keys) {
             template = template.replace("{{ $key }}", values[key]!!)
         }
@@ -35,19 +31,23 @@ class MailTemplateService {
     }
 
     private fun insertContentInTemplate(content: String): String {
-        val pathToTemplate = paths[MailTemplate.TEMPLATE]
-        val template = FileUtils.convertFileToString(pathToTemplate)
+        val template = paths[MailTemplate.TEMPLATE]
         return template.replace("{{ content }}", content)
     }
 
-    private fun loadTemplate(value: MailTemplate): File {
+    private fun loadTemplate(value: MailTemplate): String {
         val templateFileName = "${value.name.toLowerCase()}_notification.html"
-        val templateUri = javaClass.classLoader.getResource("notification-templates/$templateFileName").toURI()
+        return getResourceAsText("notification-templates/$templateFileName")
+    }
 
-        if (Files.exists(Paths.get(templateUri))) {
-            return File(templateUri)
+    fun getResourceAsText(path: String): String {
+        try {
+            val stream = this.javaClass.classLoader.getResourceAsStream(path)
+            val reader = BufferedReader(InputStreamReader(stream))
+            return reader.readText()
+        } catch (e: Error) {
+            throw Error("Could not find template \"$path\"", e)
         }
-        throw Error("Could not find template \"$templateFileName\"")
     }
 
     private fun removeAllUnusedVars(value: String): String {

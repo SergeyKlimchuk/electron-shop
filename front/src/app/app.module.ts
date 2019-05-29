@@ -68,6 +68,9 @@ import { ProductSelectDialog } from './core/product-select/product-select.compon
 import { PageActionViewComponent } from './pages/page-actions/page-action-view/page-action-view.component';
 import { CartButtonComponent } from './core/cart-button/cart-button.component';
 import { FavoritesButtonComponent } from './core/favorites-button/favorites-button.component';
+import { UserAddressesComponent } from './pages/page-profile/user-addresses/user-addresses.component';
+import { AddressViewComponent } from './core/address-view/address-view.component';
+import { AddressEditComponent } from './core/address-edit/address-edit.component';
 
 
 const appRoutes: Routes = [
@@ -140,7 +143,10 @@ const appRoutes: Routes = [
     ProductSelectDialog,
     PageActionViewComponent,
     CartButtonComponent,
-    FavoritesButtonComponent
+    FavoritesButtonComponent,
+    UserAddressesComponent,
+    AddressViewComponent,
+    AddressEditComponent
   ],
   imports: [
     BrowserModule,

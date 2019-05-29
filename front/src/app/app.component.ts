@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./app.component.styl']
 })
 export class AppComponent {
-  title = 'techno-space';
+  title = 'electron';
 
   categories$ = this.productTypeService.getProductTypes().pipe(map(x => x.content.slice(0, 12)));
 
