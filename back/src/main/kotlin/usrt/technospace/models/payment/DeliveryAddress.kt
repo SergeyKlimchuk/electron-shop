@@ -25,7 +25,6 @@ class DeliveryAddress : Auditable() {
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)
     @ManyToOne(
-            cascade = [CascadeType.ALL],
             fetch = FetchType.LAZY,
             optional = false
     )
@@ -34,4 +33,6 @@ class DeliveryAddress : Auditable() {
     var address: String? = null
 
     var comment: String? = null
+
+    var isFavorite: Boolean = false
 }

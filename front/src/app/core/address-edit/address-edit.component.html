@@ -1,16 +1,28 @@
-<mat-form-field>
-  <mat-label>Город</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let city of cities" [(ngModel)]="address.city">
-      {{ city.name }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div *ngIf="address" class="container">
+  <mat-form-field>
+    <mat-label>Город</mat-label>
+    <mat-select [(ngModel)]="address.city" (valueChange)="updateValue()">
+      <mat-option *ngFor="let city of cities" [value]="city">
+        {{ city.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<mat-form-field>
-  <input matInput placeholder="Адрес", [(ngModel)]="address.text">
-</mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Адрес"
+      [(ngModel)]="address.address"
+      (keyup)="updateValue()"
+    />
+  </mat-form-field>
 
-<mat-form-field>
-  <textarea matInput placeholder="Комментарий" [(ngModel)]="address.comment"></textarea>
-</mat-form-field>
+  <mat-form-field>
+    <textarea
+      matInput
+      placeholder="Комментарий"
+      [(ngModel)]="address.comment"
+      (keyup)="updateValue()"
+    ></textarea>
+  </mat-form-field>
+</div>

@@ -1,4 +1,4 @@
-package usrt.technospace.controllers
+package usrt.technospace.controllers.user
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*

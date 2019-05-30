@@ -1,3 +1,28 @@
-<div class="text">{{ address.city.name }}</div>
-<div class="address">{{ address.text }}</div>
-<div class="comment">{{ address.comment }}</div>
+<div class="container">
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Адрес"
+      [(ngModel)]="address.address"
+      disabled
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Адрес"
+      [(ngModel)]="address.address"
+      disabled
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea
+      matInput
+      placeholder="Комментарий"
+      [value]="address.comment"
+      disabled
+    ></textarea>
+  </mat-form-field>
+</div>

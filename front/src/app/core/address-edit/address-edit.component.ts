@@ -1,3 +1,4 @@
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MapService } from './../../services/map/map.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { DeliveryAddress } from 'src/models/users/address';
@@ -7,12 +8,15 @@ import { NotificationService } from 'src/app/services/notification/notification.
 @Component({
   selector: 'app-address-edit',
   templateUrl: './address-edit.component.html',
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: AddressEditComponent, multi: true },
+  ],
   styleUrls: ['./address-edit.component.styl']
 })
-export class AddressEditComponent implements OnInit {
+export class AddressEditComponent implements OnInit, ControlValueAccessor {
 
-  @Input()
-  address: DeliveryAddress = new DeliveryAddress();
+  address: DeliveryAddress;
+  updateFn: (DeliveryAddress) => void;
 
   cities: City[] = [];
 
@@ -36,4 +40,20 @@ export class AddressEditComponent implements OnInit {
     );
   }
 
+  writeValue(address: DeliveryAddress): void {
+    this.address = address;
+  }
+  registerOnChange(fn: any): void {
+    this.updateFn = fn;
+  }
+  registerOnTouched(fn: any): void {
+  }
+  setDisabledState?(isDisabled: boolean): void {
+  }
+
+  updateValue() {
+    console.log('WAS UPDATED');
+
+    this.updateFn(this.address);
+  }
 }
