@@ -12,6 +12,12 @@ import { DeliveryAddress } from 'src/models/users/address';
 export class AddressViewComponent implements OnInit {
 
   @Input()
+  editable = false;
+
+  @Input()
+  selectable = false;
+
+  @Input()
   address: DeliveryAddress;
   addressBackup: DeliveryAddress;
 

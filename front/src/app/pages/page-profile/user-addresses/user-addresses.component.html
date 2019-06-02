@@ -15,6 +15,7 @@
   (applyChanges)="updateAddress($event)"
   (delete)="deleteAddress($event)"
   (enableFavorite)="setFavorite($event)"
+  [editable]="true"
 ></app-address-view>
 <app-address-edit
   *ngIf="visibleAddForm"

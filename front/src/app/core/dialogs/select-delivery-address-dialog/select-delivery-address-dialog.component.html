@@ -1,0 +1,8 @@
+<h2>Выберите адрес</h2>
+<app-address-view
+  *ngFor="let address of addresses"
+  [address]="address"
+  (click)="selectAddress(address)"
+  [selectable]="true"
+></app-address-view>
+<button mat-button (click)="close()" class="close-btn">Отмена</button>

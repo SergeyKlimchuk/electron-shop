@@ -73,6 +73,10 @@ import { AddressViewComponent } from './core/address-view/address-view.component
 import { AddressEditComponent } from './core/address-edit/address-edit.component';
 import { CityInputComponent } from './core/city-input/city-input.component';
 import { BooleanInputComponent } from './core/boolean-input/boolean-input.component';
+import { PagePaymentComponent } from './pages/page-payment/page-payment.component';
+import { SelectDeliveryAddressDialogComponent } from './core/dialogs/select-delivery-address-dialog/select-delivery-address-dialog.component';
+import { SelectDeliveryAddressComponent } from './core/select-delivery-address/select-delivery-address.component';
+import { ProductListMinComponent } from './core/product-list-min/product-list-min.component';
 
 
 const appRoutes: Routes = [
@@ -90,6 +94,7 @@ const appRoutes: Routes = [
   { path: 'cart',                    component: PageCartComponent         },
   { path: 'favorites',               component: PageFavoritesComponent    },
   { path: 'profile',                 component: PageProfileComponent      },
+  { path: 'payment',                 component: PagePaymentComponent      },
   {
     path: '',
     redirectTo: '/main',
@@ -150,7 +155,11 @@ const appRoutes: Routes = [
     AddressViewComponent,
     AddressEditComponent,
     CityInputComponent,
-    BooleanInputComponent
+    BooleanInputComponent,
+    PagePaymentComponent,
+    SelectDeliveryAddressDialogComponent,
+    SelectDeliveryAddressComponent,
+    ProductListMinComponent
   ],
   imports: [
     BrowserModule,
@@ -177,7 +186,8 @@ const appRoutes: Routes = [
     ChangeEmailDialog,
     ChangeSecondaryEmailDialog,
     ChangePasswordDialog,
-    ProductSelectDialog
+    ProductSelectDialog,
+    SelectDeliveryAddressDialogComponent
   ],
   providers: [
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}

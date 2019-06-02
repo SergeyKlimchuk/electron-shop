@@ -1,10 +1,11 @@
-<div class="container">
+<div class="container" [ngClass]="{'selectable' : selectable}" [class.mat-elevation-z2]="selectable">
+  <div class="selectable-panel" *ngIf="selectable" matRipple></div>
   <div class="row">
     <app-city-input
       [(ngModel)]="address.city"
       [disabled]="!editMode"
     ></app-city-input>
-    <button mat-icon-button (click)="setFavorite()" class="btn btn-favorite">
+    <button mat-icon-button (click)="setFavorite()" class="btn btn-favorite" [disabled]="!editMode">
       <ng-container
         *ngIf="address.favorite; then isFavorite; else notFavorite"
       ></ng-container>
@@ -25,10 +26,10 @@
       </button>
     </ng-container>
     <ng-template #elseTemplate>
-      <button mat-stroked-button (click)="enableEditMode()" class="btn">
+      <button mat-stroked-button (click)="enableEditMode()" class="btn" *ngIf="editable">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-stroked-button (click)="deleteAddress()" class="btn">
+      <button mat-stroked-button (click)="deleteAddress()" class="btn" *ngIf="editable">
         <mat-icon>delete</mat-icon>
       </button>
     </ng-template>

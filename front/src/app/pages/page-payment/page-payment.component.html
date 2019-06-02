@@ -1,0 +1,60 @@
+<mat-card>
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Ознакомление с товарами</ng-template>
+      <app-product-list-min [products]="products"></app-product-list-min>
+      <mat-divider></mat-divider>
+      <div class="actions">
+        <button mat-raised-button matStepperNext color="primary">
+          Я ознакомлен со список заказываемх товаров
+        </button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Выбор адреса доставки</ng-template>
+      <app-select-delivery-address
+        [addresses]="addresses"
+        [address]="selectedAddress"
+      ></app-select-delivery-address>
+      <div class="actions">
+        <button mat-raised-button matStepperPrevious>Назад</button>
+        <button mat-raised-button matStepperNext color="primary">
+          Адрес указан верно
+        </button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Оплата</ng-template>
+      <div class="message-page error">
+        <div class="icon"><mat-icon [inline]="true">warning</mat-icon></div>
+        <div class="text">
+          В данный момент сервис QIWI недоступен, выберите другой способ оплаты!
+        </div>
+      </div>
+      <div class="actions">
+        <button mat-raised-button matStepperPrevious>Назад</button>
+        <button mat-raised-button matStepperNext color="primary">
+          Оплатить
+        </button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Завершение</ng-template>
+      <div class="message-page">
+        <div class="icon">
+          <mat-icon [inline]="true">check_circle_outline</mat-icon>
+        </div>
+        <div class="text">
+          Благодарим вас за покупку! Оператор свяжется с вами в ближайшее время
+          для дополнительного подтверждения оформления заказа.
+        </div>
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" [routerLink]="['/main']">
+          Перейти на главную страницу
+        </button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>

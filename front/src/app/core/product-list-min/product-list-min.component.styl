@@ -1,0 +1,32 @@
+@import '../../../stylus/templates.styl'
+
+$row-heght = 120px
+
+:host
+  display flex
+  flex-direction column
+  .element
+    display flex
+    height $row-heght
+    &:not(:last-child)
+      border-bottom $border
+    .image
+      width $row-heght
+      overflow hidden
+      img
+        position absolute
+        width 100%
+        top 50%
+        transform translateY(-50%)
+        object-fit cover
+
+    .name
+      flex-grow 2
+      font-size 1.3em
+      display flex
+      align-items center
+    .price
+      font-weight bold
+      font-size 1.5em
+      display flex
+      align-items center

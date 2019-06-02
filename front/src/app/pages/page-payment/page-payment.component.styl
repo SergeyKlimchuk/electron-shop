@@ -1,0 +1,30 @@
+@import '../../../stylus/colors.styl'
+
+mat-card
+  margin-top 24px
+
+.actions
+  display flex
+  justify-content flex-end
+  padding-top 16px
+  & > *
+    margin-left 16px
+
+>>> .mat-horizontal-content-container
+  padding 0 !important
+
+.message-page
+  display flex
+  flex-direction column
+  text-align center
+  padding 120px 0
+  .icon
+    font-size 64px
+    color $main-color
+    cursor default
+  .text
+    font-size 1.3em
+
+.error
+  .icon
+    color #f44336

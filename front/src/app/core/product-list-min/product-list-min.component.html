@@ -1,0 +1,13 @@
+<div class="element" *ngFor="let product of products" >
+  <div class="square image">
+    <div class="content">
+      <img [src]="product.imageUrl" [alt]="product.name">
+    </div>
+  </div>
+  <div class="name">
+    {{ product.name }}
+  </div>
+  <div class="price">
+    {{ product.price - product.discount | numberSplit }} ₸
+  </div>
+</div>

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { PayService } from './../../services/pay/pay.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatTableDataSource } from '@angular/material';
@@ -17,7 +18,8 @@ export class PageCartComponent implements OnInit {
 
   constructor(private snack: MatSnackBar,
               private cartService: CartService,
-              private payService: PayService) { }
+              private payService: PayService,
+              private router: Router) { }
 
   ngOnInit() {
     this.cartService.getProducts().subscribe(
@@ -62,6 +64,8 @@ export class PageCartComponent implements OnInit {
   }
 
   pay() {
+    this.router.navigate(['/payment']);
+    return;
     const productIds = this.productsDataSource.data.map(x => x.product.id);
     this.payService.generatePayLink(productIds).subscribe(
       payLink => {

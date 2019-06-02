@@ -1,0 +1,31 @@
+<ng-container *ngIf="addresses.length > 0; else noHaveAddresses">
+  <app-address-view
+    [address]="address"
+    [editable]="false"
+    *ngIf="address"
+  ></app-address-view>
+  <div class="actions">
+    <button
+      mat-raised-button
+      *ngIf="addresses.length > 1"
+      (click)="openSelectDialog()"
+    >
+      <mat-icon>room</mat-icon> Выбрать другой адрес
+    </button>
+  </div>
+</ng-container>
+<ng-template #noHaveAddresses>
+  <app-address-edit
+    *ngIf="newAddress"
+    [(ngModel)]="newAddress"
+  ></app-address-edit>
+  <div class="actions">
+    <button
+      mat-raised-button
+      *ngIf="addresses.length === 0 && !newAddress"
+      (click)="createNewAddress()"
+    >
+      <mat-icon>add_location</mat-icon> Добавить адресс
+    </button>
+  </div>
+</ng-template>

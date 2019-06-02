@@ -1,29 +1,31 @@
 import { NgModule } from '@angular/core';
-import {MatNativeDateModule,
-        MatDatepickerModule,
-        MatIconModule,
-        MatButtonModule,
-        MatCheckboxModule,
-        MatToolbarModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatRadioModule,
-        MatListModule,
-        MatTableModule,
-        MatTabsModule,
-        MatPaginatorModule,
-        MatSelectModule,
-        MatMenuModule,
-        MatSnackBarModule,
-        MatRippleModule,
-        MatExpansionModule,
-        MatProgressBarModule,
-        MatChipsModule,
-        MatTooltipModule,
-        MatTreeModule} from '@angular/material';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDatepickerModule,
+  MatExpansionModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressBarModule,
+  MatRadioModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatTableModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatTreeModule,
+  MatStepperModule,
+} from '@angular/material';
 
 @NgModule({
 imports: [
@@ -47,7 +49,8 @@ imports: [
   MatSnackBarModule,
   MatSelectModule,
   MatExpansionModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatStepperModule
 ],
 exports: [MatNativeDateModule,
   FormsModule,
@@ -72,7 +75,8 @@ exports: [MatNativeDateModule,
   MatProgressBarModule,
   MatChipsModule,
   MatTreeModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatStepperModule
 ],
 })
 export class MaterialModule { }
