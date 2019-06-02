@@ -1,17 +1,15 @@
 :host
-  display flex
-  flex-wrap wrap
-  align-items baseline
+  display grid
+  grid-template-columns 1fr 400px
+  grid-column-gap 20px
 
 .profile__label
-  width 100%
+  grid-column 1 / 3
   line-height 60px
   vertical-align center
 
 .profile__settings
-  width 780px
-  margin-right 20px
   padding 0px 40px 20px 40px
 
-.profile__notifications
-  flex-grow 1
+.notifications
+  padding 24px 0
