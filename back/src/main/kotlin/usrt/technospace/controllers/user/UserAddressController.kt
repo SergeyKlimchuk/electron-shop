@@ -38,7 +38,7 @@ class UserAddressController {
         addressRepository.save(address)
     }
 
-    @DeleteMapping("/user/current/address")
+    @DeleteMapping("/user/current/address/{addressId}")
     fun removeAddress(@PathVariable addressId: Long) {
         addressRepository.deleteById(addressId)
     }
