@@ -71,6 +71,7 @@ import { FavoritesButtonComponent } from './core/favorites-button/favorites-butt
 import { UserAddressesComponent } from './pages/page-profile/user-addresses/user-addresses.component';
 import { AddressViewComponent } from './core/address-view/address-view.component';
 import { AddressEditComponent } from './core/address-edit/address-edit.component';
+import { CityInputComponent } from './core/city-input/city-input.component';
 
 
 const appRoutes: Routes = [
@@ -146,7 +147,8 @@ const appRoutes: Routes = [
     FavoritesButtonComponent,
     UserAddressesComponent,
     AddressViewComponent,
-    AddressEditComponent
+    AddressEditComponent,
+    CityInputComponent
   ],
   imports: [
     BrowserModule,

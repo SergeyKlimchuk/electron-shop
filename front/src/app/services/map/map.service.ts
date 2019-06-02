@@ -1,4 +1,3 @@
-import { UserService } from './../user/user.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Address } from 'src/models/map/address';
@@ -13,8 +12,7 @@ import { environment } from './../../../environments/environment';
 })
 export class MapService {
 
-  constructor(private http: HttpClient,
-              private userService: UserService) { }
+  constructor(private http: HttpClient) { }
 
 
   createCountry(country: Country) {
@@ -33,6 +31,10 @@ export class MapService {
     return this.http.delete<void>(`/api/map/countries/${countryId}`);
   }
 
+
+  getAllCities() {
+    return this.http.get<City[]>(`/api/map/cities`);
+  }
 
   createCity(countryId: number, city: City) {
     return this.http.post<City>(`/api/map/countries/${countryId}/cities`, city);
@@ -69,12 +71,5 @@ export class MapService {
 
   deleteAddress(addressId: number) {
     return this.http.delete<void>(`/api/map/addresses/${addressId}`);
-  }
-
-  getUserLocation() {
-    console.log('GET LOCATION...');
-
-    return this.http
-    .get<Place>(`http://api.ipapi.com/check?access_key=${environment.ipapiToken}&format=1`);
   }
 }

@@ -1,16 +1,38 @@
-<div class="address-not-found" *ngIf="addresses.length === 0 && !visibleAddForm" >
+<div
+  class="address-not-found"
+  *ngIf="addresses.length === 0 && !visibleAddForm"
+>
   <div class="container">
     <mat-icon class="icon" [inline]="true">not_listed_location</mat-icon>
-    <div class="text">Адреса доставки отсутствуют</div> <!-- Добавьте адрес доставки сейчас, или вы можете добавить его при совершении покупки! -->
+    <div class="text">Адреса доставки отсутствуют</div>
+    <!-- Добавьте адрес доставки сейчас, или вы можете добавить его при совершении покупки! -->
   </div>
 </div>
 
-<app-address-view *ngFor="let address of addresses" [address]="address"></app-address-view>
-<app-address-edit [(ngModel)]="address" *ngIf="visibleAddForm" ></app-address-edit>
+<app-address-view
+  *ngFor="let address of addresses"
+  [address]="address"
+  (applyChanges)="updateAddress($event)"
+  (delete)="deleteAddress($event)"
+  (enableFavorite)="setFavorite($event)"
+></app-address-view>
+<app-address-edit
+  *ngIf="visibleAddForm"
+  [(ngModel)]="address"
+></app-address-edit>
 <div class="actions__panel">
-   <button mat-raised-button (click)="openAddPanel()" color="primary" *ngIf="!visibleAddForm"><mat-icon>add</mat-icon>Добавить адрес</button>
-   <section *ngIf="visibleAddForm">
-     <button mat-button (click)="closeAddPanel()">Отмена</button>
-     <button mat-raised-button (click)="createNewAddress()" color="primary"><mat-icon>save</mat-icon>Сохранить</button>
-   </section>
+  <button
+    mat-raised-button
+    (click)="openAddPanel()"
+    color="primary"
+    *ngIf="!visibleAddForm"
+  >
+    <mat-icon>add</mat-icon>Добавить адрес
+  </button>
+  <section *ngIf="visibleAddForm">
+    <button mat-button (click)="closeAddPanel()">Отмена</button>
+    <button mat-raised-button (click)="createNewAddress()" color="primary">
+      <mat-icon>save</mat-icon>Сохранить
+    </button>
+  </section>
 </div>

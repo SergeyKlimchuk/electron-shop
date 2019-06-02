@@ -125,13 +125,10 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
   }
 
   FindUserCity() {
-    this.mapService
-      .getUserLocation()
+    this.userService
+      .getUserCity()
       .pipe(
-        takeUntil(this.unsubscribe$),
-        switchMap(place =>
-          this.mapService.findCityByName(place.location.capital)
-        )
+        takeUntil(this.unsubscribe$)
       )
       .subscribe(
         city => this.selectCity(city),

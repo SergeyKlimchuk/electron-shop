@@ -50,13 +50,47 @@ export class UserAddressesComponent implements OnInit {
     this.deliveryAddressService.saveAddress(this.address).subscribe(
       _ => {
         this.notificationService.notify('Адрес успешно сохранен!');
+        this.loadAddresses();
         this.closeAddPanel();
       },
       error => {
         this.notificationService.notifyAboutError('Во время сохранения удреса произошла ошибка', error);
       }
     );
+  }
 
+  updateAddress(address: DeliveryAddress) {
+    this.deliveryAddressService.updateAddress(address).subscribe(
+      () => {
+        this.notificationService.notify('Адрес успешно обновлен!');
+      },
+      error => {
+        this.notificationService.notifyAboutError('При обновлении адреса произошла ошибка!', error);
+      }
+    );
+  }
+
+  deleteAddress(address: DeliveryAddress) {
+    this.deliveryAddressService.deleteAddress(address.id).subscribe(
+      () => {
+        this.notificationService.notify('Адрес успешно удален!');
+      },
+      error => {
+        this.notificationService.notifyAboutError('При удалении адреса произошла ошибка!', error);
+      }
+    );
+  }
+
+  setFavorite(address: DeliveryAddress) {
+    this.deliveryAddressService.setFavoriteAddress(address.id).subscribe(
+      () => {
+        this.notificationService.notify('Первичный адрес был успешно обновлен!');
+        this.loadAddresses();
+      },
+      error => {
+        this.notificationService.notifyAboutError('Не удалось удалить первичный адресс!', error);
+      }
+    );
   }
 
 }

@@ -1,16 +1,20 @@
+import { environment } from 'src/environments/environment';
+import { Place } from './../../../models/map/place';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { tap, map, flatMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { flatMap, tap, switchMap } from 'rxjs/operators';
 
 import { User } from './../../../models/users/user';
+import { MapService } from './../map/map.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private mapService: MapService) {
   }
 
   getRequiredPasswordLength() {
@@ -28,6 +32,22 @@ export class UserService {
         }
       );
     });
+  }
+
+  private getUserLocation() {
+    console.log('GET LOCATION...');
+
+    return this.http
+    .get<Place>(`http://api.ipapi.com/check?access_key=${environment.ipapiToken}&format=1`);
+  }
+
+  getUserCity() {
+    return this.getUserLocation()
+      .pipe(
+        switchMap(place =>
+          this.mapService.findCityByName(place.location.capital)
+        )
+      );
   }
 
   updateEmail(newEmail: string, password: string) {

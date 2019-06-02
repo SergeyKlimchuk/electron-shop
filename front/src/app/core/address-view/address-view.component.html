@@ -1,28 +1,58 @@
 <div class="container">
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Адрес"
-      [(ngModel)]="address.address"
-      disabled
-    />
-  </mat-form-field>
+  <div class="row">
+    <app-city-input
+      [(ngModel)]="address.city"
+      [disabled]="!editMode"
+    ></app-city-input>
+    <button mat-icon-button (click)="setFavorite()" class="btn btn-favorite">
+      <ng-container
+        *ngIf="address.favorite; then isFavorite; else notFavorite"
+      ></ng-container>
+      <ng-template #isFavorite>
+        <mat-icon>star</mat-icon>
+      </ng-template>
+      <ng-template #notFavorite>
+        <mat-icon>star_border</mat-icon>
+      </ng-template>
+    </button>
 
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Адрес"
-      [(ngModel)]="address.address"
-      disabled
-    />
-  </mat-form-field>
+    <ng-container *ngIf="editMode; else elseTemplate">
+      <button mat-stroked-button (click)="closeEditMode()" class="btn">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="save()" class="btn" color="primary">
+        <mat-icon>save</mat-icon>
+      </button>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <button mat-stroked-button (click)="enableEditMode()" class="btn">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="deleteAddress()" class="btn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </ng-template>
+  </div>
 
-  <mat-form-field>
-    <textarea
-      matInput
-      placeholder="Комментарий"
-      [value]="address.comment"
-      disabled
-    ></textarea>
-  </mat-form-field>
+  <div class="row">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Адрес"
+        [(ngModel)]="address.address"
+        [disabled]="!editMode"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field>
+      <textarea
+        matInput
+        placeholder="Комментарий"
+        [(ngModel)]="address.comment"
+        [disabled]="!editMode"
+      ></textarea>
+    </mat-form-field>
+  </div>
 </div>

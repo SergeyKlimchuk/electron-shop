@@ -60,6 +60,11 @@ class AddressesController {
         return cityRepository.save(city)
     }
 
+    @GetMapping("/cities")
+    fun getAllCities(): List<City> {
+        return cityRepository.findAll()
+    }
+
     @GetMapping("/cities/{city}")
     fun getCity(city: City): City {
         return city

@@ -78,7 +78,7 @@ class User {
     )
     var favorites: MutableList<Product> = arrayListOf()
 
-    // Favorites
+    // Delivery addresses
     @OneToMany(
             fetch = FetchType.LAZY,
             mappedBy = "user",

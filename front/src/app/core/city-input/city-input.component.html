@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-label>Город</mat-label>
+  <mat-select [(ngModel)]="value" (valueChange)="updateFn($event)" [disabled]="disabled">
+    <mat-option *ngFor="let city of values" [value]="city">
+      {{ city.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
