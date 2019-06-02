@@ -53,8 +53,8 @@
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row" class="price">
-          <div class="price__default" [ngClass]="row.product.discount > 0 ? 'dashed-price' : ''" >{{ row.product.price | numberSplit }} ₸</div>
-          <div class="price__discount" *ngIf="row.product.discount" >{{ row.product.price - row.product.discount | numberSplit }} ₸</div>
+          <div class="price__default" [ngClass]="row.product.discount > 0 ? 'dashed-price' : ''" >{{ row.product.price * row.count | numberSplit }} ₸</div>
+          <div class="price__discount" *ngIf="row.product.discount" >{{ (row.product.price - row.product.discount) * row.count | numberSplit }} ₸</div>
         </td>
       </ng-container>
 
