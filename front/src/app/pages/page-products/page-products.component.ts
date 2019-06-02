@@ -1,15 +1,15 @@
+import { FilterStep } from 'src/models/filters/filter-step';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSnackBar, PageEvent } from '@angular/material';
+import { MatPaginator, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ProductTypeService } from 'src/app/services/product-type/product-type.service';
-import { SearchRequestSegment } from 'src/app/services/search/search-request-segment';
 import { SearchService } from 'src/app/services/search/search.service';
 import { Product } from 'src/models/products/product';
 import { ProductType } from 'src/models/products/product-type';
+import { PageableResponse } from 'src/models/system/pageable-response';
 
 import { ProductService } from './../../services/product/product.service';
-import { PageableResponse } from 'src/models/system/pageable-response';
 
 @Component({
   selector: 'app-page-products',
@@ -20,7 +20,7 @@ export class PageProductsComponent implements OnInit {
   public productType: ProductType = null;
   public products$ = new BehaviorSubject<Product[]>([]);
 
-  private filters: SearchRequestSegment[];
+  private filters: FilterStep[];
   minItemsCount = 5;
 
   @ViewChild(MatPaginator)
@@ -83,7 +83,7 @@ export class PageProductsComponent implements OnInit {
       );
   }
 
-  onApplyFilter(filters: SearchRequestSegment[]) {
+  onApplyFilter(filters: FilterStep[]) {
     this.filters = filters;
     this.matPaginator.pageSize = 0;
     this.updateProductsList();

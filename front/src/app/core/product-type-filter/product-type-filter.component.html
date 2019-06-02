@@ -7,16 +7,32 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <app-dictionary-value-input
-      [dictionaryId]="title.dictionary.id"
-      [multiply]="true"
-      (change)="onChangeFilters()"
-    ></app-dictionary-value-input>
+    <span [ngSwitch]="title.type">
+      <p *ngSwitchCase="'Dictionary'">
+        <app-dictionary-value-input
+          [dictionaryId]="title.dictionary.id"
+          [multiply]="true"
+          (change)="onChangeFilters()"
+        ></app-dictionary-value-input>
+      </p>
+      <p *ngSwitchCase="'Boolean'">
+        <app-boolean-input (change)="onChangeFilters()"></app-boolean-input>
+      </p>
+      <p *ngSwitchDefault></p>
+    </span>
   </mat-expansion-panel>
 </mat-accordion>
+
 <div class="actions">
-  <button mat-flat-button (click)="clearFilters()" >Сбросить <mat-icon>clear</mat-icon></button>
-  <button mat-raised-button color="primary" (click)="applyFilter()" [disabled]="!applyButtonActive">
+  <button mat-flat-button (click)="clearFilters()">
+    Сбросить <mat-icon>clear</mat-icon>
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="applyFilter()"
+    [disabled]="!applyButtonActive"
+  >
     Применить <mat-icon>sort</mat-icon>
   </button>
 </div>

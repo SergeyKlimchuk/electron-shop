@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ProductInfoTitleService } from 'src/app/services/product-info-title/product-info-title.service';
-import { SearchRequestSegment } from 'src/app/services/search/search-request-segment';
+import { FilterStep } from 'src/models/filters/filter-step';
 import { ProductInfoTitle } from 'src/models/products/product-info-title';
 import { ProductPropertyTitleType } from 'src/models/products/product-property-title-type';
 
+import { BooleanInputComponent } from '../boolean-input/boolean-input.component';
 import { DictionaryValueInputComponent } from '../dictionary-value-input/dictionary-value-input.component';
 
 @Component({
@@ -18,10 +19,13 @@ export class ProductTypeFilterComponent implements OnInit {
   productTypeId: number;
 
   @ViewChildren(DictionaryValueInputComponent)
-  values: QueryList<DictionaryValueInputComponent>;
+  dictionaryValues: QueryList<DictionaryValueInputComponent>;
+
+  @ViewChildren(BooleanInputComponent)
+  booleanValues: QueryList<BooleanInputComponent>;
 
   @Output()
-  apply = new EventEmitter<SearchRequestSegment[]>();
+  apply = new EventEmitter<FilterStep[]>();
 
   @Output()
   clean = new EventEmitter<void>();
@@ -41,7 +45,8 @@ export class ProductTypeFilterComponent implements OnInit {
   loadTitlesWithDictionary() {
     this.productInfoTitleService.getProductInfoTitles(this.productTypeId).subscribe(
       titles => {
-        this.titles = titles.filter(x => x.type === ProductPropertyTitleType.Dictionary);
+        this.titles = titles.filter(x => (x.type === ProductPropertyTitleType.Dictionary) || (x.type === ProductPropertyTitleType.Boolean));
+        console.log(this.titles);
       },
       error => {
         console.error(error);
@@ -52,21 +57,45 @@ export class ProductTypeFilterComponent implements OnInit {
 
   clearFilters() {
     this.applyButtonActive = false;
-    this.values.forEach( x => x.clear() );
+    this.dictionaryValues.forEach( x => x.clear() );
+    this.booleanValues.forEach( x => x.clear() );
     this.apply.emit(null);
   }
 
   applyFilter() {
-    let index = 0;
-    const valuesList = this.values.toArray();
-    const values = this.titles.map(title => {
-      return {
-        titleId: title.id,
-        values: valuesList[index++].getValues().map(x => Number(x))
-      };
-    }).filter(value => value.values.length > 0);
+    const dictionaryValues = this.getDictionaryValues();
+    const booleanValues = this.getBooleanValues();
+    const values = dictionaryValues.concat(booleanValues);
+
+    console.log({dictionaryValues, booleanValues, values});
     this.applyButtonActive = false;
     this.apply.emit(values);
+  }
+
+  getDictionaryValues(): FilterStep[] {
+    const properties = this.titles.filter(x => x.type === ProductPropertyTitleType.Dictionary);
+    let index = 0;
+    return this.dictionaryValues
+      .filter(x => x.getValues().length > 0)
+      .map(x => {
+        return {
+          titleId: properties[index++].id,
+          value: x.getValues()
+        };
+      });
+  }
+
+  getBooleanValues(): FilterStep[] {
+    const booleanProperties = this.titles.filter(x => x.type === ProductPropertyTitleType.Boolean);
+    let index = 0;
+    return this.booleanValues
+      .filter(x => x.state !== null)
+      .map(x => {
+        return {
+          titleId: booleanProperties[index++].id,
+          value: x.state
+        };
+      });
   }
 
   onChangeFilters() {

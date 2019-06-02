@@ -72,6 +72,7 @@ import { UserAddressesComponent } from './pages/page-profile/user-addresses/user
 import { AddressViewComponent } from './core/address-view/address-view.component';
 import { AddressEditComponent } from './core/address-edit/address-edit.component';
 import { CityInputComponent } from './core/city-input/city-input.component';
+import { BooleanInputComponent } from './core/boolean-input/boolean-input.component';
 
 
 const appRoutes: Routes = [
@@ -148,7 +149,8 @@ const appRoutes: Routes = [
     UserAddressesComponent,
     AddressViewComponent,
     AddressEditComponent,
-    CityInputComponent
+    CityInputComponent,
+    BooleanInputComponent
   ],
   imports: [
     BrowserModule,
