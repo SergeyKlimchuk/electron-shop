@@ -73,6 +73,7 @@ export class UserAddressesComponent implements OnInit {
   deleteAddress(address: DeliveryAddress) {
     this.deliveryAddressService.deleteAddress(address.id).subscribe(
       () => {
+        this.addresses = this.addresses.filter(x => x.id !== address.id);
         this.notificationService.notify('Адрес успешно удален!');
       },
       error => {

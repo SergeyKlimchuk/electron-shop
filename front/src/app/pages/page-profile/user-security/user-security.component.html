@@ -7,7 +7,9 @@
         <div class="property__value">{{ user?.email }}</div>
       </div>
       <div>
-        <button mat-stroked-button (click)="updateEmail()">Изменить <mat-icon>edit</mat-icon></button>
+        <button mat-raised-button (click)="updateEmail()" color="primary">
+          <mat-icon>edit</mat-icon> Изменить
+        </button>
       </div>
     </div>
   </mat-list-item>
@@ -23,11 +25,23 @@
         </div>
       </div>
       <div>
-        <button *ngIf="haveSecondaryEmail" mat-stroked-button (click)="updateSecondaryEmail()" class="right">
-          Изменить <mat-icon>edit</mat-icon>
+        <button
+          *ngIf="haveSecondaryEmail"
+          mat-raised-button
+          (click)="updateSecondaryEmail()"
+          class="right"
+          color="primary"
+        >
+          <mat-icon>edit</mat-icon> Изменить
         </button>
-        <button *ngIf="!haveSecondaryEmail" mat-stroked-button (click)="updateSecondaryEmail()" class="right">
-          Добавить <mat-icon>add</mat-icon>
+        <button
+          *ngIf="!haveSecondaryEmail"
+          mat-raised-button
+          (click)="updateSecondaryEmail()"
+          class="right"
+          color="primary"
+        >
+          <mat-icon>add</mat-icon> Добавить
         </button>
       </div>
     </div>
@@ -41,7 +55,9 @@
         <div class="property__value">********</div>
       </div>
       <div>
-        <button mat-stroked-button (click)="updatePassword()">Изменить <mat-icon>edit</mat-icon></button>
+        <button mat-raised-button (click)="updatePassword()" color="primary">
+          <mat-icon>edit</mat-icon> Изменить
+        </button>
       </div>
     </div>
   </mat-list-item>

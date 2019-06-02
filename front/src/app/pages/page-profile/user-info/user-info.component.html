@@ -42,20 +42,21 @@
   <div class="actions full-width">
     <div *ngIf="editMode; then finishEditActions; else startEditActions"></div>
     <ng-template #finishEditActions>
-      <button mat-stroked-button (click)="revert()">Отмена</button>
+      <button mat-button (click)="revert()">Отмена</button>
       <button mat-raised-button (click)="save()" color="primary">
-        Сохранить
+        <mat-icon>save</mat-icon>Сохранить
       </button>
     </ng-template>
 
     <ng-template class="actions full-width" #startEditActions>
       <button
-        mat-stroked-button
+        mat-raised-button
         *ngIf="!editMode"
         (click)="editMode = true"
         class="edit-btn"
+        color="primary"
       >
-        Редактировать<mat-icon>edit</mat-icon>
+        <mat-icon>edit</mat-icon> Редактировать
       </button>
     </ng-template>
   </div>
