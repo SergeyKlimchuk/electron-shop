@@ -5,31 +5,36 @@
 <div class="line">
   <mat-select
     placeholder="Страна"
+    (valueChange)="onChangeCountry($event)"
     [(ngModel)]="selectedCountry"
-    (valueChange)="onChangeCountry()"
   >
-    <mat-option [value]="country" *ngFor="let country of (countries$ | async)">
+    <mat-option [value]="country" *ngFor="let country of countries">
       {{ country.name }}
     </mat-option>
   </mat-select>
+
   <div class="block" *ngIf="selectedCountry">
     <mat-icon class="arrow">chevron_right</mat-icon>
     <mat-select
       placeholder="Город"
+      (valueChange)="onChangeCity($event)"
       [(ngModel)]="selectedCity"
-      (selectionChange)="onChangeCity()"
     >
-      <mat-option *ngFor="let city of selectedCountry.cities" [value]="city">
+      <mat-option *ngFor="let city of cities" [value]="city">
         {{ city.name }}
       </mat-option>
-      <mat-option [value]="false">Все</mat-option>
+      <mat-option [value]="null">Все</mat-option>
     </mat-select>
   </div>
-  <div class="block" *ngIf="selectedCity && selectedCity">
+
+  <div class="block" *ngIf="selectedCity">
     <mat-icon class="arrow">chevron_right</mat-icon>
-    <mat-select placeholder="Отдел" [(ngModel)]="selectedAddress">
+    <mat-select
+      placeholder="Отдел"
+      [(ngModel)]="selectedAddress"
+    >
       <mat-option
-        *ngFor="let address of selectedCity.addresses"
+        *ngFor="let address of addresses"
         (click)="onSelectAddress(address)"
         [value]="address"
       >

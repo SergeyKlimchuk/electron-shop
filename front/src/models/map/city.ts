@@ -7,5 +7,4 @@ export class City extends Point implements Identity, Nameble {
   id: number;
   name: string;
   nameEn: string;
-  addresses: Address[];
 }

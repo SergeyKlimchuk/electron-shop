@@ -1,14 +1,14 @@
-import { Subject, BehaviorSubject } from 'rxjs';
-import { UserService } from './../../../services/user/user.service';
-import { Component, EventEmitter, Output, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Address } from 'src/models/map/address';
 import { Country } from 'src/models/map/country';
 import { MapState } from 'src/models/map/map-state';
+import { MapZoom } from 'src/models/map/map-zoom';
 
 import { City } from './../../../../models/map/city';
 import { MapService } from './../../../services/map/map.service';
-import { MapZoom } from 'src/models/map/map-zoom';
-import { takeUntil, switchMap } from 'rxjs/operators';
+import { UserService } from './../../../services/user/user.service';
 
 @Component({
   selector: 'app-point-selector',
@@ -26,68 +26,21 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
   @Output()
   selectPoint = new EventEmitter<MapState>();
 
-  countries$ = new BehaviorSubject<Country[]>([]);
+  countries: Country[] = [];
   selectedCountry: Country = null;
+
   selectedCity: City = null;
+  cities: City[] = [];
+
   selectedAddress: Address = null;
+  addresses: Address[] = [];
 
   constructor(private mapService: MapService,
               private userService: UserService) {
     this.mapService.getCountries().subscribe(
-      countries => this.countries$.next(countries)
+      countries => this.countries = countries
     );
   }
-
-  onChangeCountry() {
-    console.log('onChangeCountry');
-    this.selectedCity = null;
-    this.selectedAddress = null;
-  }
-
-  onChangeCity() {
-    if (this.selectedCity as any === -1) {
-      this.selectPoint.emit({
-        targetPoint: this.selectedCountry,
-        markers: this.selectedCountry.cities,
-        zoom: MapZoom.COUNTRY
-      });
-    } else {
-      this.selectPoint.emit({
-        targetPoint: this.selectedCity,
-        markers: this.selectedCity.addresses,
-        zoom: MapZoom.CITY
-      });
-      this.selectedAddress = null;
-    }
-  }
-
-  onSelectAddress(address: Address) {
-    this.selectPoint.emit({
-      targetPoint: this.selectedAddress,
-      markers: this.selectedCity.addresses,
-      zoom: MapZoom.SHOP
-    });
-  }
-
-  setCityInAddressLine(city: City) {
-    if (!city) {
-      this.selectedCity = null;
-      this.selectedAddress = null;
-    }
-    const countries = this.countries$.getValue();
-    for (const country of countries) {
-      const cityIndex = country.cities.findIndex( (x, i) => x.id === city.id);
-      if (cityIndex !== -1) {
-        console.log('City was founded!');
-        this.selectedCountry = country;
-        this.selectedCity = country.cities[cityIndex];
-        break;
-      }
-    }
-  }
-
-
-
 
   ngOnInit() {
     this.selectUserCity();
@@ -98,9 +51,74 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  onChangeCountry(country: Country) {
+    console.log('Change country to ', country);
+
+    this.selectedCountry = country;
+    this.selectedCity = null;
+    this.selectedAddress = null;
+    if (country) {
+      this.mapService.getCitiesInCountry(country.id).subscribe(
+        cities => {
+          this.cities = cities;
+          this.selectPoint.emit({
+            targetPoint: this.selectedCountry,
+            markers: cities,
+            zoom: MapZoom.COUNTRY
+          });
+        }
+      );
+    } else {
+      this.countries = [];
+    }
+  }
+
+  onChangeCity(city: City) {
+    console.log('Change city to ', city);
+    this.selectedCity = city;
+    if (city !== null) {
+      this.mapService.getAddressesInCity(city.id).subscribe(
+        addresses => {
+          this.addresses = addresses;
+          this.selectPoint.emit({
+            targetPoint: this.selectedCity,
+            markers: addresses,
+            zoom: MapZoom.CITY
+          });
+        }
+      );
+    } else {
+      this.selectPoint.emit({
+        targetPoint: this.selectedCountry,
+        markers: this.cities,
+        zoom: MapZoom.COUNTRY
+      });
+    }
+  }
+
+  onSelectAddress(address: Address) {
+    console.log('Change address to ', address);
+    this.selectedAddress = address;
+    if (address !== null) {
+      this.selectPoint.emit({
+        targetPoint: address,
+        markers: [],
+        zoom: MapZoom.SHOP
+      });
+    } else {
+      this.selectPoint.emit({
+        targetPoint: this.selectedCity,
+        markers: this.addresses,
+        zoom: MapZoom.CITY
+      });
+    }
+  }
+
   selectUserCity() {
     this.userService.userIsAuthenticated().subscribe(
       isAuthenticated => {
+        console.log('User is not authenticated');
+
         if (isAuthenticated) {
           this.loadUserCity();
         } else {
@@ -110,50 +128,48 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
     );
   }
 
+  selectCity(cityId: number) {
+    this.mapService.getCountryOfCity(cityId).subscribe(
+      country => {
+        this.selectedCountry = this.countries.filter(x => x.id === country.id)[0];
+        this.mapService.getCitiesInCountry(this.selectedCountry.id).subscribe(
+          cities => {
+            this.cities = cities;
+            this.onChangeCity(this.cities.filter(x => x.id === cityId)[0]);
+          }
+        );
+      }
+    );
+  }
+
   loadUserCity() {
     this.userService
       .getCurrentUser()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(user => {
-        this.selectPoint.emit({
-          targetPoint: user.city,
-          markers: user.city.addresses,
-          zoom: MapZoom.CITY
-        });
-        this.setCityInAddressLine(user.city);
+        if (user.city) {
+          this.selectCity(user.city.id);
+        } else {
+          this.FindUserCity();
+        }
       });
   }
 
   FindUserCity() {
     this.userService
       .getUserCity()
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
-        city => this.selectCity(city),
+        city => this.selectCity(city.id),
         error => {
           if (error.status === 404) {
             this.mapService.getMainCity()
-              .subscribe(city => this.selectCity(city));
+              .subscribe(city => this.selectCity(city.id));
           } else {
             this.selectPoint.error(null);
           }
         }
       );
-  }
-
-  selectCity(city: City) {
-    if (city) {
-      this.selectPoint.emit({
-        targetPoint: city,
-        markers: city.addresses,
-        zoom: MapZoom.CITY
-      });
-    } else {
-      this.selectWorld();
-    }
-    this.setCityInAddressLine(city);
   }
 
   selectWorld() {
@@ -165,6 +181,5 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
       });
     });
   }
-
 
 }

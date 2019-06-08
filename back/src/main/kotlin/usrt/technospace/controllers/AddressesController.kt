@@ -38,9 +38,9 @@ class AddressesController {
         return country
     }
 
-    @GetMapping("/countries/{country}/cities")
-    fun getCitiesInCountry(country: Country): List<City> {
-        return country.cities
+    @GetMapping("/countries/{countryId}/cities")
+    fun getCitiesInCountry(@PathVariable countryId: Long): List<City> {
+        return cityRepository.findCityByCountryId(countryId)
     }
 
     @DeleteMapping("/countries/{countryId}")
@@ -73,6 +73,11 @@ class AddressesController {
     @GetMapping("/cities/{city}/addresses")
     fun getAddressesInCity(city: City): List<Address> {
         return city.addresses
+    }
+
+    @GetMapping("/cities/{city}/country")
+    fun getCountryOfCity(city: City): Country {
+        return city.country
     }
 
     @GetMapping("/cities/search")

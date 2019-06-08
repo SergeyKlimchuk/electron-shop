@@ -24,11 +24,15 @@ export class MapService {
   }
 
   getCitiesInCountry(countryId: number) {
-    return this.http.get<City[]>(`/api/map/countries/${countryId}`);
+    return this.http.get<City[]>(`/api/map/countries/${countryId}/cities`);
   }
 
   deleteCountry(countryId: number) {
     return this.http.delete<void>(`/api/map/countries/${countryId}`);
+  }
+
+  getCountryOfCity(cityId: number) {
+    return this.http.get<City>(`/api/map/cities/${cityId}/country`);
   }
 
 

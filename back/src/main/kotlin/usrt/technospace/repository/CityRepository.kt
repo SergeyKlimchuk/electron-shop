@@ -8,4 +8,5 @@ import usrt.technospace.models.map.City
 interface CityRepository : JpaRepository<City, Long> {
     fun findByNameOrNameEn(name: String, nameEn: String): List<City>
     fun findByIsMainTrue(): City
+    fun findCityByCountryId(countryId: Long): List<City>
 }

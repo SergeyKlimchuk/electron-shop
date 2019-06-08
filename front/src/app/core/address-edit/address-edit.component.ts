@@ -31,7 +31,8 @@ export class AddressEditComponent implements OnInit, ControlValueAccessor {
     this.mapService.getCountries().subscribe(
       countries => {
         const cities: City[] = [];
-        countries.forEach(x => x.cities.forEach(x1 => cities.push(x1)));
+        // TODO: FIX THIS WARNING!!!
+        // countries.forEach(x => x.cities.forEach(x1 => cities.push(x1)));
         this.cities = cities;
       },
       error => {

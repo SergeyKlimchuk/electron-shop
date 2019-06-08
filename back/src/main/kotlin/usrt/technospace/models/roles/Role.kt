@@ -1,5 +1,5 @@
 package usrt.technospace.models.roles
 
 enum class Role {
-    USER, ADMIN, MANAGER
+    ROLE_USER, ROLE_ADMIN, ROLE_MANAGER
 }
