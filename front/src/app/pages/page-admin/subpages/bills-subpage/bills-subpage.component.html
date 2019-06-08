@@ -15,7 +15,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions class="actions">
-      <button mat-raised-button color="primary" [disabled]="!filterChanged">
+      <button mat-raised-button color="primary" [disabled]="!filterChanged" (click)="loadBills()">
         Применить фильтр
       </button>
     </mat-card-actions>

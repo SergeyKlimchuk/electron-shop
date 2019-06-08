@@ -1,10 +1,11 @@
-import { NotificationService } from './../../../../services/notification/notification.service';
-import { Bill } from 'src/models/bills/bill';
-import { MatPaginator, MatCheckbox, MatDialog } from '@angular/material';
-import { BillService } from './../../../../services/bill/bill.service';
-import { Component, OnInit, ViewChildren, ViewChild, QueryList, AfterViewInit } from '@angular/core';
-import { BillStatus } from 'src/models/bills/BillStatus';
+import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { MatCheckbox, MatDialog, MatPaginator } from '@angular/material';
 import { BillEditDialogComponent } from 'src/app/bills-list/bill-edit/bill-edit.component';
+import { Bill } from 'src/models/bills/bill';
+import { BillStatus } from 'src/models/bills/BillStatus';
+
+import { BillService } from './../../../../services/bill/bill.service';
+import { NotificationService } from './../../../../services/notification/notification.service';
 
 @Component({
   selector: 'app-bills-subpage',
@@ -40,7 +41,7 @@ export class BillsSubpageComponent implements AfterViewInit {
   }
 
   loadBills() {
-    const statuses = this.allowedStatuses.length === 0 ? this.allowedStatuses : this.allowedStatuses;
+    const statuses = this.selectedStatuses.length === 0 ? this.allowedStatuses : this.selectedStatuses;
     this.billService.getAllBillsByStatus(this.paginator.pageIndex, this.paginator.pageSize, statuses).subscribe(
       bills => {
         this.bills = bills.content;
@@ -50,11 +51,11 @@ export class BillsSubpageComponent implements AfterViewInit {
   }
 
   updateSelected(status: BillStatus) {
-    const alreadyContains = this.allowedStatuses.some(x => x === status);
+    const alreadyContains = this.selectedStatuses.some(x => x === status);
     if (alreadyContains) {
-      this.allowedStatuses = this.allowedStatuses.filter(x => x !== status);
+      this.selectedStatuses = this.selectedStatuses.filter(x => x !== status);
     } else {
-      this.allowedStatuses.push(status);
+      this.selectedStatuses.push(status);
     }
     this.filterChanged = true;
   }
