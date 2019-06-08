@@ -5,7 +5,6 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -36,6 +35,9 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
                         "/user/current/bills/{billId}/products",
                         "/user/current/bills/**",
                         "/user/current/bills",
+                        "/bills/status-filter",
+                        "/bills/status-filter**",
+                        "/bills/*/status",
                         "/login",
                         "/logout",
                         "/map",

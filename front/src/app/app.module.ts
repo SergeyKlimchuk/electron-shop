@@ -77,6 +77,9 @@ import { PagePaymentComponent } from './pages/page-payment/page-payment.componen
 import { SelectDeliveryAddressDialogComponent } from './core/dialogs/select-delivery-address-dialog/select-delivery-address-dialog.component';
 import { SelectDeliveryAddressComponent } from './core/select-delivery-address/select-delivery-address.component';
 import { ProductListMinComponent } from './core/product-list-min/product-list-min.component';
+import { BillsSubpageComponent } from './pages/page-admin/subpages/bills-subpage/bills-subpage.component';
+import { BillsListComponent } from './bills-list/bills-list.component';
+import { BillEditDialogComponent } from './bills-list/bill-edit/bill-edit.component';
 
 
 const appRoutes: Routes = [
@@ -159,7 +162,10 @@ const appRoutes: Routes = [
     PagePaymentComponent,
     SelectDeliveryAddressDialogComponent,
     SelectDeliveryAddressComponent,
-    ProductListMinComponent
+    ProductListMinComponent,
+    BillsSubpageComponent,
+    BillsListComponent,
+    BillEditDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -187,7 +193,8 @@ const appRoutes: Routes = [
     ChangeSecondaryEmailDialog,
     ChangePasswordDialog,
     ProductSelectDialog,
-    SelectDeliveryAddressDialogComponent
+    SelectDeliveryAddressDialogComponent,
+    BillEditDialogComponent
   ],
   providers: [
     {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 2500}}

@@ -1,0 +1,29 @@
+<div class="statuses">
+  <mat-card>
+    <mat-card-header>
+      <h3>Статусы заказов</h3>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="statuses__list">
+        <mat-checkbox
+          *ngFor="let status of allowedStatuses"
+          (change)="updateSelected(status)"
+          color="primary"
+        >
+          {{ status | billStatus }}
+        </mat-checkbox>
+      </div>
+    </mat-card-content>
+    <mat-card-actions class="actions">
+      <button mat-raised-button color="primary" [disabled]="!filterChanged">
+        Применить фильтр
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+<div class="list">
+  <mat-card>
+    <app-bills-list [dataSource]="bills" (rowClick)="clickElement($event)"></app-bills-list>
+    <mat-paginator [pageSizeOptions]="[1, 5, 10, 25, 100]" (page)="loadBills()"></mat-paginator>
+  </mat-card>
+</div>
