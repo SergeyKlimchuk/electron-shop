@@ -56,9 +56,9 @@ class BillController {
 
     @PostMapping("/bills/{billId}/status")
     @PreAuthorize("hasRole('ADMIN')")
-    fun updateBillStatus(@PathVariable billId: Long, @RequestBody status: BillStatus) {
+    fun updateBillStatus(@PathVariable billId: Long, @RequestBody status: String) {
         val bill = billRepository.getOne(billId)
-        bill.status = status
+        bill.status = BillStatus.valueOf(status)
         billRepository.save(bill)
     }
 }

@@ -12,4 +12,6 @@ enum class BillStatus(value: Int) {
     SENT(7),
     AWAIT_DELIVERY(8),
     DELIVERED(9)
+
+
 }
