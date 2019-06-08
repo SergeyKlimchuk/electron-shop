@@ -16,7 +16,6 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @ComponentScan(basePackageClasses = [CustomUserDetailService::class])
 class SecurityConfig : WebSecurityConfigurerAdapter() {
 
