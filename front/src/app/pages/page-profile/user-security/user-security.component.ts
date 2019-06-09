@@ -3,9 +3,9 @@ import { UserService } from 'src/app/services/user/user.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { User } from 'src/models/users/user';
 import { tap } from 'rxjs/operators';
-import { ChangeEmailDialog } from 'src/app/core/dialogs/change-email/change-email-dialog';
-import { ChangeSecondaryEmailDialog } from 'src/app/core/dialogs/change-secondary-email/change-secondary-email-dialog';
-import { ChangePasswordDialog } from 'src/app/core/dialogs/change-password/change-password-dialog';
+import { ChangeEmailDialog } from 'src/app/pages/page-profile/user-security/change-email/change-email-dialog';
+import { ChangeSecondaryEmailDialog } from 'src/app/pages/page-profile/user-security/change-secondary-email/change-secondary-email-dialog';
+import { ChangePasswordDialog } from 'src/app/pages/page-profile/user-security/change-password/change-password-dialog';
 
 @Component({
   selector: 'app-user-security',

@@ -39,6 +39,7 @@ export class MapSubpageComponent {
 
   editMode = false;
   editPointMode = false;
+  isMainCity = false;
 
   icon = {
     url: 'http://localhost:4200/assets/icons/mark_icon.svg',
@@ -180,6 +181,7 @@ export class MapSubpageComponent {
   saveNode() {
     const item = this.targetNode as any;
     let obs: Observable<any>;
+    // How to track who point is country or city or address>
     if (item.cities) {
       obs = this.mapService.createCountry(item);
     } else if (item.addresses) {

@@ -9,9 +9,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ChangeEmailDialog } from './core/dialogs/change-email/change-email-dialog';
-import { ChangePasswordDialog } from './core/dialogs/change-password/change-password-dialog';
-import { ChangeSecondaryEmailDialog } from './core/dialogs/change-secondary-email/change-secondary-email-dialog';
+import { ChangeEmailDialog } from './pages/page-profile/user-security/change-email/change-email-dialog';
+import { ChangePasswordDialog } from './pages/page-profile/user-security/change-password/change-password-dialog';
+import { ChangeSecondaryEmailDialog } from './pages/page-profile/user-security/change-secondary-email/change-secondary-email-dialog';
 import { DictionaryValueInputComponent } from './core/dictionary-value-input/dictionary-value-input.component';
 import { HistoryListComponent } from './core/history-list/history-list.component';
 import { LoadableImageComponent } from './core/loadable-image/loadable-image.component';
@@ -78,8 +78,8 @@ import { SelectDeliveryAddressDialogComponent } from './core/dialogs/select-deli
 import { SelectDeliveryAddressComponent } from './core/select-delivery-address/select-delivery-address.component';
 import { ProductListMinComponent } from './core/product-list-min/product-list-min.component';
 import { BillsSubpageComponent } from './pages/page-admin/subpages/bills-subpage/bills-subpage.component';
-import { BillsListComponent } from './bills-list/bills-list.component';
-import { BillEditDialogComponent } from './bills-list/bill-edit/bill-edit.component';
+import { BillsListComponent } from './core/bills-list/bills-list.component';
+import { BillEditDialogComponent } from './pages/page-admin/subpages/bills-subpage/bill-edit/bill-edit.component';
 
 
 const appRoutes: Routes = [

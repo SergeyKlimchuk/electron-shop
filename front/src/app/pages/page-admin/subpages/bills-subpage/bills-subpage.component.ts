@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatCheckbox, MatDialog, MatPaginator } from '@angular/material';
-import { BillEditDialogComponent } from 'src/app/bills-list/bill-edit/bill-edit.component';
+import { BillEditDialogComponent } from 'src/app/pages/page-admin/subpages/bills-subpage/bill-edit/bill-edit.component';
 import { Bill } from 'src/models/bills/bill';
 import { BillStatus } from 'src/models/bills/BillStatus';
 
