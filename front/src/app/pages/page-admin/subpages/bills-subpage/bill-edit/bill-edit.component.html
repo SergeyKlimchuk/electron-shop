@@ -1,3 +1,6 @@
+<h3>Товары в заказе</h3>
+<app-product-list-min [products]="bill.products" *ngIf="bill" class="products-list"></app-product-list-min>
+
 <mat-form-field>
   <mat-label>Новый статус заказа</mat-label>
   <select matNativeControl required [(ngModel)]="newStatus">

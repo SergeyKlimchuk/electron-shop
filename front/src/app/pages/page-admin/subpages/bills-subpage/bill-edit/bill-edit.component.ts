@@ -1,3 +1,5 @@
+import { Product } from './../../../../../../models/products/product';
+import { BillService } from 'src/app/services/bill/bill.service';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Bill } from 'src/models/bills/bill';
@@ -20,7 +22,8 @@ export class BillEditDialogComponent {
   ];
 
   constructor(public dialogRef: MatDialogRef<BillEditDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: Bill) {
+              @Inject(MAT_DIALOG_DATA) public data: Bill,
+              private billService: BillService) {
     this.bill = data;
   }
 
