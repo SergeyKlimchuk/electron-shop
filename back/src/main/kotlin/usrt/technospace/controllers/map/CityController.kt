@@ -68,7 +68,7 @@ class CityController {
     }
 
     @DeleteMapping("map/cities/{cityId}")
-    fun delete(cityId: Long) {
+    fun delete(@PathVariable cityId: Long) {
         if (!repository.existsById(cityId)) {
             throw NotFoundException()
         }

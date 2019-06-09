@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.*
 import usrt.technospace.exceptions.NotFoundException
 import usrt.technospace.models.map.CityPoint
 import usrt.technospace.models.map.CountryPoint
+import usrt.technospace.repository.CountryRepository
 import usrt.technospace.repository.MapRepository
 
 @RestController
 class CountryController {
     @Autowired
-    lateinit var repository: MapRepository<CountryPoint>
+    lateinit var repository: CountryRepository
 
     @GetMapping("map/countries")
     fun getAll(): List<CountryPoint> {

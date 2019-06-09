@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.*
 import usrt.technospace.exceptions.NotFoundException
 import usrt.technospace.models.map.AddressPoint
 import usrt.technospace.models.map.CityPoint
+import usrt.technospace.repository.AddressRepository
 import usrt.technospace.repository.CityRepository
 import usrt.technospace.repository.MapRepository
 
 @RestController
 class AddressController {
     @Autowired
-    lateinit var repository: MapRepository<AddressPoint>
+    lateinit var repository: AddressRepository
 
     @Autowired
     lateinit var cityRepository: CityRepository
@@ -30,7 +31,7 @@ class AddressController {
         return country.get()
     }
 
-    @PostMapping("map/{cityId}/childrens")
+    @PostMapping("map/cities/{cityId}/childrens")
     fun addNew(@PathVariable cityId: Long, @RequestBody address: AddressPoint): AddressPoint {
         val city = cityRepository.findById(cityId)
         if (!city.isPresent) {
@@ -41,7 +42,7 @@ class AddressController {
     }
 
     @DeleteMapping("map/addresses/{addressId}")
-    fun delete(addressId: Long) {
+    fun delete(@PathVariable addressId: Long) {
         if (!repository.existsById(addressId)) {
             throw NotFoundException()
         }

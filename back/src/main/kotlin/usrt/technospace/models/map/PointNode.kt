@@ -5,7 +5,7 @@ import javax.persistence.*
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class PointNode : Point(), NamedPoint {
+abstract class PointNode : Point(), NamedPoint, Zoomed {
     @Id
     @GeneratedValue
     var id: Long? = null
@@ -15,6 +15,9 @@ abstract class PointNode : Point(), NamedPoint {
 
     @Column(name = "nameEn")
     override lateinit var nameEn: String
+
+    @Column(name = "zoom")
+    override var zoom: Int = 0
 
     @OneToMany(mappedBy = "parent", targetEntity = PointNode::class)
     open var childrens: Set<PointNode> = emptySet()

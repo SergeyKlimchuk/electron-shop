@@ -6,7 +6,7 @@ import javax.persistence.Converter
 @Converter
 class WorkDaysConverter : AttributeConverter<List<Int>, String> {
     override fun convertToEntityAttribute(dbData: String?): List<Int> {
-        if (dbData == null) {
+        if (dbData == null || dbData == "") {
             return arrayListOf()
         }
         return dbData.split(',').map { x -> x.toInt() }
