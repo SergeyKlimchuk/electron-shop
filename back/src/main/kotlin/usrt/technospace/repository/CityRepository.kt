@@ -1,12 +1,9 @@
 package usrt.technospace.repository
 
-import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
-import usrt.technospace.models.map.City
+import usrt.technospace.models.map.CityPoint
 
 @Repository
-interface CityRepository : JpaRepository<City, Long> {
-    fun findByNameOrNameEn(name: String, nameEn: String): List<City>
-    fun findByIsMainTrue(): City
-    fun findCityByCountryId(countryId: Long): List<City>
+interface CityRepository : MapRepository<CityPoint> {
+    fun findByIsMainTrue(): CityPoint
 }

@@ -1,14 +1,13 @@
 package usrt.technospace.models.map
 
 import usrt.technospace.models.core.Auditable
-import javax.persistence.Column
-import javax.persistence.MappedSuperclass
+import javax.persistence.*
 
 @MappedSuperclass
 open class Point : Auditable() {
     @Column(name = "latitude")
-    var latitude: Double? = null
+    open var latitude: Double? = null
 
     @Column(name = "longitude")
-    var longitude: Double? = null
+    open var longitude: Double? = null
 }

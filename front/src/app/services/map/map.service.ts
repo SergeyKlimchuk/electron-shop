@@ -3,9 +3,6 @@ import { Injectable } from '@angular/core';
 import { Address } from 'src/models/map/address';
 import { City } from 'src/models/map/city';
 import { Country } from 'src/models/map/country';
-import { Place } from 'src/models/map/place';
-
-import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +21,7 @@ export class MapService {
   }
 
   getCitiesInCountry(countryId: number) {
-    return this.http.get<City[]>(`/api/map/countries/${countryId}/cities`);
+    return this.http.get<City[]>(`/api/map/countries/${countryId}/childrens`);
   }
 
   deleteCountry(countryId: number) {
@@ -32,7 +29,7 @@ export class MapService {
   }
 
   getCountryOfCity(cityId: number) {
-    return this.http.get<City>(`/api/map/cities/${cityId}/country`);
+    return this.http.get<City>(`/api/map/cities/${cityId}/parent`);
   }
 
 
@@ -41,11 +38,11 @@ export class MapService {
   }
 
   createCity(countryId: number, city: City) {
-    return this.http.post<City>(`/api/map/countries/${countryId}/cities`, city);
+    return this.http.post<City>(`/api/map/countries/${countryId}/childrens`, city);
   }
 
   getCity(cityId: number) {
-    return this.http.get<City>(`/api/map/countries/${cityId}/cities`);
+    return this.http.get<City>(`/api/map/cities/${cityId}`);
   }
 
   getMainCity() {
@@ -53,7 +50,7 @@ export class MapService {
   }
 
   getAddressesInCity(cityId: number) {
-    return this.http.get<Address[]>(`/api/map/cities/${cityId}/addresses`);
+    return this.http.get<Address[]>(`/api/map/cities/${cityId}/childrens`);
   }
 
   findCityByName(name: string) {
@@ -66,7 +63,7 @@ export class MapService {
 
 
   createAddress(cityId: number, address: Address) {
-    return this.http.post<Address>(`/api/map/cities/${cityId}/addresses`, address);
+    return this.http.post<Address>(`/api/map/cities/${cityId}/childrens`, address);
   }
 
   getAddress(addressId: number) {

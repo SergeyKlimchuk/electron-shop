@@ -1,6 +1,5 @@
 package usrt.technospace.models.identity
 
-import usrt.technospace.models.map.City
 import usrt.technospace.models.payment.DeliveryAddress
 import usrt.technospace.models.product.Product
 import usrt.technospace.models.roles.Role
@@ -52,9 +51,9 @@ class User {
     @Size(min = 10, max = 10)
     var phoneNumber: String? = null
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    var city: City? = null
+//    @ManyToOne
+//    @JoinColumn(name = "city_id")
+//    var city: City? = null
 
     @ElementCollection(targetClass = Role::class, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])
