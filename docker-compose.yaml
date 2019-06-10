@@ -38,3 +38,4 @@ services:
       # TODO: save picrutes on disk
     ports:
       - "80:80"
+      - "443:443"
