@@ -104,6 +104,7 @@
             [disabled]="editPointMode"
           />
         </mat-form-field>
+        <mat-button-toggle [(ngModel)]="isMainCity">Основной город</mat-button-toggle>
         <ng-container *ngIf="!editPointMode; else elseTemplate">
           <button mat-button (click)="enableEditPointMode()">
             <mat-icon>room</mat-icon>Укзаать расположение на карте

@@ -25,6 +25,7 @@ import {
   MatTooltipModule,
   MatTreeModule,
   MatStepperModule,
+  MatButtonToggleModule,
 } from '@angular/material';
 
 @NgModule({
@@ -50,7 +51,8 @@ imports: [
   MatSelectModule,
   MatExpansionModule,
   MatTooltipModule,
-  MatStepperModule
+  MatStepperModule,
+  MatButtonToggleModule
 ],
 exports: [MatNativeDateModule,
   FormsModule,
@@ -76,7 +78,8 @@ exports: [MatNativeDateModule,
   MatChipsModule,
   MatTreeModule,
   MatTooltipModule,
-  MatStepperModule
+  MatStepperModule,
+  MatButtonToggleModule
 ],
 })
 export class MaterialModule { }

@@ -1,0 +1,19 @@
+<h3>Товары в заказе</h3>
+<app-product-list-min [products]="bill.products" *ngIf="bill" class="products-list"></app-product-list-min>
+
+<mat-form-field>
+  <mat-label>Новый статус заказа</mat-label>
+  <select matNativeControl required [(ngModel)]="newStatus">
+    <option *ngFor="let status of allowedStatuses" [value]="status">{{
+      status | billStatus
+    }}</option>
+  </select>
+</mat-form-field>
+<button
+  mat-raised-button
+  (click)="save()"
+  color="primary"
+  [disabled]="newStatus === null"
+>
+  Сохранить
+</button>

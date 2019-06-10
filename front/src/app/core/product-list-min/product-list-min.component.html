@@ -8,6 +8,11 @@
     {{ product.name }}
   </div>
   <div class="price">
-    {{ product.price - product.discount | numberSplit }} ₸
+    <ng-container *ngIf="product.discount; else withoutDiscount">
+        {{ product.price - product.discount | numberSplit }} ₸
+    </ng-container>
+    <ng-template #withoutDiscount>
+        {{ product.price | numberSplit }} ₸
+    </ng-template>
   </div>
 </div>

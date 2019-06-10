@@ -36,7 +36,7 @@ class RegistrationController {
             throw IllegalArgumentException("Email already exists!")
         }
 
-        user.roles = hashSetOf(Role.USER)
+        user.roles = hashSetOf(Role.ROLE_USER)
         user.active = true
         return userRepository.save(user)
     }

@@ -6,4 +6,5 @@ export class Bill {
   status: BillStatus;
   products: Product[];
   lastModifiedDate: Date;
+  createdDate: Date;
 }

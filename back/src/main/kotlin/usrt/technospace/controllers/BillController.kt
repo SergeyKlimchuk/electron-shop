@@ -6,12 +6,10 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.web.PageableDefault
 import org.springframework.security.access.prepost.PreAuthorize
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import usrt.technospace.exceptions.NotFoundException
 import usrt.technospace.models.payment.Bill
-import usrt.technospace.models.product.Product
+import usrt.technospace.models.payment.BillStatus
 import usrt.technospace.repository.BillRepository
 import usrt.technospace.services.UserService
 
@@ -40,9 +38,27 @@ class BillController {
         return billRepository.findAllByAuthorId(currentUser.id!!, pageable)
     }
 
+
+
     @GetMapping("/bills/{billId}")
     @PreAuthorize("hasRole('ADMIN')")
     fun getBillById(@PathVariable billId: Long): Bill {
         return billRepository.getOne(billId)
+    }
+
+    @GetMapping("/bills/status-filter")
+    @PreAuthorize("hasRole('ADMIN')")
+    fun getPageableBillsFilteredByStatus(@RequestParam billStatus: List<BillStatus>,
+                                         @PageableDefault(sort = ["createdDate"], direction = Sort.Direction.DESC)
+                                         pageable: Pageable): Page<Bill> {
+        return billRepository.findAllByStatusIn(billStatus, pageable)
+    }
+
+    @PostMapping("/bills/{billId}/status")
+    @PreAuthorize("hasRole('ADMIN')")
+    fun updateBillStatus(@PathVariable billId: Long, @RequestBody status: String) {
+        val bill = billRepository.getOne(billId)
+        bill.status = BillStatus.valueOf(status)
+        billRepository.save(bill)
     }
 }
