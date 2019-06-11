@@ -19,6 +19,7 @@ export class MapSubpageComponent {
   editPointMode = false;
 
   selectedPoint: PointNode = null;
+  parentPoint: PointNode = null;
 
   markers: Point[] = [];
 
@@ -41,6 +42,7 @@ export class MapSubpageComponent {
 
   editPoint(point: PointNode) {
     this.editMode = true;
+    this.parentPoint = this.selectedPoint;
     this.selectedPoint = point;
   }
 
@@ -67,9 +69,9 @@ export class MapSubpageComponent {
       if (point instanceof Country) {
         subscription = this.mapService.createCountry(point);
       } else if (point instanceof City) {
-        subscription = this.mapService.createCity(this.selectedPoint.id, point);
+        subscription = this.mapService.createCity(this.parentPoint.id, point);
       } else if (point instanceof Address) {
-        subscription = this.mapService.createAddress(this.selectedPoint.id, point);
+        subscription = this.mapService.createAddress(this.parentPoint.id, point);
       }
       subscription.subscribe(
         entity => {
