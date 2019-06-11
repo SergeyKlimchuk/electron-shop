@@ -80,6 +80,9 @@ import { ProductListMinComponent } from './core/product-list-min/product-list-mi
 import { BillsSubpageComponent } from './pages/page-admin/subpages/bills-subpage/bills-subpage.component';
 import { BillsListComponent } from './core/bills-list/bills-list.component';
 import { BillEditDialogComponent } from './pages/page-admin/subpages/bills-subpage/bill-edit/bill-edit.component';
+import { PointNodeEditComponent } from './pages/page-admin/subpages/map-subpage/point-node-edit/point-node-edit.component';
+import { PointsListComponent } from './pages/page-admin/subpages/map-subpage/points-list/points-list.component';
+import { MapComponent } from './core/map/map.component';
 
 
 const appRoutes: Routes = [
@@ -165,7 +168,10 @@ const appRoutes: Routes = [
     ProductListMinComponent,
     BillsSubpageComponent,
     BillsListComponent,
-    BillEditDialogComponent
+    BillEditDialogComponent,
+    PointNodeEditComponent,
+    PointsListComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

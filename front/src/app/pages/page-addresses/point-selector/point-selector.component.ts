@@ -4,7 +4,6 @@ import { takeUntil } from 'rxjs/operators';
 import { Address } from 'src/models/map/address';
 import { Country } from 'src/models/map/country';
 import { MapState } from 'src/models/map/map-state';
-import { MapZoom } from 'src/models/map/map-zoom';
 
 import { City } from './../../../../models/map/city';
 import { MapService } from './../../../services/map/map.service';
@@ -24,7 +23,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject();
 
   @Output()
-  selectPoint = new EventEmitter<MapState>();
+  selectPoint = new EventEmitter();
 
   countries: Country[] = [];
   selectedCountry: Country = null;
@@ -64,7 +63,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
           this.selectPoint.emit({
             targetPoint: this.selectedCountry,
             markers: cities,
-            zoom: MapZoom.COUNTRY
+            zoom: 0
           });
         }
       );
@@ -83,7 +82,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
           this.selectPoint.emit({
             targetPoint: this.selectedCity,
             markers: addresses,
-            zoom: MapZoom.CITY
+            zoom: 0
           });
         }
       );
@@ -91,7 +90,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
       this.selectPoint.emit({
         targetPoint: this.selectedCountry,
         markers: this.cities,
-        zoom: MapZoom.COUNTRY
+        zoom: 0
       });
     }
   }
@@ -103,13 +102,13 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
       this.selectPoint.emit({
         targetPoint: address,
         markers: [],
-        zoom: MapZoom.SHOP
+        zoom: 0
       });
     } else {
       this.selectPoint.emit({
         targetPoint: this.selectedCity,
         markers: this.addresses,
-        zoom: MapZoom.CITY
+        zoom: 0
       });
     }
   }
@@ -177,7 +176,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
       this.selectPoint.emit({
         targetPoint: {latitude: 50, longitude: 50},
         markers: countries,
-        zoom: MapZoom.CITY
+        zoom: 0
       });
     });
   }

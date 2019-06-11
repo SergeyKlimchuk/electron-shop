@@ -1,0 +1,30 @@
+<ng-container *ngIf="target; else error">
+  <agm-map
+    [latitude]="camera.latitude"
+    [longitude]="camera.longitude"
+    [zoom]="camera.zoom"
+    (centerChange)="updatePointPosition($event)"
+    (zoomChange)="updateZoom($event)"
+    [streetViewControl]="false"
+  >
+    <agm-marker
+      [latitude]="target.latitude"
+      [longitude]="target.longitude"
+      [iconUrl]="icon"
+    ></agm-marker>
+
+    <agm-marker
+      *ngFor="let marker of markers"
+      [latitude]="marker.latitude"
+      [longitude]="marker.longitude"
+      [iconUrl]="icon"
+    ></agm-marker>
+  </agm-map>
+</ng-container>
+<ng-template #error>
+  <div class="map-error">
+    <mat-icon class="icon">map</mat-icon>Произошла ошибка при отображении
+    карты!<br />
+    Приносим свои извенения! :(
+  </div>
+</ng-template>

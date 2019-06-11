@@ -28,12 +28,12 @@ class CountryController {
     }
 
     @GetMapping("map/countries/{countryId}/childrens")
-    fun getChildrens(@PathVariable countryId: Long): List<CountryPoint> {
+    fun getChildrens(@PathVariable countryId: Long): List<CityPoint> {
         val country = repository.findById(countryId)
         if (!country.isPresent) {
             throw NotFoundException()
         }
-        return country.get().childrens.map { x -> x as CountryPoint }
+        return country.get().childrens.map { x -> x as CityPoint }
     }
 
     @PostMapping("map/countries")

@@ -3,6 +3,7 @@ package usrt.technospace.controllers.map
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import usrt.technospace.exceptions.NotFoundException
+import usrt.technospace.models.map.AddressPoint
 import usrt.technospace.models.map.CityPoint
 import usrt.technospace.models.map.CountryPoint
 import usrt.technospace.repository.CityRepository
@@ -12,8 +13,6 @@ import usrt.technospace.repository.MapRepository
 class CityController {
     @Autowired
     lateinit var repository: CityRepository
-    @Autowired
-    lateinit var countryRepository: MapRepository<CountryPoint>
 
     @GetMapping("map/cities")
     fun getAll(): List<CityPoint> {
@@ -29,15 +28,6 @@ class CityController {
         return country.get()
     }
 
-    @GetMapping("map/cities/{city}/childrens")
-    fun getChildrens(@PathVariable cityId: Long): List<CityPoint> {
-        val country = repository.findById(cityId)
-        if (!country.isPresent) {
-            throw NotFoundException()
-        }
-        return country.get().childrens.map { x -> x as CityPoint }
-    }
-
     @GetMapping("map/cities/{city}/parent")
     fun getParent(@PathVariable cityId: Long): CountryPoint {
         val country = repository.findById(cityId)
@@ -45,6 +35,15 @@ class CityController {
             throw NotFoundException()
         }
         return country.get().parent as CountryPoint
+    }
+
+    @GetMapping("map/cities/{cityId}/childrens")
+    fun get(@PathVariable cityId: Long): List<AddressPoint> {
+        val city = repository.findById(cityId)
+        if (!city.isPresent) {
+            throw NotFoundException()
+        }
+        return city.get().childrens.map { x -> x as AddressPoint }
     }
 
     @GetMapping("map/cities/main")
@@ -55,16 +54,6 @@ class CityController {
     @GetMapping("map/cities/search")
     fun findCityByName(@RequestParam name: String): List<CityPoint> {
         return repository.findByName(name)
-    }
-
-    @PostMapping("map/countries/{countryId}/childrens")
-    fun addNew(@PathVariable countryId: Long, @RequestBody city: CityPoint): CityPoint {
-        val country = countryRepository.findById(countryId)
-        if (!country.isPresent) {
-            throw NotFoundException()
-        }
-        city.parent = country.get()
-        return repository.save(city)
     }
 
     @DeleteMapping("map/cities/{cityId}")

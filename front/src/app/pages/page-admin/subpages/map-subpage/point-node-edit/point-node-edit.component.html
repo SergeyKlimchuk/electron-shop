@@ -1,0 +1,89 @@
+<div class="header">
+  <button mat-icon-button (click)="close.emit()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <h3 *ngIf="this.node" class="label" >Редактирование: "{{ node.name }}"</h3>
+</div>
+<div class="actions">
+  <button mat-icon-button aria-label="Откатить изменения">
+    <mat-icon [inline]="true" (click)="discarChanges()">
+      settings_backup_restore
+    </mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    [disabled]="true"
+    aria-label="Отменить последнее изменение"
+  >
+    <mat-icon [inline]="true">undo</mat-icon>
+  </button>
+  <button
+    mat-icon-button
+    [disabled]="true"
+    aria-label="Восстановить последнее изменение"
+  >
+    <mat-icon [inline]="true">redo</mat-icon>
+  </button>
+</div>
+
+<div class="panel" *ngIf="this.node" >
+  <mat-form-field>
+    <input matInput placeholder="Название" [(ngModel)]="node.name" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Название на английском"
+      [(ngModel)]="node.nameEn"
+    />
+  </mat-form-field>
+
+  <mat-button-toggle *ngIf="isMainable" [(ngModel)]="isMain">
+    Основной город
+  </mat-button-toggle>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Ширина"
+      [(ngModel)]="node.longitude"
+      [disabled]="disabled"
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Долгота"
+      [(ngModel)]="node.latitude"
+      [disabled]="disabled"
+    />
+  </mat-form-field>
+
+  <ng-container *ngIf="selectPointMode; else elseTemplate">
+    <div class="position__actions">
+      <button mat-button (click)="revertNodePosition()" color="warn">
+        Отменить
+      </button>
+      <button mat-button (click)="saveNodePosition()" color="primary">
+        Сохранить
+      </button>
+    </div>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <button mat-button (click)="enableEditMode()" class="btn-select-point">
+      <mat-icon>room</mat-icon>Укзаать расположение на карте
+    </button>
+  </ng-template>
+
+  <button
+    mat-raised-button
+    (click)="close.emit(node)"
+    color="primary"
+    class="save-btn"
+    [disabled]="disabled || selectPointMode"
+  >
+    <mat-icon>save</mat-icon>Сохранить
+  </button>
+</div>

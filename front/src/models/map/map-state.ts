@@ -1,8 +1,7 @@
 import { Point } from './point';
-import { MapZoom } from './map-zoom';
+import { PointNode } from './point-node';
 
 export class MapState {
-  targetPoint: Point;
+  targetPoint: PointNode;
   markers: Point[];
-  zoom: MapZoom;
 }

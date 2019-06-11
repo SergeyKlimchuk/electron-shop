@@ -1,12 +1,5 @@
-import { City } from 'src/models/map/city';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { MapState } from 'src/models/map/map-state';
-import { MapZoom } from 'src/models/map/map-zoom';
-
-import { MapService } from './../../services/map/map.service';
-import { UserService } from './../../services/user/user.service';
 
 @Component({
   selector: 'app-page-addresses',

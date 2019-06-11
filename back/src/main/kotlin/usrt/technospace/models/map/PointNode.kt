@@ -1,6 +1,6 @@
 package usrt.technospace.models.map
 
-import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -19,10 +19,11 @@ abstract class PointNode : Point(), NamedPoint, Zoomed {
     @Column(name = "zoom")
     override var zoom: Int = 0
 
+    @JsonIgnore
     @OneToMany(mappedBy = "parent", targetEntity = PointNode::class)
     open var childrens: Set<PointNode> = emptySet()
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToOne(
             cascade = [CascadeType.ALL],
             fetch = FetchType.LAZY,

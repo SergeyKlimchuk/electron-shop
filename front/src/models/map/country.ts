@@ -1,8 +1,4 @@
-import { Identity } from '../core/identity';
-import { Nameble } from '../core/nameble';
-import { Point } from './point';
+import { PointNode } from './point-node';
 
-export class Country extends Point implements Identity, Nameble {
-  id: number;
-  name: string;
+export class Country extends PointNode {
 }

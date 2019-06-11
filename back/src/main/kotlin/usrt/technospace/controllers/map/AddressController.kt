@@ -7,7 +7,6 @@ import usrt.technospace.models.map.AddressPoint
 import usrt.technospace.models.map.CityPoint
 import usrt.technospace.repository.AddressRepository
 import usrt.technospace.repository.CityRepository
-import usrt.technospace.repository.MapRepository
 
 @RestController
 class AddressController {
@@ -29,6 +28,15 @@ class AddressController {
             throw NotFoundException()
         }
         return country.get()
+    }
+
+    @GetMapping("map/addresses/{addressId}/parent")
+    fun getParent(@PathVariable addressId: Long): CityPoint {
+        val country = repository.findById(addressId)
+        if (!country.isPresent) {
+            throw NotFoundException()
+        }
+        return country.get().parent as CityPoint
     }
 
     @PostMapping("map/cities/{cityId}/childrens")

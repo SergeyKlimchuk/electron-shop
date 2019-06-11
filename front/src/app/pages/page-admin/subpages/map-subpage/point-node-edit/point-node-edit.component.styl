@@ -1,0 +1,30 @@
+$border = 1px solid #ddd
+
+.header
+  padding 0 16px 16px 16px
+  display flex
+  align-items center
+  margin 0 -16px
+  border-bottom $border
+  .label
+    padding-left 8px
+
+.actions
+  border-bottom $border
+  margin 0 -16px
+  padding 0 16px
+  button
+    border-radius 2px
+    font-size 20px
+    width 32px
+    height 32px
+    line-height 32px
+    margin 4px
+    button:not([disabled]):hover
+      background-color rgba(0, 0, 0, 0.12)
+
+.panel
+  display flex
+  flex-direction column
+  .save-btn
+    margin-bottom 16px

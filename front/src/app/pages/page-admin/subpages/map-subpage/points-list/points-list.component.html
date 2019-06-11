@@ -1,0 +1,36 @@
+<div class="header">
+  <button
+    mat-icon-button
+    (click)="back()"
+    *ngIf="pointsStack.length > 0"
+    aria-label="Назад"
+  >
+    <mat-icon>keyboard_backspace</mat-icon>
+  </button>
+  <h3 class="label">{{ label }}</h3>
+</div>
+<ul class="list">
+  <li *ngFor="let item of elements" class="item">
+    <h4 class="text" (click)="selectElement(item)">
+      {{ item.name }}
+    </h4>
+    <div>
+      <mat-menu #itemActions="matMenu">
+        <button mat-menu-item (click)="edit.emit(item)">
+          Редактировать
+        </button>
+        <button mat-menu-item (click)="delete.emit(item)">Удалить</button>
+      </mat-menu>
+
+      <button mat-icon-button [matMenuTriggerFor]="itemActions">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+  </li>
+</ul>
+{{ some }}
+<div class="actions">
+  <button mat-raised-button (click)="add.emit()" color="primary">
+    <mat-icon>add</mat-icon> Добавить
+  </button>
+</div>

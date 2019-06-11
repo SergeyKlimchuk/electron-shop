@@ -1,11 +1,9 @@
-import { Point } from './point';
-import { Nameble } from '../core/nameble';
-import { Identity } from '../core/identity';
+import { Mainable } from './../core/mainable';
+import { PointNode } from './point-node';
 
-export class Address extends Point implements Identity, Nameble {
-  id: number;
-  name: string;
+export class Address extends PointNode implements Mainable {
   beginWotkDay: Date;
-  endWotkDay: Date;
+  endWorkDay: Date;
   workDays: number[];
+  isMain: boolean;
 }

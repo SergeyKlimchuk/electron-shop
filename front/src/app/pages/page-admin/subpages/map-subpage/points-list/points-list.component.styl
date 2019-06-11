@@ -1,0 +1,37 @@
+@import '../../../../../../stylus/colors.styl'
+
+$border = 1px solid #ddd
+
+:host
+  display flex
+  flex-direction column
+
+.header
+  padding-bottom 16px
+  display flex
+  align-items center
+  .label
+    padding-left 8px
+
+.list
+  display flex
+  flex-direction column
+  list-style none
+  margin 0 -16px
+  .item
+    display flex
+    padding 6px 16px
+    selectable()
+    border-top $border
+    &:last-child
+      border-bottom $border
+    .text
+      flex-grow 2
+      display flex
+      align-items center
+      padding-left 8px
+
+.actions
+  padding-top 16px
+  display flex
+  justify-content flex-end
