@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "city_points")
-class CityPoint : PointNode() {
+open class CityPoint : PointNode() {
     @Column(name = "is_main")
     var isMain: Boolean = false
 }

@@ -31,12 +31,14 @@ class CityController {
         return country.get()
     }
 
-    @GetMapping("map/cities/{city}/parent")
+    @GetMapping("map/cities/{cityId}/parent")
     fun getParent(@PathVariable cityId: Long): CountryPoint {
         val country = repository.findById(cityId)
         if (!country.isPresent) {
             throw NotFoundException()
         }
+        val parent = country.get().parent
+
         return country.get().parent as CountryPoint
     }
 
@@ -66,8 +68,8 @@ class CityController {
     }
 
     @GetMapping("map/cities/search")
-    fun findCityByName(@RequestParam name: String): List<CityPoint> {
-        return repository.findByName(name)
+    fun findCityByName(@RequestParam name: String): CityPoint {
+        return repository.findByName(name) ?: throw NotFoundException()
     }
 
     @DeleteMapping("map/cities/{cityId}")

@@ -1,11 +1,12 @@
 package usrt.technospace.models.map
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class PointNode : Point(), NamedPoint, Zoomed {
+open class PointNode : Point(), NamedPoint, Zoomed {
     @Id
     @GeneratedValue
     var id: Long? = null
@@ -23,10 +24,9 @@ abstract class PointNode : Point(), NamedPoint, Zoomed {
     @OneToMany(mappedBy = "parent", targetEntity = PointNode::class)
     open var childrens: Set<PointNode> = emptySet()
 
-    @JsonIgnore
     @ManyToOne(
             cascade = [CascadeType.ALL],
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             optional = true
     )
     open var parent: PointNode? = null

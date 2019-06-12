@@ -3,11 +3,11 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Address } from 'src/models/map/address';
 import { Country } from 'src/models/map/country';
-import { MapState } from 'src/models/map/map-state';
 
 import { City } from './../../../../models/map/city';
 import { MapService } from './../../../services/map/map.service';
 import { UserService } from './../../../services/user/user.service';
+import { PointNode } from 'src/models/map/point-node';
 
 @Component({
   selector: 'app-point-selector',
@@ -23,7 +23,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject();
 
   @Output()
-  selectPoint = new EventEmitter();
+  selectPoint = new EventEmitter<{target: PointNode, markers: PointNode[], zoom: number}>();
 
   countries: Country[] = [];
   selectedCountry: Country = null;
@@ -61,7 +61,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
         cities => {
           this.cities = cities;
           this.selectPoint.emit({
-            targetPoint: this.selectedCountry,
+            target: this.selectedCountry,
             markers: cities,
             zoom: 0
           });
@@ -80,7 +80,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
         addresses => {
           this.addresses = addresses;
           this.selectPoint.emit({
-            targetPoint: this.selectedCity,
+            target: this.selectedCity,
             markers: addresses,
             zoom: 0
           });
@@ -88,7 +88,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
       );
     } else {
       this.selectPoint.emit({
-        targetPoint: this.selectedCountry,
+        target: this.selectedCountry,
         markers: this.cities,
         zoom: 0
       });
@@ -100,13 +100,13 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
     this.selectedAddress = address;
     if (address !== null) {
       this.selectPoint.emit({
-        targetPoint: address,
+        target: address,
         markers: [],
         zoom: 0
       });
     } else {
       this.selectPoint.emit({
-        targetPoint: this.selectedCity,
+        target: this.selectedCity,
         markers: this.addresses,
         zoom: 0
       });
@@ -131,6 +131,7 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
     this.mapService.getCountryOfCity(cityId).subscribe(
       country => {
         this.selectedCountry = this.countries.filter(x => x.id === country.id)[0];
+
         this.mapService.getCitiesInCountry(this.selectedCountry.id).subscribe(
           cities => {
             this.cities = cities;
@@ -159,7 +160,14 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
       .getUserCity()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
-        city => this.selectCity(city.id),
+        city => {
+          if (city) {
+            this.selectCity(city.id);
+          } else {
+            this.mapService.getMainCity()
+              .subscribe(mainCity => this.selectCity(mainCity.id));
+          }
+        },
         error => {
           if (error.status === 404) {
             this.mapService.getMainCity()
@@ -172,9 +180,11 @@ export class PointSelectorComponent implements OnInit, OnDestroy {
   }
 
   selectWorld() {
+    console.log('Select world');
+
     this.mapService.getCountries().subscribe(countries => {
       this.selectPoint.emit({
-        targetPoint: {latitude: 50, longitude: 50},
+        target: {latitude: 50, longitude: 50, id: null, name: null, nameEn: null, zoom: null},
         markers: countries,
         zoom: 0
       });

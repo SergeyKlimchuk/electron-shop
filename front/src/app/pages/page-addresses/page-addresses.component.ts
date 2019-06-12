@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MapState } from 'src/models/map/map-state';
+import { PointNode } from 'src/models/map/point-node';
 
 @Component({
   selector: 'app-page-addresses',
@@ -7,7 +7,7 @@ import { MapState } from 'src/models/map/map-state';
   styleUrls: ['./page-addresses.component.styl']
 })
 export class PageAddressesComponent {
-  state: MapState;
+  state: {target: PointNode, markers: PointNode[], zoom: number};
   error = false;
 
   constructor() {}
@@ -20,8 +20,8 @@ export class PageAddressesComponent {
     }
   };
 
-  showPointWithMarkers(newState: MapState) {
-    console.log('Map state was updated:', newState);
-    this.state = newState;
+  showPointWithMarkers(event: {target: PointNode, markers: PointNode[], zoom: number}) {
+    console.log('Map state was updated:', event.target);
+    this.state = event;
   }
 }

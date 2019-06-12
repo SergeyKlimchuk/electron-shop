@@ -9,5 +9,5 @@ import usrt.technospace.models.map.PointNode
 interface MapRepository<T> : CrudRepository<T, Long> where T : PointNode {
     fun findAllByParent_id(id: Long): List<T>
     @Query("SELECT p FROM PointNode p WHERE p.name=?1 OR p.nameEn=?1")
-    fun findByName(nameRu: String): List<T>
+    fun findByName(nameRu: String): T?
 }

@@ -4,4 +4,4 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "country_points")
-class CountryPoint : PointNode()
+open class CountryPoint : PointNode()

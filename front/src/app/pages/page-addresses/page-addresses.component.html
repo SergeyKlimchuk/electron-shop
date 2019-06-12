@@ -6,10 +6,10 @@
     <app-point-selector (selectPoint)="showPointWithMarkers($event)"></app-point-selector>
   </div>
   <agm-map
-    *ngIf="state && state.targetPoint"
-    [latitude]="state.targetPoint.latitude"
-    [longitude]="state.targetPoint.longitude"
-    [zoom]="state.zoom"
+    *ngIf="state && state.target"
+    [latitude]="state.target.latitude"
+    [longitude]="state.target.longitude"
+    [zoom]="state.target.zoom"
   >
     <agm-marker
       *ngFor="let marker of state.markers"
