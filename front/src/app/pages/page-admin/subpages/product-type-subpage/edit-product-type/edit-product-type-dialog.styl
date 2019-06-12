@@ -1,6 +1,7 @@
 :host
   display flex
   flex-direction column
+  max-height 80vh
 
 .image-block
   display flex
@@ -27,10 +28,13 @@
   padding 10px
   display flex
   flex-direction column
+  .prperties__table
+    max-height 400px
+    overflow auto
+    table
+      width 100%
   h5
     margin-bottom 10px
-  .properties__table
-    width 100%
   .properties__actions
     display flex
     justify-content flex-end

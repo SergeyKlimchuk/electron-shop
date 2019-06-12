@@ -74,6 +74,6 @@
     </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayedCollumns"></tr>
+  <tr mat-header-row *matHeaderRowDef="displayedCollumns; sticky: true"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedCollumns"></tr>
 </table>
