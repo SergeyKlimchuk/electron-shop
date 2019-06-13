@@ -4,11 +4,14 @@
 section
   flex-grow 2
 
-.content-wrapper
-  width $body-width
-  height: 100%
-  margin auto
+@media screen and (min-width 1370px)
+  .content-wrapper
+    width $body-width
+    margin auto
 
+
+.content-wrapper
+  height: 100%
 
 .footer-wrapper
   display flex
@@ -18,7 +21,7 @@ footer
   flex-grow 0
   border-top 1px solid rgba(0,0,0,.12)
   background-color #fff
-  padding 20px 0
+  padding 20px
   .categories
     display grid
     grid-template-columns 1fr 1fr 1fr

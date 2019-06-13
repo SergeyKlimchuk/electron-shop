@@ -8,13 +8,6 @@
 
 <footer>
   <div class="content-wrapper footer-wrapper">
-    <div class="categories">
-      <a
-        *ngFor="let category of (categories$ | async)"
-        [routerLink]="['/products/' + category.id]"
-        >{{ category.name }}</a
-      >
-    </div>
     <div class="contacts">
       <div>Почта для связи: </div><strong>support.electron.shop.kz@gmail.com</strong>
       <div>Номер тех. поддержки1: </div><strong>8 702 896 8217</strong>
