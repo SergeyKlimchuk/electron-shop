@@ -97,6 +97,12 @@ export class UserService {
   }
 
   signOut() {
-    return this.http.get<void>('/api/logout');
+    return this.http.get<void>('/api/logout').pipe(
+      tap(_ => {
+        this.router.navigate(['/']).then(
+          x => window.location.reload()
+        );
+      })
+    );
   }
 }
