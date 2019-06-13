@@ -31,6 +31,10 @@ footer
         color $main-color
   .contacts
     text-align right
-    color #333
-    .mail
-      font-weight bold
+    color #333333
+    display grid
+    grid-template-columns 1fr 1fr
+    max-width 600px
+    & > *:nth-child(even)
+      text-align left
+      padding-left 10px
