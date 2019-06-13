@@ -21,7 +21,7 @@ class UserAddressController {
     @PostMapping("/user/current/address")
     fun addAddress(@RequestBody address: DeliveryAddress) {
         val user = userService.getCurrentUser()
-        if (user.addresses.size == 0) {
+        if (user.addresses.isEmpty()) {
             address.isFavorite = true
         }
         address.user = user
@@ -36,7 +36,14 @@ class UserAddressController {
 
     @DeleteMapping("/user/current/address/{addressId}")
     fun removeAddress(@PathVariable addressId: Long) {
+        val address = addressRepository.getOne(addressId)
         addressRepository.deleteById(addressId)
+        if (address.isFavorite) {
+            val user = userService.getCurrentUser()
+            val newAddress = user.addresses.first { x -> x.id != address.id }
+            newAddress.isFavorite = true
+            addressRepository.save(newAddress)
+        }
     }
 
     @PostMapping("/user/current/address/favorite/{addressId}")

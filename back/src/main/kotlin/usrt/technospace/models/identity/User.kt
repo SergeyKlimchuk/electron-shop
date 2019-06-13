@@ -79,10 +79,9 @@ class User {
 
     // Delivery addresses
     @OneToMany(
-            fetch = FetchType.LAZY,
             mappedBy = "user",
             orphanRemoval = true,
             cascade = [CascadeType.ALL]
     )
-    var addresses: MutableList<DeliveryAddress> = arrayListOf()
+    var addresses: Set<DeliveryAddress> = emptySet()
 }

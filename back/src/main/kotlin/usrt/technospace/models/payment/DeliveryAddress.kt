@@ -1,6 +1,6 @@
 package usrt.technospace.models.payment
 
-import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnore
 import usrt.technospace.models.core.Auditable
 import usrt.technospace.models.identity.User
 import usrt.technospace.models.map.CityPoint
@@ -15,18 +15,12 @@ class DeliveryAddress : Auditable() {
     var id: Long? = null
 
     @JoinColumn(name = "city_id", nullable = false)
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            optional = false
-    )
+    @ManyToOne
     var city: CityPoint? = null
 
-    @JsonBackReference
+    @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)
-    @ManyToOne(
-            fetch = FetchType.LAZY,
-            optional = false
-    )
+    @ManyToOne
     var user: User? = null
 
     var address: String? = null
