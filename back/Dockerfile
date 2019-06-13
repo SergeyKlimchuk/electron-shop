@@ -15,6 +15,7 @@ ENV DATABASE_ADDRESS=database
 ENV DATABASE_DB=electron
 ENV DATABASE_USERNAME=admin
 ENV DATABASE_PASSWORD=123321
+ENV PATH_TO_FILES=/files
 # Start service
 # ENTRYPOINT [ "ping", "localhost", "-c", "999999999" ]
 
