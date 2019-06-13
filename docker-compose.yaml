@@ -24,7 +24,7 @@ services:
       - DATABASE_USERNAME=admin
       - DATABASE_PASSWORD=123321
       - DATABASE_DB=electron
-      - PATH_TO_FILES=/files
+      - PATH_TO_FILES=/files/
     ports:
       - '8080:8080'
     volumes:
