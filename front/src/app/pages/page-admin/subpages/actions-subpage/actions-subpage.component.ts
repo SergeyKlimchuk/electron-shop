@@ -78,7 +78,10 @@ export class ActionsSubpageComponent implements OnInit {
 
   async save() {
     this.editMode = false;
-    await this.picture.uploadImage();
+    const imageUrl = await this.picture.uploadImage();
+    if (imageUrl) {
+      this.editedAction.imageUrl = imageUrl;
+    }
     this.actionService.saveAction(this.editedAction).subscribe(
       () => {
         this.loadActions();
