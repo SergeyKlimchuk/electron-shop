@@ -1,5 +1,4 @@
-import { NotificationService } from './../../../../services/notification/notification.service';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Address } from 'src/models/map/address';
 import { City } from 'src/models/map/city';
 import { Country } from 'src/models/map/country';
@@ -7,6 +6,8 @@ import { PointNode } from 'src/models/map/point-node';
 
 import { Point } from './../../../../../models/map/point';
 import { MapService } from './../../../../services/map/map.service';
+import { NotificationService } from './../../../../services/notification/notification.service';
+import { PointsListComponent } from './points-list/points-list.component';
 
 @Component({
   selector: 'app-map-subpage',
@@ -23,6 +24,9 @@ export class MapSubpageComponent {
 
   markers: Point[] = [];
 
+  @ViewChild(PointsListComponent)
+  pointsList: PointsListComponent;
+
   constructor(private mapService: MapService,
               private notificationService: NotificationService) {
 
@@ -33,7 +37,16 @@ export class MapSubpageComponent {
   }
 
   addNewPoint() {
-    this.editPoint(new PointNode());
+    let node = null;
+    if (this.selectedPoint == null) {
+      node = new Country();
+    } else if (this.selectedPoint instanceof Country) {
+      node = new City();
+    } else if (this.selectedPoint instanceof City) {
+      node = new Address();
+    }
+
+    this.editPoint(node);
   }
 
   updateEditPointMode(enable: boolean) {
@@ -58,7 +71,7 @@ export class MapSubpageComponent {
     subscription.subscribe(
       () => {
         this.notificationService.notify('Точка успешно удалена!');
-        // TODO: reload page
+        this.refreshList();
       }
     );
   }
@@ -75,15 +88,16 @@ export class MapSubpageComponent {
       }
       subscription.subscribe(
         entity => {
+          this.selectedPoint = null;
           this.notificationService.notify('Точка успешно сохранена!');
-          // TODO: reload page
+          this.refreshList();
         }
       );
     }
     this.editMode = false;
   }
 
-  back() {
-
+  refreshList() {
+    this.pointsList.refresh();
   }
 }

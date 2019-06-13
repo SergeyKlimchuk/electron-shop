@@ -38,6 +38,11 @@ export class PointsListComponent implements OnInit {
     this.loadState();
   }
 
+  refresh() {
+    this.pointsStack = [];
+    this.loadState();
+  }
+
   back() {
     this.pointsStack.pop();
     this.loadState();

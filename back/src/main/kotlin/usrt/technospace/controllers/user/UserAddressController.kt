@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import usrt.technospace.models.payment.DeliveryAddress
 import usrt.technospace.repository.DeliveryAddressRepository
-import usrt.technospace.repository.UserRepository
 import usrt.technospace.services.DeliveryAddressService
 import usrt.technospace.services.UserService
 
@@ -13,9 +12,6 @@ class UserAddressController {
 
     @Autowired
     lateinit var userService: UserService
-
-    @Autowired
-    lateinit var userRepository: UserRepository
 
     @Autowired
     lateinit var addressRepository: DeliveryAddressRepository
@@ -28,8 +24,8 @@ class UserAddressController {
         if (user.addresses.size == 0) {
             address.isFavorite = true
         }
-        user.addresses.add(address)
-        userRepository.save(user)
+        address.user = user
+        addressRepository.save(address)
     }
 
     @PutMapping("/user/current/address")

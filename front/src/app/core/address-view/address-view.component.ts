@@ -1,7 +1,4 @@
-import { NotificationService } from 'src/app/services/notification/notification.service';
-import { City } from 'src/models/map/city';
-import { MapService } from './../../services/map/map.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DeliveryAddress } from 'src/models/users/address';
 
 @Component({
@@ -41,7 +38,6 @@ export class AddressViewComponent implements OnInit {
     this.editMode = true;
     this.addressBackup = this.address;
     this.address = Object.assign({}, this.address);
-
   }
 
   closeEditMode() {

@@ -3,6 +3,7 @@ package usrt.technospace.models.payment
 import com.fasterxml.jackson.annotation.JsonBackReference
 import usrt.technospace.models.core.Auditable
 import usrt.technospace.models.identity.User
+import usrt.technospace.models.map.CityPoint
 import javax.persistence.*
 
 @Entity
@@ -13,13 +14,12 @@ class DeliveryAddress : Auditable() {
     @GeneratedValue
     var id: Long? = null
 
-//    @JoinColumn(name = "city_id", nullable = false)
-//    @ManyToOne(
-//            cascade = [CascadeType.ALL],
-//            fetch = FetchType.LAZY,
-//            optional = false
-//    )
-//    var city: City? = null
+    @JoinColumn(name = "city_id", nullable = false)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            optional = false
+    )
+    var city: CityPoint? = null
 
     @JsonBackReference
     @JoinColumn(name = "user_id", nullable = false)

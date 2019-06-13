@@ -1,5 +1,6 @@
 package usrt.technospace.models.map
 
+import usrt.technospace.models.payment.DeliveryAddress
 import javax.persistence.*
 
 @Entity
@@ -7,4 +8,7 @@ import javax.persistence.*
 open class CityPoint : PointNode() {
     @Column(name = "is_main")
     var isMain: Boolean = false
+
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.EAGER)
+    open var addresses: List<DeliveryAddress> = emptyList()
 }

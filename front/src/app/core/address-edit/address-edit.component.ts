@@ -1,9 +1,10 @@
+import { Component, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MapService } from './../../services/map/map.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { DeliveryAddress } from 'src/models/users/address';
-import { City } from 'src/models/map/city';
 import { NotificationService } from 'src/app/services/notification/notification.service';
+import { City } from 'src/models/map/city';
+import { DeliveryAddress } from 'src/models/users/address';
+
+import { MapService } from './../../services/map/map.service';
 
 @Component({
   selector: 'app-address-edit',
@@ -28,12 +29,10 @@ export class AddressEditComponent implements OnInit, ControlValueAccessor {
   }
 
   private loadCities() {
-    this.mapService.getCountries().subscribe(
-      countries => {
-        const cities: City[] = [];
-        // TODO: FIX THIS WARNING!!!
-        // countries.forEach(x => x.cities.forEach(x1 => cities.push(x1)));
+    this.mapService.getAllCities().subscribe(
+      cities => {
         this.cities = cities;
+        this.applyCitiesReferences();
       },
       error => {
         this.notificationService.notifyAboutError('Не удалось получить список городов!', error);
@@ -41,8 +40,16 @@ export class AddressEditComponent implements OnInit, ControlValueAccessor {
     );
   }
 
+  applyCitiesReferences() {
+    try {
+      this.address.city = this.cities.filter(x => x.id === this.address.city.id)[0];
+    } catch {
+    }
+  }
+
   writeValue(address: DeliveryAddress): void {
     this.address = address;
+    this.applyCitiesReferences();
   }
   registerOnChange(fn: any): void {
     this.updateFn = fn;
@@ -53,8 +60,6 @@ export class AddressEditComponent implements OnInit, ControlValueAccessor {
   }
 
   updateValue() {
-    console.log('WAS UPDATED');
-
     this.updateFn(this.address);
   }
 }
