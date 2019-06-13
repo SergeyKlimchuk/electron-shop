@@ -7,6 +7,7 @@ import { flatMap, tap, switchMap } from 'rxjs/operators';
 
 import { User } from './../../../models/users/user';
 import { MapService } from './../map/map.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ import { MapService } from './../map/map.service';
 export class UserService {
 
   constructor(private http: HttpClient,
-              private mapService: MapService) {
+              private mapService: MapService,
+              private router: Router) {
   }
 
   getRequiredPasswordLength() {
@@ -86,8 +88,10 @@ export class UserService {
     formData.append('email', email);
     formData.append('password', password);
     this.http.post<any>('/api/login', formData).pipe(
-      tap(user => {
-        window.location.reload();
+      tap(_ => {
+        this.router.navigate(['/']).then(
+          x => window.location.reload()
+        );
       })
     ).subscribe();
   }

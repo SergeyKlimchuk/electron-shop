@@ -16,9 +16,7 @@ export class PageRegistrationComponent implements OnInit {
   registerForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private userService: UserService,
-              private router: Router,
-              private snack: MatSnackBar) {}
+              private userService: UserService) {}
 
   // TODO: Сделать нормальные валидаторы
 
