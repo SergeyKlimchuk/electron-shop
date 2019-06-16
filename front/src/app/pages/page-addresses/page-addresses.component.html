@@ -17,6 +17,12 @@
       [longitude]="marker.longitude"
       [iconUrl]="icon"
     ></agm-marker>
+    <agm-marker
+      *ngIf="state.markers.length === 0"
+      [latitude]="state.target.latitude"
+      [longitude]="state.target.longitude"
+      [iconUrl]="icon"
+    ></agm-marker>
   </agm-map>
   <div class="map-error" *ngIf="error">
     <mat-icon class="icon">map</mat-icon>Произошла ошибка при отображении

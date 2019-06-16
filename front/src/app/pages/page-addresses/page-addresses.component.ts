@@ -21,7 +21,7 @@ export class PageAddressesComponent {
   };
 
   showPointWithMarkers(event: {target: PointNode, markers: PointNode[], zoom: number}) {
-    console.log('Map state was updated:', event.target);
+    console.log('Map state was updated:', event);
     this.state = event;
   }
 }
