@@ -83,6 +83,7 @@ import { BillEditDialogComponent } from './pages/page-admin/subpages/bills-subpa
 import { PointNodeEditComponent } from './pages/page-admin/subpages/map-subpage/point-node-edit/point-node-edit.component';
 import { PointsListComponent } from './pages/page-admin/subpages/map-subpage/points-list/points-list.component';
 import { MapComponent } from './core/map/map.component';
+import { DictionaryTypesListComponent } from './pages/page-admin/subpages/dictionaries-subpage/dictionary-types-list/dictionary-types-list.component';
 
 
 const appRoutes: Routes = [
@@ -171,7 +172,8 @@ const appRoutes: Routes = [
     BillEditDialogComponent,
     PointNodeEditComponent,
     PointsListComponent,
-    MapComponent
+    MapComponent,
+    DictionaryTypesListComponent
   ],
   imports: [
     BrowserModule,

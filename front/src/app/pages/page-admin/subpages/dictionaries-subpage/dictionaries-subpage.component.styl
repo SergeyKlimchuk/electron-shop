@@ -1,39 +1,8 @@
 :host
-  min-height 300px
-
-.wrapper
+  width 100%
   display grid
-  grid-template-columns 1fr 500px
-  margin 20px
+  grid-template-columns 1fr 400px
+  grid-gap 20px
+  padding 20px
+  box-sizing border-box
 
-
-.table
-  width 100%
-  .row:hover
-    background-color #eee
-    cursor pointer
-
-.option-collumn
-  width 1%
-  button
-    float right
-
-.info
-  border-left 1px solid rgba(0,0,0,.12)
-
-.actions
-  display flex
-  align-items center
-  mat-paginator
-    flex-grow 2
-  button
-    height 36px
-    margin 0 10px
-
-.new-value-field
-  width 100%
-
-.action-list-flat
-  display flex
-  button:not(:last-child)
-    margin-right 10px

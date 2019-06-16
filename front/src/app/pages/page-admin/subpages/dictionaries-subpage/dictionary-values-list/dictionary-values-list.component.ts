@@ -1,10 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatSnackBar, MatTableDataSource } from '@angular/material';
-import { Observable, Subscription } from 'rxjs';
+import { Dictionary } from 'src/models/dictionaries/dictionary';
 
 import { DictionaryValue } from './../../../../../../models/dictionaries/dictionary-value';
 import { DictionaryService } from './../../../../../services/dictionary/dictionary.service';
-import { Dictionary } from 'src/models/dictionaries/dictionary';
 
 
 @Component({
@@ -12,7 +11,7 @@ import { Dictionary } from 'src/models/dictionaries/dictionary';
   templateUrl: './dictionary-values-list.component.html',
   styleUrls: ['./dictionary-values-list.component.styl']
 })
-export class DictionaryValuesListComponent implements OnInit, OnDestroy {
+export class DictionaryValuesListComponent {
 
   infoDataSource = new MatTableDataSource<DictionaryValue>();
   displayedColumns = ['name', 'options'];
@@ -21,37 +20,25 @@ export class DictionaryValuesListComponent implements OnInit, OnDestroy {
   addPanelVisible = false;
   newValue = new DictionaryValue();
   dictionaryId: number;
+  @Input('dictionaryId')
+  set setDictionaryId(dictionaryId: number) {
+    if (!dictionaryId) {
+      return;
+    }
+    this.dictionaryService.getDictionary(dictionaryId).subscribe(
+      dictionary => this.dictionary = dictionary
+    );
+    this.dictionaryId = dictionaryId;
+    this.loadValues();
+  }
 
-  @Input()
-  dictionaryIdObservable: Observable<number>;
-  subscription: Subscription;
   dictionary: Dictionary;
 
   constructor(private dictionaryService: DictionaryService,
               private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
-    this.subscription = this.dictionaryIdObservable.subscribe(
-      (dictionaryId) => {
-        this.dictionaryService.getDictionary(dictionaryId).subscribe(
-          dictionary => this.dictionary = dictionary,
-          error => {
-            this.snackBar.open('Произошла ошибка при получении справочника!');
-            console.error('Ошибка при получении справочника', error);
-          }
-        );
-        this.loadValues(dictionaryId);
-        this.dictionaryId = dictionaryId;
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  loadValues(dictionaryId: number) {
-    this.dictionaryService.getDictionaryValues(dictionaryId).subscribe(
+  loadValues() {
+    this.dictionaryService.getDictionaryValues(this.dictionaryId).subscribe(
       (values) => {
         console.log(values);
         this.infoDataSource.data = values;
@@ -84,7 +71,7 @@ export class DictionaryValuesListComponent implements OnInit, OnDestroy {
   addNewValue() {
     this.dictionaryService.addDictionaryValue(this.dictionaryId, this.newValue).subscribe(
       (response) => {
-        this.loadValues(this.dictionaryId);
+        this.loadValues();
         this.hideAddRow();
         this.newValue = new DictionaryValue();
         this.snackBar.open('Успешно добавлено!');
