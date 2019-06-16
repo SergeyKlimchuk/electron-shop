@@ -34,10 +34,10 @@
           <input
             matInput
             required
+            numeric
+            numericType="number"
             placeholder="Числовое значение"
             [(ngModel)]="property.value.value"
-            [type]="'number'"
-            type="number"
             (keyup)="onValueUpdate()"
             />
         </mat-form-field>
