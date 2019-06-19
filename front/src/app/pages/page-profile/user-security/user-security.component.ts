@@ -57,8 +57,9 @@ export class UserSecurityComponent {
 
   updatePassword() {
     this.matDialog.open(ChangePasswordDialog).afterClosed().subscribe(
-      newEmail => {
-        if (newEmail) {
+      newPassword => {
+        if (newPassword) {
+          this.userService.signIn(this.user.email, newPassword);
           this.snack.open('Пароль успешно обновлен!');
         }
       }
