@@ -10,14 +10,17 @@ import usrt.technospace.models.product.ProductType
 import usrt.technospace.repository.ProductTypeRepository
 import javax.validation.Valid
 import org.hibernate.SessionFactory
+import org.slf4j.LoggerFactory
 import usrt.technospace.repository.ProductInfoTitleRepository
 
 
 @RestController
 class ProductTypeController {
+    var logger = LoggerFactory.getLogger(ProductTypeController::class.java)!!
 
     @Autowired
     private lateinit var productTypeRepository: ProductTypeRepository
+
     @Autowired
     private lateinit var productInfoTitleRepository: ProductInfoTitleRepository
 
@@ -34,6 +37,7 @@ class ProductTypeController {
                 }
             }
         }
+        logger.info("Add productType \"${savedProductType.id}\"")
         return savedProductType
     }
 
@@ -50,11 +54,13 @@ class ProductTypeController {
 
     @PutMapping("/product-types")
     fun updateProductType(@Valid @RequestBody productType: ProductType): ProductType {
+        logger.info("Update productType \"${productType.id}\"")
         return productTypeRepository.save(productType)
     }
 
     @DeleteMapping("/product-types/{id}")
     fun deleteProductType(@PathVariable id: Long) {
+        logger.info("Delete productType \"$id\"")
         val productType = productTypeRepository.getOne(id)
         productTypeRepository.delete(productType)
     }
