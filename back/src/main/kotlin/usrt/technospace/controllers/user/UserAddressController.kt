@@ -40,6 +40,9 @@ class UserAddressController {
         addressRepository.deleteById(addressId)
         if (address.isFavorite) {
             val user = userService.getCurrentUser()
+            if (!user.addresses.any()) {
+                return
+            }
             val newAddress = user.addresses.first { x -> x.id != address.id }
             newAddress.isFavorite = true
             addressRepository.save(newAddress)
