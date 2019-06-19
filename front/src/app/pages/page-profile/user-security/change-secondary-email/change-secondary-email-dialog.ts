@@ -29,7 +29,7 @@ export class ChangeSecondaryEmailDialog {
 
   applyChanges() {
     this.userService.updateSecondaryEmail(this.newEmail, this.password).subscribe(
-      () => this.dialogRef.close(0),
+      () => this.dialogRef.close(this.newEmail),
       error => {
         console.error(error);
         this.snack.open('Произошла ошибка при обновлении почты!');

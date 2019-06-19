@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user/user.service';
-import { MatSnackBar, MatDialog } from '@angular/material';
-import { User } from 'src/models/users/user';
+import { Component } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { tap } from 'rxjs/operators';
 import { ChangeEmailDialog } from 'src/app/pages/page-profile/user-security/change-email/change-email-dialog';
-import { ChangeSecondaryEmailDialog } from 'src/app/pages/page-profile/user-security/change-secondary-email/change-secondary-email-dialog';
 import { ChangePasswordDialog } from 'src/app/pages/page-profile/user-security/change-password/change-password-dialog';
+import {
+  ChangeSecondaryEmailDialog,
+} from 'src/app/pages/page-profile/user-security/change-secondary-email/change-secondary-email-dialog';
+import { UserService } from 'src/app/services/user/user.service';
+import { User } from 'src/models/users/user';
 
 @Component({
   selector: 'app-user-security',
@@ -17,7 +19,7 @@ export class UserSecurityComponent {
   user: User;
   haveSecondaryEmail = false;
 
-  constructor(private userService: UserService,
+  constructor(userService: UserService,
               private snack: MatSnackBar,
               private matDialog: MatDialog) {
     userService.getCurrentUser().pipe(
@@ -45,6 +47,7 @@ export class UserSecurityComponent {
     this.matDialog.open(ChangeSecondaryEmailDialog).afterClosed().subscribe(
       newEmail => {
         if (newEmail) {
+          this.user.secondaryEmail = newEmail;
           this.snack.open('Запасная почта успешно обновлена!');
         }
       }
