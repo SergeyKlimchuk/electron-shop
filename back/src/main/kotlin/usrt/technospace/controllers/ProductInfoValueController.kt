@@ -1,5 +1,6 @@
 package usrt.technospace.controllers
 
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import usrt.technospace.models.product.ProductInfoValue
@@ -8,12 +9,15 @@ import javax.validation.Valid
 
 @RestController
 class ProductInfoValueController {
+    var logger = LoggerFactory.getLogger(ProductInfoValueController::class.java)!!
+
     @Autowired
     private lateinit var productInfoValueRepository: ProductInfoValueRepository
 
     @PostMapping("/product-info-values")
     fun add(@Valid @RequestBody productInfoValue: ProductInfoValue): ProductInfoValue {
-        return productInfoValueRepository.save(productInfoValue)
+        productInfoValueRepository.save(productInfoValue)
+        return productInfoValue
     }
 
     @GetMapping("/product-info-values/{id}")
