@@ -1,6 +1,6 @@
+import { Component } from '@angular/core';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { UserService } from 'src/app/services/user/user.service';
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatSnackBar, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-change-email',
@@ -28,7 +28,7 @@ export class ChangeEmailDialog {
 
   applyChanges() {
     this.userService.updateEmail(this.newEmail, this.password).subscribe(
-      () => this.dialogRef.close(0),
+      () => this.dialogRef.close(this.newEmail),
       error => {
         console.error(error);
         this.snack.open('Произошла ошибка при обновлении почты!');

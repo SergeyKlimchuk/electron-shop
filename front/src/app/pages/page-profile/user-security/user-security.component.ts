@@ -19,7 +19,7 @@ export class UserSecurityComponent {
   user: User;
   haveSecondaryEmail = false;
 
-  constructor(userService: UserService,
+  constructor(private userService: UserService,
               private snack: MatSnackBar,
               private matDialog: MatDialog) {
     userService.getCurrentUser().pipe(
@@ -37,6 +37,7 @@ export class UserSecurityComponent {
     this.matDialog.open(ChangeEmailDialog).afterClosed().subscribe(
       newEmail => {
         if (newEmail) {
+          this.userService.signIn(newEmail, this.user.password);
           this.snack.open('Почта успешно обновлена!');
         }
       }
