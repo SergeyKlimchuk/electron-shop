@@ -1,5 +1,6 @@
 package usrt.technospace.services
 
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.javamail.JavaMailSender
@@ -10,7 +11,7 @@ import java.nio.charset.StandardCharsets
 
 @Service
 class EmailService {
-
+    var logger = LoggerFactory.getLogger(EmailService::class.java)!!
     @Autowired
     var emailSender: JavaMailSender? = null
 
@@ -27,7 +28,11 @@ class EmailService {
         mimeMessageHelper.setSubject(siteName!!)
         mimeMessageHelper.setFrom(currentEmail!!)
         attachDefault(mimeMessageHelper)
-        this.emailSender!!.send(mimeMessage)
+        try {
+            this.emailSender!!.send(mimeMessage)
+        } catch (e: Error) {
+            logger.error("Could not send email", e)
+        }
     }
 
     private fun attachDefault(helper: MimeMessageHelper) {
